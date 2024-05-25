@@ -1,0 +1,53 @@
+.sidebar {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    top: 0;
+    right: -280px;
+    background-color: #111111be;
+
+    padding-top: 60px;
+    transition: 0.5s;
+    z-index: 1000;
+}
+
+.sidebar.open {
+    right: 0;
+    background-color: #dadada;
+    box-shadow: 1em 0 3em rgba(0, 0, 0, 0.4);
+
+}
+
+
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 15em;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    text-align: center;
+}
+
+.sidebar ul li button {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 18px;
+    background-color: #72a5db;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+
+.open-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+}

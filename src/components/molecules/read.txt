@@ -1,0 +1,4 @@
+Pasta responsável pela organização dos moleculas. moelulas são um conjunto de atomos que constinuem um grupo 
+que exercem funções semelhantes.
+exemplo: um conjunto de inputs (atomos) forma uma molecula de formulário.
+

@@ -1,0 +1,112 @@
+.sidebar {
+    width: 60px !important;
+    position: fixed;
+    top: 22vh !important;
+    left: 0;
+    height: 70vh;
+    background-color: #f8f6f6;
+    padding-top: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px !important;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 10) !important;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+
+.sub-sidebar {
+    width: 25px !important;
+    position: absolute;
+    top: 30vh;
+    left: 55px;
+    height: 55vh;
+    background-color: #e0dddd;
+    padding-top: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px !important;
+}
+
+.left-0 {
+    position: absolute;
+    left: -15px !important;
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+}
+
+.circle.home {
+    background-color: #212f3f;
+    color: white;
+}
+
+.circle:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: scale(1.1);
+}
+
+
+.zoom1:hover {
+    transform: scale(1.1) rotate(180deg);
+    cursor: pointer;
+}
+
+.zoom2:hover {
+    transform: scale(1.1);
+    cursor: pointer
+}
+
+.buttonDiv {
+    cursor: pointer;
+}
+
+.sidebar a,
+.sidebar .item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    /* Remove o sublinhado padrão dos links */
+    color: inherit;
+    /* Herda a cor do texto */
+    margin-bottom: 15px;
+    /* Espaçamento entre os itens */
+}
+
+.circle {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #8cb7f0;
+    padding:10px;
+    margin-right: 10px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar .item {
+    cursor: pointer;
+}
+
+.mb-10 {
+    margin-bottom: 50px !important;
+}
+
+.hidden {
+    display: none;
+}

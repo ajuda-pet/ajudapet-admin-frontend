@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    display: flex;
+    color: white !important;
+    align-items: center;
+    background-color: #212f3f;
+}
+
+.btn-warning {
+    background-color: #f6ee7d !important;
+    border-color: #f6ee7d !important;
+}
+
+.btn-warning:hover {
+    background-color: #fdf252 !important;
+    border-color: #fdf252 !important;
+}
+
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn ease-in-out 1s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

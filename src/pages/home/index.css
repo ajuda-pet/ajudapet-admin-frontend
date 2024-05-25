@@ -1,0 +1,74 @@
+body {
+    overflow-x: hidden;
+}
+
+
+.container-pets {
+    width: 80vw;
+    border-radius: 30px;
+    background-color: #f4f4f4;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6) !important;
+}
+
+.card-group {
+    margin-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+}
+
+#green {
+    position: absolute;
+    top: 10%;
+    z-index: -1;
+
+    left: 100%;
+    transform: translate(-50%, -50%);
+}
+
+#pink {
+    width: 15vw;
+    position: absolute;
+    top: 98%;
+    left: 96%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+#yellow {
+    position: absolute;
+    z-index: -1;
+
+    top: 5%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+}
+
+#black {
+    z-index: -1;
+
+    position: absolute;
+    top: 105%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+}
+
+.Filter {
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+select {
+    border-radius: 50px !important;
+    background-color: #fff !important;
+}

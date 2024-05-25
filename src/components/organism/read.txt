@@ -1,0 +1,3 @@
+Pasta responsável pela organização dos organismos. organismos são um conjunto de moleculas que formam uma 'tela'.
+
+exemplo: uma tela de login, possui o formulario, talvez imagens e botões. este agrupamento de moleculas+atomos = organismo (tela).

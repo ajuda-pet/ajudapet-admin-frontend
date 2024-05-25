@@ -1,0 +1,62 @@
+.container-l{
+    margin: 12vh auto 0;
+}
+
+.form-l{
+    height: 370px !important;
+}
+
+.header-l{
+    border: 1px solid black;
+}
+
+.footer-l{
+    display: flex;
+    flex-direction: column;
+}
+
+.linha-ou{
+    margin-bottom: -15px;
+    margin-top: 15px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.linha{
+    position: relative;
+    top: 7px;
+    width: 100%;
+    border-bottom: .5px solid gray;
+}
+
+.ou{
+    position: relative;
+    display: flex;
+    align-items: center;
+    top: -5px;
+    padding: 0;
+    width: 20px;
+}
+
+.ou span {
+    background-color: #fff;
+    padding: 0 2px;
+    color: gray;
+    
+}
+
+.btn-clean {
+    border: none;
+    background-color: #0000;
+    text-align: center;
+}
+
+.btn-clean:hover {
+    color: rgb(0, 0, 153);
+    cursor: pointer;
+}
+

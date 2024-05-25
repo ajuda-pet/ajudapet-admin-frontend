@@ -1,0 +1,41 @@
+.div-button button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+.card {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.card:hover {
+    opacity: 0.9;
+}
+
+.adopt-btn{
+    background-color: #212f3f !important;
+    border-color: #101924 !important;
+}
+
+.adopt-btn:hover {
+    background-color: #253344 !important;
+    border-color: #101924 !important;
+    scale: 1.01;
+}
+
+.alert-button {
+    background-color: #ced4da !important;
+    border-color: #a09e9e !important;
+    color: #495057 !important;
+}
+
+.alert-danger-button {
+    background-color: #f8d7da !important;
+    border-color: #eb99a0 !important;
+    color: #5c1a21 !important;
+}
+
+.whatsapp-button {
+    background-color: #128c7e !important;
+    border: #137065 !important;
+    color: white !important;
+}
