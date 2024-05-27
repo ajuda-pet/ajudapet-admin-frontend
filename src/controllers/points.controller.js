@@ -20,10 +20,11 @@ const pointsController = {
             console.error(error)
         }
     },
-    getByGroup: async (GroupId) => {
+    getByGroup: async (groupId) => {
         try {
-            const response = await axios.get(`${authEndpoint}/${GroupId}`)
-            if (!response.data.success) {
+            const response = await axios.get(`${noAuthEndpoint}/groups/${groupId}`)
+
+            if (!response || !response.data.success) {
                 return response.data.message
             }
 

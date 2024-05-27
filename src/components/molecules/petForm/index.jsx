@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import pointsController from '../../../controllers/points.contorller.js';
+import pointsController from '../../../controllers/points.controller.js';
 import petController from '../../../controllers/pet.controller.js';
 import './form.css'; // Importação do arquivo CSS
 import { Alert, Card, Col, Form, InputGroup, Row, Container } from 'react-bootstrap';
@@ -132,7 +132,6 @@ const Step2 = ({ register }) => {
             </Card>
         </>
     )
-   
 }
 
 const PetForm = ({ step, register }) => {
