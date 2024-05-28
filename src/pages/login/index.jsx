@@ -10,10 +10,12 @@ import Background from '../../components/organism/background/Background';
 
 // Estilos
 import './index.css';
+import Load from '../../components/molecules/load/Load';
 
 function Login() {
   localStorage.removeItem("authenticated");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
   const location = useLocation();
 
   const [msg, setMsg] = useState('');
@@ -24,6 +26,7 @@ function Login() {
 
   // Função para lidar com o envio do formulario
   const handleSubmit = async (e) => {
+    setLoading(true)
 
     e.preventDefault();
     setError('');
@@ -34,8 +37,9 @@ function Login() {
       const token = await loginUser(userData);
 
       if (token) {
-        localStorage.setItem('valid', true);
+        setLoading(false)
 
+        localStorage.setItem('valid', true);
         navigate('/')
       } else {
         setError('Erro ao autenticar usuário. Verifique suas credenciais.');
@@ -44,6 +48,8 @@ function Login() {
     else {
       setError('Email inválido!');
     }
+
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -73,56 +79,62 @@ function Login() {
               <img src="./images/logo.png" alt="logo" />
           </a>
       </div>
-      <form onSubmit={handleSubmit} method='post'>
-        
-        <div className="form-inputs form-l">
-          <div className="header-lr" >
-            <h1>Login</h1>
+
+      {!loading &&
+      
+        <form onSubmit={handleSubmit} method='post'>
+          
+          <div className="form-inputs form-l">
+            <div className="header-lr" >
+              <h1>Login</h1>
+              
+            {error ? <p className="error">{error}</p> : <></>}
+            {msg? <p className="error">{msg}</p>: <></>}
+            </div>
+            <div className="main-rl">
+              <div className="input-form">
+                <input
+                  required
+                  name='email'
+                  className="input-field"
+                  type="email"
+                  value={email}
+                  placeholder='email'
+                  onChange={(e) => setEmail(e.target.value)}
+
+                />
+              </div>
             
-           {error ? <p className="error">{error}</p> : <></>}
-           {msg? <p className="error">{msg}</p>: <></>}
-          </div>
-          <div className="main-rl">
-            <div className="input-form">
-              <input
-                required
-                name='email'
-                className="input-field"
-                type="email"
-                value={email}
-                placeholder='email'
-                onChange={(e) => setEmail(e.target.value)}
+              <div className="input-form">
+                <input
+                  required
+                  placeholder='Senha'
+                  name='password'
+                  className="input-field"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
 
-              />
-            </div>
-          
-            <div className="input-form">
-              <input
-                required
-                placeholder='Senha'
-                name='password'
-                className="input-field"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-
-              />
-            </div>
-          </div>
-          
-          <div className='footer-l mt-4'>
-            <button type='submit' className="btn1">Entrar</button>
-
-            <div className='linha-ou mt-4 mb-1'>
-              <div className='linha'></div>
-              <p className='ou'><span>ou</span></p>
+                />
+              </div>
             </div>
             
-              <button onClick={() => navigate('/register')} className="btn-clean"> Registrar </button>
-            </div>
-        </div>
+            <div className='footer-l mt-4'>
+              <button type='submit' className="btn1">Entrar</button>
 
-      </form>
+              <div className='linha-ou mt-4 mb-1'>
+                <div className='linha'></div>
+                <p className='ou'><span>ou</span></p>
+              </div>
+              
+                <button onClick={() => navigate('/register')} className="btn-clean"> Registrar </button>
+              </div>
+          </div>
+
+        </form>
+      }
+
+      {loading && <Load></Load>}
       
     </div>
 </div>

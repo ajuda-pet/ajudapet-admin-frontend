@@ -167,6 +167,7 @@ const AddAdoptPoint = () => {
 
     
     return (
+
         <>
             <Header />
             <img src="./images/green.png" id='green' alt='mancha verde' />
