@@ -8,12 +8,7 @@ const groupController = {
     getById: async (groupId) => {
         try { 
             const response = await axios.get(`${noAuthEndpoint}/${groupId}`)
-
-            /* if (!response.data.success) {
-                return response.data.message
-            } */
-
-            return response.data.info.pets
+            return response.data
         }
 
         catch (error) {
