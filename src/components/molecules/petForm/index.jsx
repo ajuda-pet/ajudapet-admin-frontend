@@ -5,7 +5,8 @@ import petController from '../../../controllers/pet.controller.js';
 import './form.css'; // Importação do arquivo CSS
 import { Alert, Card, Col, Form, InputGroup, Row, Container } from 'react-bootstrap';
 import groupController from '../../../controllers/group.controller.js';
-
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../../controllers/resgisterImg.js'
 const Step1 = ({ points, register }) => {
     return (
         <>
@@ -26,27 +27,28 @@ const Step1 = ({ points, register }) => {
                     </Row>
                 </Card.Body>
             </Card>
-        
+
         </>
     )
 }
 
-const Step2 = ({ register }) => {
-    const [picture, setPicture] = useState('')
-    
-    const handlePicture = (event) => {
-        const file = event.target.files[0]
+const Step2 = ({ register, onPictureUploaded }) => {
 
-        const reader = new FileReader()
+    const [picture, setPicture] = useState('');
+    const [pictureURL, setPictureURL] = useState('');
 
-        reader.onloadend = () => {
-            setPicture(reader.result)
-        }
+    const handlePicture = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
 
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    }
+        const storageRef = ref(storage, `pets/${file.name}`);
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+
+        setPictureURL(url);
+        onPictureUploaded(url);
+        setPicture(URL.createObjectURL(file));
+    };
 
     return (
         <>
@@ -100,9 +102,9 @@ const Step2 = ({ register }) => {
                     </Row>
 
                     <Row className='mb-1'>
-                        <Form.Group controlId="formFile" className="mb-3" {...register('picture')} onChange={handlePicture}>
+                        <Form.Group controlId="formFile" className="mb-3">
                             <Form.Label>Foto</Form.Label>
-                            <Form.Control type="file" accept='image/*'/>
+                            <Form.Control type="file" accept='image/*' onChange={handlePicture} />
                         </Form.Group>
                     </Row>
 
@@ -117,7 +119,7 @@ const Step2 = ({ register }) => {
                                 placeholder="Escreva o nome do seu pet"
                                 aria-label="Username"
                                 aria-describedby="basic-addon1"
-                                { ...register('name')}
+                                {...register('name')}
                             />
                         </InputGroup>
                     </Row>
@@ -125,19 +127,29 @@ const Step2 = ({ register }) => {
                     <Row>
                         <InputGroup>
                             <InputGroup.Text>Descrição</InputGroup.Text>
-                            <Form.Control as="textarea" aria-label="With textarea" placeholder='Escreve uma descrição fofa para seu pet' {...register('description')}/>
+                            <Form.Control as="textarea" aria-label="With textarea" placeholder='Escreva uma descrição fofa para seu pet' {...register('description')} />
                         </InputGroup>
                     </Row>
                 </Card.Body>
             </Card>
         </>
-    )
-}
+    );
+};
 
 const PetForm = ({ step, register }) => {
-    const [points, setPoints] = useState([])
+    const [points, setPoints] = useState([]);
+    const [pictureURL, setPictureURL] = useState('');
+    const handlePictureUploaded = (url) => {
+        setPictureURL(url);
+    };
 
-    
+    useEffect(() => {
+        if (pictureURL) {
+            register('picture', { value: pictureURL });
+        }
+    }, [pictureURL, register])
+
+
     useEffect(() => {
         groupController.getAdoptionPoints().then(response => {
             if (response.success) {
@@ -156,7 +168,7 @@ const PetForm = ({ step, register }) => {
 
                 <Form className='p-2'>
                     {step == 1 && <Step1 points={points} register={register}> </Step1>}
-                    {step == 2 && <Step2 register={register}></Step2>}
+                    {step == 2 && <Step2 register={register} onPictureUploaded={handlePictureUploaded}></Step2>}
                 </Form>
             </Container>
         </FormProvider>

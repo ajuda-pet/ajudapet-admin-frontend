@@ -24,8 +24,8 @@ function AddPet() {
             </Toast>
         )
     })
-    
-    
+
+
     const ToastError = ({ show }) => {
         return (
             <Toast bg='danger' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToast} onClose={() => setShowToast(false)}>
@@ -40,7 +40,7 @@ function AddPet() {
 
     const [showToastSuccess, setShowToastSuccess] = useState(false)
     const [showToast, setShowToast] = useState(false);
-    
+
     const [loading, setLoading] = useState(true)
     const methods = useForm()
 
@@ -52,21 +52,22 @@ function AddPet() {
 
 
     const handleSubmit = (payload) => {
+        console.log('pegou')
         if (
             !payload.gender ||
             !payload.species ||
             !payload.size ||
             !payload.name ||
-            !payload.description ||
-            !payload.picture
+            !payload.description
         ) {
+
             setShowToast(true)
             setTimeout(() => { setShowToast(false) }, 3000)
             return
         }
-
-        petController.create({ ...payload, picture: 'https://i.ibb.co/K0X9TtH/jojo.jpg'}).then(response => {
-            if(response && response.success) {
+        console.log(payload);
+        petController.create({ ...payload }).then(response => {
+            if (response && response.success) {
                 pets.push(response.info.pet)
                 setShowToastSuccess(true)
 
@@ -82,21 +83,22 @@ function AddPet() {
     const handleNextStep = () => {
         const payload = methods.getValues()
         console.log(payload)
-        
+
         if (step == 1) {
             if (!payload.adoptionPointId) {
+
                 setShowToast(true)
-                
-                setTimeout(() => {setShowToast(false)}, 3000)
+
+                setTimeout(() => { setShowToast(false) }, 3000)
                 return
             }
         }
 
         setStep(step + 1)
     }
-    
 
-    const handleBackStep = () => setStep(step -1)
+
+    const handleBackStep = () => setStep(step - 1)
 
     const handleClose = () => {
         setShow(false)
@@ -104,7 +106,7 @@ function AddPet() {
     }
 
     const handleShow = () => setShow(true)
-    
+
 
     useEffect(() => {
         petController.get().then((response) => {
@@ -128,7 +130,7 @@ function AddPet() {
                 <PetForm />
             </div> */}
 
-            { !loading && 
+            {!loading &&
                 <div className='px-3'>
                     <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
                         {/* <ToastComponent variant={'warning'}></ToastComponent> */}
@@ -200,7 +202,7 @@ function AddPet() {
                                         Cadastrar pet
                                     </span>
                                 </Button>
-                            
+
                             </Col>
                         </Row>
 
@@ -223,7 +225,7 @@ function AddPet() {
             {
                 loading && <Load></Load>
             }
-            
+
             {/* Modal de cadastro de Pets */}
             <Modal show={show} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>
@@ -232,24 +234,24 @@ function AddPet() {
                 <Modal.Body>
                     {step == 1 &&
                         <div className='petForm'>
-                            <PetForm step={1} register={methods.register}/>
-                        </div> 
+                            <PetForm step={1} register={methods.register} />
+                        </div>
                     }
 
                     {
                         step == 2 &&
                         <div className='petForm'>
-                                <PetForm step={2} register={methods.register}/>
-                        </div> 
+                            <PetForm step={2} register={methods.register} />
+                        </div>
                     }
-                   
+
                 </Modal.Body>
                 <Modal.Footer>
 
                     {step < 2 && <>
-                    <Button variant="secondary" onClick={handleClose}>Fechar</Button>
+                        <Button variant="secondary" onClick={handleClose}>Fechar</Button>
                         <Button variant="primary" onClick={handleNextStep}>Próximo</Button>
-                    
+
                     </>
                     }
 
