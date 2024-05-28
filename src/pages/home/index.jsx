@@ -1,14 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, CardGroup } from 'react-bootstrap'
+import { Container, Row, Col, Button, CardGroup, Table, Alert, Image, Card, Modal, ModalBody, ModalTitle } from 'react-bootstrap'
 import Header from '../../components/molecules/header';
 import SideBarHome from '../../components/molecules/sideBarHome';
 import CardComponent from '../../components/molecules/cards';
-import petController from '../../controllers/pet.controller';
 import Form from 'react-bootstrap/Form';
 import './index.css';
+import groupController from '../../controllers/group.controller';
 
-function Home() {
+const Home = () => {
+  const [group, setGroup] = useState({})
 
+  const [whatsapp, setWhatsapp] = useState({})
+  const [instagram, setInstagram] = useState({})
+  const [pix, setPix] = useState({})
+
+  const [showWhatsappModal, setWhatsappModal] = useState(false)
+  
+
+  const handleShowWhatsappModal = () => setWhatsappModal(true)
+  const handleCloseWhatsappModal = () => setWhatsappModal(false)  
+
+
+  useEffect(() => {
+    const groupId = localStorage.getItem('groupId')
+    groupController.getById(groupId).then(response => {
+
+      if (response && response.succes) {
+        const group = response.info.group
+
+        console.log(group)
+
+        // Set Whatsapp
+        group.socialMedia.forEach(socialMedia => {
+          if (socialMedia.plataform == 'WHATSAPP') {
+            setWhatsapp(socialMedia)
+          }
+
+          if (socialMedia.plataform == 'INSTAGRAM') {
+            setInstagram(socialMedia)
+          }
+        })
+
+
+        setGroup(group)
+      }
+    })
+  })
 
 
   return (
@@ -25,10 +62,83 @@ function Home() {
 
         {/* Sidebar */}
         <SideBarHome/>
-        
-        {/* Container dos pets */}
        
       </div >
+
+      <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
+        <h2> Dados Gerais do Grupo </h2>
+        <hr class='my-4 bg-primary' /> 
+
+        <Alert variant='primary'> É importante deixar as informações de contato e sua chave pix atualizadas para receber doações ou adoção de pets.</Alert>
+
+        {/* Foto do Grupo */}
+        <Row lg={12} className='mt-5'>
+          <center>
+            <Col xs={6} md={4} className='text-center'>
+              <Image src="./images/ong-profile.jpg" width='250' roundedCircle />
+            </Col>
+          </center>
+        </Row>
+
+
+        
+        <Row className='mt-3'>
+          <center>
+            <Col>
+              <h3>{group.name}</h3>
+              <span>{group.description}</span>&nbsp;&nbsp;
+            </Col>
+          </center>
+        </Row>
+
+        <Row className='mx-5 my-3'>
+          <Button variant='secondary' className='adopt-btn'>Editar Grupo</Button>
+        </Row>
+
+
+        <Row className='mt-5 mb-5'>
+          <Col>
+            <Card className='p-3'>
+              <Card.Title>Whatsapp para Adoção</Card.Title>
+              <Card.Body>
+                <Alert variant='danger'>Não cadastrado.</Alert>
+
+              </Card.Body>
+              <Button variant='secondary' className='adopt-btn' onClick={setWhatsappModal}> Cadastrar </Button>
+            </Card>
+          </Col>
+          <Col>
+            <Card className='p-3'>
+              <Card.Title>Instagram do Grupo</Card.Title>
+              <Card.Body>
+                <Alert variant='danger'>Não cadastrado.</Alert>
+              </Card.Body>
+              <Button variant='secondary' className='adopt-btn'> Cadastrar </Button>
+            </Card>
+          </Col>
+          <Col>
+            <Card className='p-3'>
+              <Card.Title>PIX</Card.Title>
+              <Card.Body>
+                <Alert variant='danger'>Não cadastrado.</Alert>
+
+              </Card.Body>
+              <Button variant='secondary' className='adopt-btn'> 
+                  Cadastrar
+               </Button>
+            </Card>
+          </Col>
+        </Row>
+
+
+      </Container>
+
+
+      <Modal show={showWhatsappModal} onHide={handleCloseWhatsappModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+        <Modal.Header><h3>Cadastro de Whatsapp</h3></Modal.Header>
+        <Modal.Body>dedwe</Modal.Body>
+      </Modal>
+
     </>
   );
 }
