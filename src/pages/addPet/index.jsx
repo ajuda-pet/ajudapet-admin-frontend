@@ -124,7 +124,7 @@ function AddPet() {
             <img src="./images/pink.png" id='pink' alt='mancha rosa' />
             <img src="./images/black.png" id='black' alt='mancha preta' />
             {/* Sidebar */}
-            <SideBarHome />
+            <SideBarHome page={'addPet'} />
 
             {/* <div className='petForm'>
                 <PetForm />

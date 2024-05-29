@@ -19,21 +19,21 @@ const AddAdoptPoint = () => {
                 <Toast.Header>
                     <strong className="mr-auto">😸 Sucesso </strong>
                 </Toast.Header>
-                <Toast.Body>{ message }</Toast.Body>
+                <Toast.Body>{message}</Toast.Body>
             </Toast>
         )
     })
 
 
     const ToastError = ({ show }) => {
-            return (
-                <Toast bg='danger' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToast} onClose={() => setShowToast(false)}>
-                    <Toast.Header>
-                        <strong className="mr-auto">😿 Atenção</strong>
-                    </Toast.Header>
-                    <Toast.Body>Preencha todos os campos antes de avançar.</Toast.Body>
-                </Toast>
-            )
+        return (
+            <Toast bg='danger' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToast} onClose={() => setShowToast(false)}>
+                <Toast.Header>
+                    <strong className="mr-auto">😿 Atenção</strong>
+                </Toast.Header>
+                <Toast.Body>Preencha todos os campos antes de avançar.</Toast.Body>
+            </Toast>
+        )
     }
 
 
@@ -48,18 +48,18 @@ const AddAdoptPoint = () => {
     const [show, setShow] = useState(false)
 
     const handleShow = () => setShow(true)
-    
-    const handleNextStep = () => { 
-        
+
+    const handleNextStep = () => {
+
         if (step == 1) {
-            const payload =  methods.getValues()
-            
+            const payload = methods.getValues()
+
             if (!payload.name || !payload.description) {
                 setShowToast(true);
 
-                return        
+                return
             }
-            
+
         }
 
         setStep(step + 1)
@@ -75,14 +75,14 @@ const AddAdoptPoint = () => {
     const handleSubmit = (payload) => {
         payload.addressCountry = 'BR'
 
-        const { 
-            postalCode, 
-            addressState, 
+        const {
+            postalCode,
+            addressState,
             addressCity,
             addressNeighborhood,
-            addressStreet, 
+            addressStreet,
             addressNumber
-         } = payload
+        } = payload
 
         if (
             !postalCode ||
@@ -108,16 +108,16 @@ const AddAdoptPoint = () => {
                 points.push(point)
 
                 setShowToastSuccess(true)
-                
+
                 setTimeout(() => {
                     setShowToastSuccess(false)
                 }, 2000)
-                
+
                 handleClose()
             }
-            
+
             /* Tratar erros 400 */
-            else if  (response && !response.success) {
+            else if (response && !response.success) {
                 setLoading(false)
                 setShowToast(true)
 
@@ -128,7 +128,7 @@ const AddAdoptPoint = () => {
                 }, 2000)
             }
 
-            
+
             setLoading(false)
         })
     }
@@ -165,7 +165,7 @@ const AddAdoptPoint = () => {
         })
     }, [])
 
-    
+
     return (
 
         <>
@@ -174,16 +174,16 @@ const AddAdoptPoint = () => {
             <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
             <img src="./images/pink.png" id='pink' alt='mancha rosa' />
             <img src="./images/black.png" id='black' alt='mancha preta' />
-           {/*  |<div className='pointForm'>
+            {/*  |<div className='pointForm'>
                 <PointForm />
             </div> */}
             {/* Sidebar */}
-            <SideBarHome />
+            <SideBarHome page={'addAdoptPoint'} />
 
             {/* Container dos pets */}
 
-            { !loading && 
-            
+            {!loading &&
+
                 <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
                     <h2> Pontos de Adoção </h2>
                     <hr class='my-4 bg-primary' />
@@ -197,12 +197,12 @@ const AddAdoptPoint = () => {
 
 
                     {/* Tabela de pontos de adoção */}
-                    <PointTable points={points}/>
+                    <PointTable points={points} />
 
                 </Container>
             }
 
-            { loading &&
+            {loading &&
                 <Load condition={loading}></Load>
 
             }
@@ -247,7 +247,7 @@ const AddAdoptPoint = () => {
             <ToastSuccess message={'Ponto de adoção cadastrado com sucesso.'}></ToastSuccess>
         </>
 
-        
+
 
     )
 }
