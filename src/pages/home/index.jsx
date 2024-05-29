@@ -25,7 +25,7 @@ const Home = () => {
   const [showWhatsappModal, setWhatsappModal] = useState(false)
 
   const handleShowWhatsappModal = () => setWhatsappModal(true)
-  const handleCloseWhatsappModal = () => setWhatsappModal(false)
+  const handleCloseWhatsappModal = () => setWhatsappModal(false) 
 
   const handleSubmit = (payload) => {
     console.log(payload)
@@ -72,14 +72,14 @@ const Home = () => {
         {/* Header */}
 
         {/* Sidebar */}
-        <SideBarHome page={'home'} />
-
+        <SideBarHome/>
+       
       </div >
 
-      {!loading &&
+      { !loading && 
         <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
           <h2> Dados Gerais do Grupo </h2>
-          <hr class='my-4 bg-primary' />
+          <hr class='my-4 bg-primary' /> 
 
           <Alert variant='primary'> É importante deixar as informações de contato e sua chave pix atualizadas para receber doações ou adoção de pets.</Alert>
 
@@ -93,7 +93,7 @@ const Home = () => {
           </Row>
 
 
-
+          
           <Row className='mt-3'>
             <center>
               <Col>
@@ -139,8 +139,8 @@ const Home = () => {
                   <Alert variant='danger'>Não cadastrado.</Alert>
 
                 </Card.Body>
-                <Button variant='secondary' className='adopt-btn'>
-                  Cadastrar
+                <Button variant='secondary' className='adopt-btn'> 
+                    Cadastrar
                 </Button>
               </Card>
             </Col>
@@ -150,18 +150,18 @@ const Home = () => {
         </Container>
       }
 
-      {loading && <Load></Load>}
+      { loading && <Load></Load>}
 
 
       <Modal show={showWhatsappModal} onHide={handleCloseWhatsappModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>
           <img src='./images/whatsapp-icon.png' width='50'></img>&nbsp;&nbsp;
           <h3>Whatsapp</h3>
-        </Modal.Header>
+          </Modal.Header>
         <Modal.Body>
-          <FormWhatsapp register={methods.register} setValue={methods.setValue} />
-        </Modal.Body>
-
+          <FormWhatsapp register={methods.register} setValue={methods.setValue}/>
+          </Modal.Body>
+        
         <Modal.Footer>
           <Button variant='secondary' onClick={handleCloseWhatsappModal}>Fechar</Button>
           <Button onClick={methods.handleSubmit(handleSubmit)}>Cadastrar</Button>
