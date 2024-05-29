@@ -38,9 +38,7 @@ const AddAdoptPoint = () => {
 
 
     const [loading, setLoading] = useState(true)
-
     const methods = useForm()
-
 
     const [showToastSuccess, setShowToastSuccess] = useState(false)
     const [showToast, setShowToast] = useState(false);
@@ -48,7 +46,6 @@ const AddAdoptPoint = () => {
     const [show, setShow] = useState(false)
 
     const handleShow = () => setShow(true)
-    
     const handleNextStep = () => { 
         
         if (step == 1) {
@@ -56,10 +53,8 @@ const AddAdoptPoint = () => {
             
             if (!payload.name || !payload.description) {
                 setShowToast(true);
-
                 return        
             }
-            
         }
 
         setStep(step + 1)
@@ -107,27 +102,10 @@ const AddAdoptPoint = () => {
                 point.createdAt = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
                 points.push(point)
 
-                setShowToastSuccess(true)
-                
-                setTimeout(() => {
-                    setShowToastSuccess(false)
-                }, 2000)
-                
+                setShowToastSuccess(false)
                 handleClose()
             }
             
-            /* Tratar erros 400 */
-            else if  (response && !response.success) {
-                setLoading(false)
-                setShowToast(true)
-
-
-
-                setTimeout(() => {
-                    setShowToast(false)
-                }, 2000)
-            }
-
             
             setLoading(false)
         })
@@ -161,12 +139,14 @@ const AddAdoptPoint = () => {
                 })
 
                 setPoint(response.info.adoptionPoints)
+                setLoading(false)
             }
         })
     }, [])
 
     
     return (
+
         <>
             <Header />
             <img src="./images/green.png" id='green' alt='mancha verde' />
@@ -177,7 +157,7 @@ const AddAdoptPoint = () => {
                 <PointForm />
             </div> */}
             {/* Sidebar */}
-            <SideBarHome />
+            <SideBarHome page={'/addAdoptPoint'}/>
 
             {/* Container dos pets */}
 
