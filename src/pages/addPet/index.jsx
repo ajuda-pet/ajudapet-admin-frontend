@@ -9,7 +9,9 @@ import CardComponent from '../../components/molecules/cards';
 import petController from '../../controllers/pet.controller';
 import { useForm } from 'react-hook-form';
 import Load from '../../components/molecules/load/Load';
-
+import { gerarNomeImagem } from '../../components/validators/arquivo';
+import { storage } from '../../controllers/resgisterImg';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
 
@@ -49,10 +51,26 @@ function AddPet() {
     const [show, setShow] = useState(false)
     const [step, setStep] = useState(1)
     const [pets, setPets] = useState([])
+    const [dataPet, setDataPet] = useState()
 
+    const handleSubmitTwo = () =>{
+        if (!dataPet) return;
+        console.log(dataPet)
+        petController.create({ ...dataPet }).then(response => {
+            if (response && response.success) {
+                pets.push(response.info.pet)
+                setShowToastSuccess(true)
+
+                setTimeout(() => {
+                    setShowToastSuccess(false)
+                }, 3000)
+            }
+            setDataPet([]);
+            handleClose();
+        })
+    }
 
     const handleSubmit = (payload) => {
-        console.log('pegou')
         if (
             !payload.gender ||
             !payload.species ||
@@ -65,24 +83,26 @@ function AddPet() {
             setTimeout(() => { setShowToast(false) }, 3000)
             return
         }
-        console.log(payload);
-        petController.create({ ...payload }).then(response => {
-            if (response && response.success) {
-                pets.push(response.info.pet)
-                setShowToastSuccess(true)
+        ;
+        if(payload.picture) {
+            console.log(payload)
+            let nomeImg = gerarNomeImagem();
+            const sendfirebase = async () =>  {
+                const storageRef = ref(storage, `pets/${nomeImg}`);
+                await uploadBytes(storageRef, payload.picture);
+                const url = await getDownloadURL(storageRef);
 
-                setTimeout(() => {
-                    setShowToastSuccess(false)
-                }, 3000)
+                payload.picture = url
+                setDataPet(payload)
             }
+            sendfirebase()
+        }
+                
 
-            handleClose()
-        })
     }
 
     const handleNextStep = () => {
         const payload = methods.getValues()
-        console.log(payload)
 
         if (step == 1) {
             if (!payload.adoptionPointId) {
@@ -109,12 +129,15 @@ function AddPet() {
 
 
     useEffect(() => {
-        petController.get().then((response) => {
+        petController.getByGroupId().then((response) => {
             setPets(response);
             setLoading(false)
         });
     }, []);
 
+    useEffect(()=>{
+        handleSubmitTwo()
+    }, [dataPet])
 
     return (
         <>
@@ -124,7 +147,7 @@ function AddPet() {
             <img src="./images/pink.png" id='pink' alt='mancha rosa' />
             <img src="./images/black.png" id='black' alt='mancha preta' />
             {/* Sidebar */}
-            <SideBarHome />
+            <SideBarHome page='/addPet' />
 
             {/* <div className='petForm'>
                 <PetForm />
@@ -179,7 +202,7 @@ function AddPet() {
                                     filter_alt
                                 </span>
                                 <span>
-                                    Filtrar
+                                    Filtrar (Dev 🛠️)
                                 </span>
                             </Button>
                         </Row>
@@ -207,13 +230,11 @@ function AddPet() {
                         </Row>
 
                         <CardGroup className='mt-5' >
-                            <Row>
+                            <Row style={{minWidth: '100%'}}>
                                 {pets && pets.map((pet) => (
-                                    <>
-                                        <Col md={4} sm={6}>
-                                            <CardComponent key={pet.id} pet={pet} />
-                                        </Col>
-                                    </>
+                                    <Col md={4} sm={6}>
+                                        <CardComponent key={pet.id} pet={pet} />
+                                    </Col>
                                 ))}
                             </Row>
                         </CardGroup>

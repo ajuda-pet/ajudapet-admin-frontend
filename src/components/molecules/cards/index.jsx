@@ -81,10 +81,10 @@ const CardComponent = (content) => {
                     <Button variant="danger" className='px-3 py-2' onClick={handleClose}>
                         Fechar
                     </Button>
-                    <Button className='whatsapp-button adoption-btn' onClick={handleClose}>
+                   {/*  <Button className='whatsapp-button adoption-btn' onClick={handleClose}>
                         <img src='./images/whatsapp-icon.png' width='25'></img>
                         <span> Adotar </span>
-                    </Button>
+                    </Button> */}
                 </Modal.Footer>
             </Modal>
         

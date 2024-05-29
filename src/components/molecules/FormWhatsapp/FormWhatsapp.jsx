@@ -3,7 +3,7 @@ import { Card, Form, InputGroup, Row } from 'react-bootstrap';
 import { formatPhoneNumber, validatePhoneNumber } from '../../validators/telefone';
 
 const FormWhatsapp = ({whatsapp, register, setValue}) => {
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState(whatsapp ? whatsapp.account : '');
 
     const handlePhoneNumberChange = (event) => {
         let value = event.target.value;
