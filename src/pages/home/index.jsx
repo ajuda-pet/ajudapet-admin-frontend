@@ -144,7 +144,7 @@ const Home = () => {
         {/* Header */}
 
         {/* Sidebar */}
-        <SideBarHome/>
+        <SideBarHome page={'/'}/>
        
       </div >
 

@@ -157,7 +157,7 @@ const AddAdoptPoint = () => {
                 <PointForm />
             </div> */}
             {/* Sidebar */}
-            <SideBarHome />
+            <SideBarHome page={'/addAdoptPoint'}/>
 
             {/* Container dos pets */}
 
