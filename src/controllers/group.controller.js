@@ -31,6 +31,41 @@ const groupController = {
         catch (error) {
             console.error(error)
         }
+    },
+
+    createSocialMedia: async (socialMedia) => {
+        try {
+            const response = await axios.post(`${authGroupsEndpoint}/social-media`, socialMedia, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': window.localStorage.getItem('token')
+                }
+            })
+
+            return response.data
+        }
+
+        catch (error) {
+            console.error(error)
+        }
+    },
+
+    updateSocialMedia: async (socialMediaId, account, plataform) => {
+        try {
+            const response = await axios.put(`${authGroupsEndpoint}/social-media/${plataform}`, account, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': window.localStorage.getItem('token')
+                }
+            })
+
+            console.log(response)
+            return response.data
+        }
+
+        catch (error) {
+            console.error(error)
+        }
     }
 }
 

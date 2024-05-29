@@ -1,11 +1,13 @@
-import { Table } from 'react-bootstrap'
+import { Alert, Table } from 'react-bootstrap'
 import './PointTable.css'
+import pointsController from '../../../controllers/points.controller'
 
 const PointTable = ({ points }) => {
     return (
-
         <>
-            <Table striped bordered hover size="sm">
+            {!points.length && <Alert>Cadastre seu ponto de adoção!</Alert>}
+
+            {points.length && <Table striped bordered hover size="sm">
                 <thead className='p-5'>
                     <tr>
                         <th>🏡 Ponto de Adoção</th>
@@ -19,12 +21,12 @@ const PointTable = ({ points }) => {
                         <tr key={point.id}>
                             <th>{point.name}</th>
                            <th>{point.addressStreet}, {point.addressNumber}. {point.addressNeighborhood}. {point.addressCity}, {point.addressState}.</th>
-                            <th>{point.pets.length}</th>
+                            <th>{point.pets ? point.pets.length : 0}</th>
                             <th>{point.createdAt}</th>
                         </tr>
                    ))}
                 </tbody>
-            </Table>
+            </Table>}
         </>
     )
 }

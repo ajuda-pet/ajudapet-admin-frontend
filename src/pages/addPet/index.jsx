@@ -71,7 +71,6 @@ function AddPet() {
     }
 
     const handleSubmit = (payload) => {
-        console.log('pegou')
         if (
             !payload.gender ||
             !payload.species ||
@@ -104,7 +103,6 @@ function AddPet() {
 
     const handleNextStep = () => {
         const payload = methods.getValues()
-        console.log(payload)
 
         if (step == 1) {
             if (!payload.adoptionPointId) {
@@ -131,7 +129,7 @@ function AddPet() {
 
 
     useEffect(() => {
-        petController.get().then((response) => {
+        petController.getByGroupId().then((response) => {
             setPets(response);
             setLoading(false)
         });
@@ -232,13 +230,11 @@ function AddPet() {
                         </Row>
 
                         <CardGroup className='mt-5' >
-                            <Row>
+                            <Row style={{minWidth: '100%'}}>
                                 {pets && pets.map((pet) => (
-                                    <>
-                                        <Col md={4} sm={6}>
-                                            <CardComponent key={pet.id} pet={pet} />
-                                        </Col>
-                                    </>
+                                    <Col md={4} sm={6}>
+                                        <CardComponent key={pet.id} pet={pet} />
+                                    </Col>
                                 ))}
                             </Row>
                         </CardGroup>
