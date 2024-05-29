@@ -40,14 +40,14 @@ const Step2 = ({ register, onPictureUploaded }) => {
     const handlePicture = async (event) => {
         const file = event.target.files[0];
         if (!file) return;
+        register('picture', {value: file})
+        // const storageRef = ref(storage, `pets/${file.name}`);
+        // await uploadBytes(storageRef, file);
+        // const url = await getDownloadURL(storageRef);
 
-        const storageRef = ref(storage, `pets/${file.name}`);
-        await uploadBytes(storageRef, file);
-        const url = await getDownloadURL(storageRef);
-
-        setPictureURL(url);
-        onPictureUploaded(url);
-        setPicture(URL.createObjectURL(file));
+        // setPictureURL(url);
+   
+        // setPicture(URL.createObjectURL(file));
     };
 
     return (

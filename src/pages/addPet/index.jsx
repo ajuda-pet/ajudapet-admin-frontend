@@ -9,7 +9,9 @@ import CardComponent from '../../components/molecules/cards';
 import petController from '../../controllers/pet.controller';
 import { useForm } from 'react-hook-form';
 import Load from '../../components/molecules/load/Load';
-
+import { gerarNomeImagem } from '../../components/validators/arquivo';
+import { storage } from '../../controllers/resgisterImg';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
 
@@ -49,7 +51,24 @@ function AddPet() {
     const [show, setShow] = useState(false)
     const [step, setStep] = useState(1)
     const [pets, setPets] = useState([])
+    const [dataPet, setDataPet] = useState()
 
+    const handleSubmitTwo = () =>{
+        if (!dataPet) return;
+        console.log(dataPet)
+        petController.create({ ...dataPet }).then(response => {
+            if (response && response.success) {
+                pets.push(response.info.pet)
+                setShowToastSuccess(true)
+
+                setTimeout(() => {
+                    setShowToastSuccess(false)
+                }, 3000)
+            }
+            setDataPet([]);
+            handleClose();
+        })
+    }
 
     const handleSubmit = (payload) => {
         console.log('pegou')
@@ -65,19 +84,22 @@ function AddPet() {
             setTimeout(() => { setShowToast(false) }, 3000)
             return
         }
-        console.log(payload);
-        petController.create({ ...payload }).then(response => {
-            if (response && response.success) {
-                pets.push(response.info.pet)
-                setShowToastSuccess(true)
+        ;
+        if(payload.picture) {
+            console.log(payload)
+            let nomeImg = gerarNomeImagem();
+            const sendfirebase = async () =>  {
+                const storageRef = ref(storage, `pets/${nomeImg}`);
+                await uploadBytes(storageRef, payload.picture);
+                const url = await getDownloadURL(storageRef);
 
-                setTimeout(() => {
-                    setShowToastSuccess(false)
-                }, 3000)
+                payload.picture = url
+                setDataPet(payload)
             }
+            sendfirebase()
+        }
+                
 
-            handleClose()
-        })
     }
 
     const handleNextStep = () => {
@@ -115,6 +137,9 @@ function AddPet() {
         });
     }, []);
 
+    useEffect(()=>{
+        handleSubmitTwo()
+    }, [dataPet])
 
     return (
         <>
