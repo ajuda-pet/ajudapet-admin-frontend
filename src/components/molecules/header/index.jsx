@@ -33,10 +33,10 @@ function Header() {
                     </Nav>
 
                     <Nav className="d-flex" style={{ maxHeight: '100px',  marginLeft:'40px'}} navbarScroll>
-                        <Nav.Link href='https://www.instagram.com/ajudapet.rg/' target='_blank'>
+                        {/* <Nav.Link href='https://www.instagram.com/ajudapet.rg/' target='_blank'>
                             <img src='./images/instagram.png' width='40' class='fade-in'/>
                             <span className='d-lg-none'>Instagram</span>
-                        </Nav.Link>
+                        </Nav.Link> */}
                         {!isLoggedIn && (
                             <Nav.Link href='/login'>
                                 <Button variant='warning' className="d-flex align-items-center btn-warning">

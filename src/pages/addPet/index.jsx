@@ -141,6 +141,7 @@ function AddPet() {
 
     return (
         <>
+            {!loading && <> 
             <Header />
             <img src="./images/green.png" id='green' alt='mancha verde' />
             <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
@@ -153,7 +154,6 @@ function AddPet() {
                 <PetForm />
             </div> */}
 
-            {!loading &&
                 <div className='px-3'>
                     <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
                         {/* <ToastComponent variant={'warning'}></ToastComponent> */}
@@ -241,6 +241,7 @@ function AddPet() {
                     </Container>
 
                 </div>
+            </>
             }
 
             {
