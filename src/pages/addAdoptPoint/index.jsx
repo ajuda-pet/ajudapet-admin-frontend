@@ -148,37 +148,40 @@ const AddAdoptPoint = () => {
     return (
 
         <>
-            <Header />
-            <img src="./images/green.png" id='green' alt='mancha verde' />
-            <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
-            <img src="./images/pink.png" id='pink' alt='mancha rosa' />
-            <img src="./images/black.png" id='black' alt='mancha preta' />
-           {/*  |<div className='pointForm'>
-                <PointForm />
-            </div> */}
-            {/* Sidebar */}
-            <SideBarHome page={'/addAdoptPoint'}/>
+            { !loading && <> 
+                <Header />
+                <img src="./images/green.png" id='green' alt='mancha verde' />
+                <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
+                <img src="./images/pink.png" id='pink' alt='mancha rosa' />
+                <img src="./images/black.png" id='black' alt='mancha preta' />
+            {/*  |<div className='pointForm'>
+                    <PointForm />
+                </div> */}
+                {/* Sidebar */}
+                <SideBarHome page={'/addAdoptPoint'}/>
 
-            {/* Container dos pets */}
+                {/* Container dos pets */}
 
-            { !loading && 
-            
-                <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
-                    <h2> Pontos de Adoção </h2>
-                    <hr class='my-4 bg-primary' />
+                
+                
+                
+                    <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
+                        <h2> Pontos de Adoção </h2>
+                        <hr class='my-4 bg-primary' />
 
-                    <Button className='d-flex align-items-center justify-content-center text-center px-5 w-100 my-4 adopt-btn' onClick={handleShow}>
-                        <span className="material-symbols-outlined" >
-                            cottage
-                        </span> &nbsp;&nbsp;
-                        <span>Cadastrar Ponto de Adoção</span>
-                    </Button>
+                        <Button className='d-flex align-items-center justify-content-center text-center px-5 w-100 my-4 adopt-btn' onClick={handleShow}>
+                            <span className="material-symbols-outlined" >
+                                cottage
+                            </span> &nbsp;&nbsp;
+                            <span>Cadastrar Ponto de Adoção</span>
+                        </Button>
 
 
-                    {/* Tabela de pontos de adoção */}
-                    <PointTable points={points}/>
+                        {/* Tabela de pontos de adoção */}
+                        <PointTable points={points}/>
 
-                </Container>
+                    </Container>
+                </>
             }
 
             { loading &&
