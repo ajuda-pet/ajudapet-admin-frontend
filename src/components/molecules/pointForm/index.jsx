@@ -2,33 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import './form.css'
 import { Card, InputGroup, Row, Col, Form, Alert } from 'react-bootstrap';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+
+import L from 'leaflet';
 
 const Step1 = ({ register }) => {
-  return (
-      <Card className='form-container'>
-          <Card.Title>🏠 Informações gerais do Ponto de Adoção</Card.Title>
-          <Card.Body>
-              <Row>
-                  <InputGroup className="mb-3">
-                      <InputGroup.Text id="basic-addon1">Nome</InputGroup.Text>
-                      <Form.Control
-                          placeholder='Ex: Apoio de Animais de Rio Grande'
-                          aria-label="Name"
-                          aria-describedby="basic-addon1"
-                          {...register('name')}
-                      />
-                  </InputGroup>
-              </Row>
+    return (
+        <Card className='form-container'>
+            <Card.Title>🏠 Informações gerais do Ponto de Adoção</Card.Title>
+            <Card.Body>
+                <Row>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Text id="basic-addon1">Nome</InputGroup.Text>
+                        <Form.Control
+                            placeholder='Ex: Apoio de Animais de Rio Grande'
+                            aria-label="Name"
+                            aria-describedby="basic-addon1"
+                            {...register('name')}
+                        />
+                    </InputGroup>
+                </Row>
 
-              <Row>
-                  <InputGroup>
-                      <InputGroup.Text>Descrição</InputGroup.Text>
-                      <Form.Control as="textarea" aria-label="With textarea" placeholder='Descreve o seu ponto de adoção' {...register('description')} />
-                  </InputGroup>
-              </Row>
-          </Card.Body>
-      </Card>
-  )
+                <Row>
+                    <InputGroup>
+                        <InputGroup.Text>Descrição</InputGroup.Text>
+                        <Form.Control as="textarea" aria-label="With textarea" placeholder='Descreve o seu ponto de adoção' {...register('description')} />
+                    </InputGroup>
+                </Row>
+            </Card.Body>
+        </Card>
+    )
 }
 
 const Step2 = ({ register }) => {
@@ -87,7 +90,7 @@ const Step2 = ({ register }) => {
                                 <option value="SC">SC</option>
                                 <option value="SE">SE</option>
                                 <option value="SP">SP</option>
-                                <option value="TO">TO</option>                            
+                                <option value="TO">TO</option>
                             </Form.Select>
                         </InputGroup>
                     </Col>
@@ -152,20 +155,104 @@ const Step2 = ({ register }) => {
     )
 }
 
+
+
+const Step3 = ({ register }) => {
+    // Use a imagem do ícone padrão do Leaflet
+    const iconUrl = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
+
+    // Defina o tamanho do ícone
+    const iconSize = [25, 41];
+
+    // Crie um ícone personalizado com a imagem do ícone padrão do Leaflet
+    const defaultIcon = L.icon({
+        iconUrl,
+        iconSize,
+    });
+
+
+    const [lat, setLat] = useState(null);
+    const [lng, setLng] = useState(null);
+    const MapClickHandler = () => {
+        useMapEvents({
+            click(e) {
+                setLat(e.latlng.lat);
+                setLng(e.latlng.lng);
+
+            },
+        });
+
+        return null;
+    };
+
+    return (
+        <Card className='form-container'>
+            <Card.Title>🗺️ Localização</Card.Title>
+            <Card.Body>
+                <Row>
+                    <Col>
+                        <Alert className='my-4'>Clique no mapa para selecionar a localização do ponto de adoção.</Alert>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <MapContainer center={[-32.044254048708105, -52.122076770802614]} zoom={10} style={{ height: '500px', width: '500px' }}>
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                            />
+                            <MapClickHandler />
+                            {lat && lng && (
+                                <Marker position={[lat, lng]} icon={defaultIcon} />
+                            )}
+                        </MapContainer>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+
+                        <Form.Control
+                            aria-label="Latitude"
+                            aria-describedby="basic-addon1"
+                            type='number'
+                            value={lat || ''}
+                            {...register('latitude')}
+                            readOnly
+                        />
+                        <Form.Control
+                            aria-label="Longitude"
+                            aria-describedby="basic-addon1"
+                            type='number'
+                            value={lng || ''}
+                            {...register('longitude')}
+                            readOnly
+                        />
+
+                    </Col>
+                </Row>
+            </Card.Body>
+        </Card>
+    );
+};
 const PointForm = ({ step, register }) => {
     return (
         <>
-            { step == 1 && 
+            {step == 1 &&
                 <>
                     <Alert className='my-4'>Lembre-se de cadastrar um nome legal para o ponto de adoção.</Alert>
-                    <Step1 register={register}></Step1> 
-                </> 
+                    <Step1 register={register}></Step1>
+                </>
             }
 
-            { step == 2 && 
+            {step == 2 &&
                 <>
                     <Step2 register={register}></Step2>
                 </>
+            }
+            {step == 3 && (
+                <Step3 register={register} />
+            )
+
             }
         </>
     )
