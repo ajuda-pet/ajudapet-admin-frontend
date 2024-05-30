@@ -215,6 +215,7 @@ const Step3 = ({ register }) => {
                             aria-label="Latitude"
                             aria-describedby="basic-addon1"
                             type='number'
+                            style={{ display: 'none' }}
                             value={lat || ''}
                             {...register('latitude')}
                             readOnly
@@ -223,6 +224,8 @@ const Step3 = ({ register }) => {
                             aria-label="Longitude"
                             aria-describedby="basic-addon1"
                             type='number'
+                            style={{ display: 'none' }}
+
                             value={lng || ''}
                             {...register('longitude')}
                             readOnly
