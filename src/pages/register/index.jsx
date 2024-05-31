@@ -95,7 +95,6 @@ function Register() {
             if (!emailValidated) setError('Email inválido!');
             if (password !== confirmPassword) setError('As senhas não são iguais!');
             if (!phoneValidated) setError('Telefone inválido!');
-            console.log('Cadastro não realizado, verifique os dados inseridos!');
         }
     };
 

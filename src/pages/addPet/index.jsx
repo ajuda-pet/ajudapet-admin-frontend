@@ -55,7 +55,6 @@ function AddPet() {
 
     const handleSubmitTwo = () =>{
         if (!dataPet) return;
-        console.log(dataPet)
         petController.create({ ...dataPet }).then(response => {
             if (response && response.success) {
                 pets.push(response.info.pet)
@@ -85,7 +84,6 @@ function AddPet() {
         }
         ;
         if(payload.picture) {
-            console.log(payload)
             let nomeImg = gerarNomeImagem();
             const sendfirebase = async () =>  {
                 const storageRef = ref(storage, `pets/${nomeImg}`);

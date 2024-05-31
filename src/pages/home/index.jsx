@@ -40,7 +40,7 @@ const Home = () => {
 
   // WHATSAPP SUBMIT
   const handleWhatsappSubmit = (payload) => {
-    if (Object.keys(whatsapp).length) {
+    if (whatsapp && Object.keys(whatsapp).length) {
       groupController.updateSocialMedia(whatsapp.id, {account: payload.account}, 'whatsapp').then(response => {
         if (response && response.success) {
           setWhatsapp(response.info.socialMedia)
@@ -60,8 +60,9 @@ const Home = () => {
 
   // INSTAGRAM SUBMIT
   const handleInstagramSubmit = (payload) => {
-    if (Object.keys(instagram).length) {
-      groupController.updateSocialMedia(instagram.id, {account: payload.account}, 'instagram').then(response => {
+    if (instagram) {
+      groupController.updateSocialMedia(instagram.id, payload, 'instagram').then(response => {
+
         if (response && response.success) {
           setInstagram(response.info.socialMedia)
         }
@@ -82,16 +83,17 @@ const Home = () => {
 
   //PIX SUBMIT
   const handlePixSubmit = (payload) => {
+    console.log(pix)
+    debugger
     if (pix) {
       pixController.update({ ...payload, qrcode: 'off'}).then(response => {
         if (response && response.success) {
           setPix(response.info.pix)
+          setPixModal(false)
         }
-
-        setPixModal(false)
-        return
       })
 
+      return
     }
 
     pixController.create({ ...payload, qrcode: 'off'}).then(response => {
@@ -102,6 +104,9 @@ const Home = () => {
       setPixModal(false)
       return
     })
+
+    console.log(payload)
+    debugger
 
   }
 
@@ -129,7 +134,7 @@ const Home = () => {
         setPix(group.pix)
       }
     })
-  })
+  }, [])
 
 
   return (
@@ -158,7 +163,7 @@ const Home = () => {
         <div className='px-3'>
             <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
               <h2> Dados Gerais do Grupo </h2>
-              <hr class='my-4 bg-primary' /> 
+              <hr className='my-4 bg-primary' /> 
 
               <Alert variant='primary'> É importante deixar as informações de contato e sua chave pix atualizadas para receber doações ou adoção de pets.</Alert>
 
@@ -279,7 +284,7 @@ const Home = () => {
           <h3>Instagram</h3>
           </Modal.Header>
         <Modal.Body>
-          <FormInstagram instagram={instagram} register={instagramFormMethods.register}/>
+          <FormInstagram instagram={instagram} register={instagramFormMethods.register} set={instagramFormMethods.setValue}/>
           </Modal.Body>
         
         <Modal.Footer>

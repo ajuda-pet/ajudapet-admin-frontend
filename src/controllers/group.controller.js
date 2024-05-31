@@ -13,9 +13,11 @@ const groupController = {
 
         catch (error) {
             console.error(error)
+            if (error.response.status == 404) {
+                window.location.href = '/login'
+            }
         }
     },
-
 
     getAdoptionPoints: async () => {
         try {
@@ -59,7 +61,6 @@ const groupController = {
                 }
             })
 
-            console.log(response)
             return response.data
         }
 
