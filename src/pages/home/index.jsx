@@ -104,10 +104,6 @@ const Home = () => {
       setPixModal(false)
       return
     })
-
-    console.log(payload)
-    debugger
-
   }
 
 
@@ -168,12 +164,10 @@ const Home = () => {
               <Alert variant='primary'> É importante deixar as informações de contato e sua chave pix atualizadas para receber doações ou adoção de pets.</Alert>
 
               {/* Foto do Grupo */}
-              <Row lg={12} className='mt-5'>
-                <center>
-                  <Col xs={6} md={4} className='text-center'>
+              <Row lg={12} className='mt-5 justify-content-center'>
+                  <Col className='text-center'>
                     <Image src="./images/ong-profile.jpg" width='250' roundedCircle />
                   </Col>
-                </center>
               </Row>
 
 
