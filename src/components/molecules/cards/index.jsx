@@ -37,8 +37,10 @@ const CardComponent = (content) => {
                     </ListGroup>
 
                     <Button className='adopt-btn mt-3' style={{width: '100%'}} onClick={handleShow}>
-                        Editar    
+                        Editar (🛠️)
                     </Button>
+
+                    <Button variant='danger' style={{ width: '100%' }} className='mt-2' disabled={true}>Remover (🛠️)</Button>
                 </Card.Body>
                 <Card.Footer>
                     <small className="text-muted"><strong>Publicado em: </strong>{formatDate}</small>

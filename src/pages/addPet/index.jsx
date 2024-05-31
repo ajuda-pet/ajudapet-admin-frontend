@@ -195,12 +195,12 @@ function AddPet() {
                         </Row>
 
                         <Row className='mx-3 mt-2'>
-                            <Button variant='secondary' className='d-flex align-items-center justify-content-center text-center px-5 w-100'>
+                            <Button variant='secondary' className='d-flex align-items-center justify-content-center text-center px-5 w-100' disabled={true}>
                                 <span class="material-symbols-outlined">
                                     filter_alt
                                 </span>
                                 <span>
-                                    Filtrar (Dev 🛠️)
+                                    Filtrar (🛠️)
                                 </span>
                             </Button>
                         </Row>

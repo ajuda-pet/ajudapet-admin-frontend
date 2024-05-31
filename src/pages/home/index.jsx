@@ -182,7 +182,7 @@ const Home = () => {
               </Row>
 
               <Row className='mx-5 my-3'>
-                <Button variant='secondary' className='adopt-btn'>Editar Grupo (🛠️ Dev)</Button>
+                <Button variant='secondary' className='adopt-btn' disabled={true}>Editar Grupo (🛠️)</Button>
               </Row>
 
 
