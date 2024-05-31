@@ -1,9 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Card, Row, InputGroup, Form } from "react-bootstrap"
 
-const FormInstagram = ({ instagram, register }) => {
-    const instagramAccount = instagram ? instagram.account : ''
-    const instagramUrl = instagram ? instagram.url : ''
+const FormInstagram = ({ instagram, register, set }) => {
+    useEffect(() => {
+        instagram ? set('account', instagram.account) : set('account', '')
+        instagram ? set('url', instagram.url) : set('url', '')
+    }, [])
+
 
 
     return (
@@ -20,7 +23,6 @@ const FormInstagram = ({ instagram, register }) => {
                                 placeholder=''
                                 aria-label="Instagram do Grupo"
                                 aria-describedby="basic-addon1"
-                                value={instagramAccount}
                                 {...register('account')}
                                 
                             />
@@ -33,7 +35,6 @@ const FormInstagram = ({ instagram, register }) => {
                                 placeholder='URL do Instagram'
                                 aria-label="Instagram do Grupo"
                                 aria-describedby="basic-addon1"
-                                value={instagramUrl}
                                 {...register('url')}
                                 
                             />

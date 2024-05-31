@@ -37,7 +37,7 @@ const CardComponent = (content) => {
                     </ListGroup>
 
                     <Button className='adopt-btn mt-3' style={{width: '100%'}} onClick={handleShow}>
-                        Quero adotar    
+                        Editar    
                     </Button>
                 </Card.Body>
                 <Card.Footer>

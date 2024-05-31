@@ -11,7 +11,6 @@ export const loginUser = async (userData) => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(response)
         if (response.data.success === true) {
             localStorage.setItem('token', response.data.info.token);
             localStorage.setItem('groupId', response.data.info.group.id);
@@ -22,6 +21,6 @@ export const loginUser = async (userData) => {
         }
         // Por que info e não data.token? Verificar!!
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
