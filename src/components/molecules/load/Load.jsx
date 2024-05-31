@@ -1,3 +1,4 @@
+import { Modal } from 'react-bootstrap'
 import './load.css'
 
 const Load = () => {
@@ -10,10 +11,15 @@ const Load = () => {
             <img src="./images/black.png" id='black' alt='mancha preta' />
             </div >
 
-            <center style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                <img src='./images/loading-cat.gif' width='400' alt='loading'></img>
-                <h3>Carregando...</h3>
-            </center>
+            <Modal className='load' centered show={true}>
+                <Modal.Body>
+                    <img src='./images/loading-cat.gif' width='400'></img>
+                </Modal.Body>
+                <Modal.Title className='text-center mb-4'>Carregando...</Modal.Title>
+
+            </Modal>
+
+
         </>        
     )
 
