@@ -77,8 +77,8 @@ const AddAdoptPoint = () => {
             addressNeighborhood,
             addressStreet,
             addressNumber,
-            latitude,
-            longidude
+            lat,
+            lon
         } = payload
         console.log(payload)
         if (
@@ -89,6 +89,7 @@ const AddAdoptPoint = () => {
             !addressStreet ||
             !addressNumber
         ) {
+            console.log(postalCode, addressState, addressCity, addressNeighborhood, addressStreet, addressNumber)
             setShowToast(true)
             return;
         }
@@ -106,6 +107,8 @@ const AddAdoptPoint = () => {
 
                 setShowToastSuccess(false)
                 handleClose()
+
+
             }
 
 
@@ -195,20 +198,24 @@ const AddAdoptPoint = () => {
                 <Modal.Body>
                     {step == 1 &&
                         <Container className='PointForm mb-5'>
-                            <PointForm step={1} register={methods.register} />
+                            <PointForm step={1} register={methods.register} setValue={methods.setValue} />
                         </Container>
                     }
 
                     {
                         step == 2 &&
                         <Container className='PointForm mb-5'>
-                            <PointForm step={2} register={methods.register} />
+
+                            <PointForm step={2} register={methods.register} setValue={methods.setValue} />
+
                         </Container>
                     }
                     {
                         step == 3 &&
                         <Container className='PointForm mb-5'>
-                            <PointForm step={3} register={methods.register} />
+
+                            <PointForm step={3} register={methods.register} setValue={methods.setValue} />
+
                         </Container>
                     }
                 </Modal.Body>

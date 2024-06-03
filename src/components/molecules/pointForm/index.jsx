@@ -157,7 +157,7 @@ const Step2 = ({ register }) => {
 
 
 
-const Step3 = ({ register }) => {
+const Step3 = ({ register, setValue }) => {
     // Use a imagem do ícone padrão do Leaflet
     const iconUrl = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';
 
@@ -170,9 +170,8 @@ const Step3 = ({ register }) => {
         iconSize,
     });
 
-
-    const [lat, setLat] = useState(null);
-    const [lng, setLng] = useState(null);
+    const [lat, setLat] = useState('');
+    const [lng, setLng] = useState('');
     const MapClickHandler = () => {
         useMapEvents({
             click(e) {
@@ -184,7 +183,10 @@ const Step3 = ({ register }) => {
 
         return null;
     };
-
+    useEffect(() => {
+        setValue('lat', lat);
+        setValue('lon', lng);
+    }, [lat, lng, setValue]);
     return (
         <Card className='form-container'>
             <Card.Title>🗺️ Localização</Card.Title>
@@ -212,22 +214,21 @@ const Step3 = ({ register }) => {
                     <Col>
 
                         <Form.Control
-                            aria-label="Latitude"
+                            aria-label="lat"
                             aria-describedby="basic-addon1"
                             type='number'
                             style={{ display: 'none' }}
                             value={lat || ''}
-                            {...register('latitude')}
+                            {...register('lat')}
                             readOnly
                         />
                         <Form.Control
-                            aria-label="Longitude"
+                            aria-label="lon"
                             aria-describedby="basic-addon1"
                             type='number'
                             style={{ display: 'none' }}
-
                             value={lng || ''}
-                            {...register('longitude')}
+                            {...register('lon')}
                             readOnly
                         />
 
@@ -237,7 +238,7 @@ const Step3 = ({ register }) => {
         </Card>
     );
 };
-const PointForm = ({ step, register }) => {
+const PointForm = ({ step, register, setValue }) => {
     return (
         <>
             {step == 1 &&
@@ -253,7 +254,7 @@ const PointForm = ({ step, register }) => {
                 </>
             }
             {step == 3 && (
-                <Step3 register={register} />
+                <Step3 register={register} setValue={setValue} />
             )
 
             }
