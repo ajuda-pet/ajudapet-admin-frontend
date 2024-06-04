@@ -40,7 +40,7 @@ const Home = () => {
 
   // WHATSAPP SUBMIT
   const handleWhatsappSubmit = (payload) => {
-    if (Object.keys(whatsapp).length) {
+    if (whatsapp && Object.keys(whatsapp).length) {
       groupController.updateSocialMedia(whatsapp.id, {account: payload.account}, 'whatsapp').then(response => {
         if (response && response.success) {
           setWhatsapp(response.info.socialMedia)
@@ -60,8 +60,9 @@ const Home = () => {
 
   // INSTAGRAM SUBMIT
   const handleInstagramSubmit = (payload) => {
-    if (Object.keys(instagram).length) {
-      groupController.updateSocialMedia(instagram.id, {account: payload.account}, 'instagram').then(response => {
+    if (instagram) {
+      groupController.updateSocialMedia(instagram.id, payload, 'instagram').then(response => {
+
         if (response && response.success) {
           setInstagram(response.info.socialMedia)
         }
@@ -82,16 +83,17 @@ const Home = () => {
 
   //PIX SUBMIT
   const handlePixSubmit = (payload) => {
+    console.log(pix)
+    debugger
     if (pix) {
       pixController.update({ ...payload, qrcode: 'off'}).then(response => {
         if (response && response.success) {
           setPix(response.info.pix)
+          setPixModal(false)
         }
-
-        setPixModal(false)
-        return
       })
 
+      return
     }
 
     pixController.create({ ...payload, qrcode: 'off'}).then(response => {
@@ -102,7 +104,6 @@ const Home = () => {
       setPixModal(false)
       return
     })
-
   }
 
 
@@ -129,120 +130,126 @@ const Home = () => {
         setPix(group.pix)
       }
     })
-  })
+  }, [])
 
 
   return (
     <>
-      <Header />
 
-      <div className='container'>
-        <img src="./images/green.png" id='green' alt='mancha verde' />
-        <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
-        <img src="./images/pink.png" id='pink' alt='mancha rosa' />
-        <img src="./images/black.png" id='black' alt='mancha preta' />
-        {/* Header */}
-
-        {/* Sidebar */}
-        <SideBarHome page={'/'}/>
-       
-      </div >
-
-      { !loading && 
-
-      <div className='px-3'>
-          <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
-            <h2> Dados Gerais do Grupo </h2>
-            <hr class='my-4 bg-primary' /> 
-
-            <Alert variant='primary'> É importante deixar as informações de contato e sua chave pix atualizadas para receber doações ou adoção de pets.</Alert>
-
-            {/* Foto do Grupo */}
-            <Row lg={12} className='mt-5'>
-              <center>
-                <Col xs={6} md={4} className='text-center'>
-                  <Image src="./images/ong-profile.jpg" width='250' roundedCircle />
-                </Col>
-              </center>
-            </Row>
+      {!loading && <div>
 
 
-            
-            <Row className='mt-3'>
-              <center>
-                <Col>
-                  <h3>{group.name}</h3>
-                  <span>{group.description}</span>&nbsp;&nbsp;
-                </Col>
-              </center>
-            </Row>
+        <Header />
 
-            <Row className='mx-5 my-3'>
-              <Button variant='secondary' className='adopt-btn'>Editar Grupo (🛠️ Dev)</Button>
-            </Row>
+        
+
+        <div className='container'>
+          <img src="./images/green.png" id='green' alt='mancha verde' />
+          <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
+          <img src="./images/pink.png" id='pink' alt='mancha rosa' />
+          <img src="./images/black.png" id='black' alt='mancha preta' />
+          {/* Header */}
+
+          {/* Sidebar */}
+          <SideBarHome page={'/'}/>
+        
+        </div >
 
 
-            <Row className='mt-5 mb-5'>
-              <Col xs={12} lg={4} className='my-3'>
-                <Card className='p-3'>
-                  <Card.Title>
-                    <img src='./images/whatsapp-icon.png' width='40'></img>&nbsp;&nbsp;
-                    Whatsapp
-                  </Card.Title>
-                  <Card.Body>
-                    {!whatsapp && <Alert variant='danger'>Não cadastrado.</Alert>}
-                    {whatsapp && 
-                    
-                    <Alert variant='success'>
-                        <span> 
-                          <strong>Whatsaap:</strong>&nbsp;&nbsp;
-                          {whatsapp.account}
-                        </span>
-                    </Alert>
-                    }
-                  </Card.Body>
+        <div className='px-3'>
+            <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
+              <h2> Dados Gerais do Grupo </h2>
+              <hr className='my-4 bg-primary' /> 
 
-                  <Button variant='secondary' className='adopt-btn' onClick={handleShowWhatsappModal}> Editar </Button>
-                
-                </Card>
-              </Col>
-              <Col xs={12} lg={4} className='my-3'>
-                <Card className='p-3'>
-                  <Card.Title>
-                    <img src='./images/instagram-icon.png' width='80'></img>&nbsp;
-                    Instagram
+              <Alert variant='primary'> É importante deixar as informações de contato e sua chave pix atualizadas para receber doações ou adoção de pets.</Alert>
+
+              {/* Foto do Grupo */}
+              <Row lg={12} className='mt-5 justify-content-center'>
+                  <Col className='text-center'>
+                    <Image src="./images/ong-profile.jpg" width='250' roundedCircle />
+                  </Col>
+              </Row>
+
+
+              
+              <Row className='mt-3'>
+                <center>
+                  <Col>
+                    <h3>{group.name}</h3>
+                    <span>{group.description}</span>&nbsp;&nbsp;
+                  </Col>
+                </center>
+              </Row>
+
+              <Row className='mx-5 my-3'>
+                <Button variant='secondary' className='adopt-btn' disabled={true}>Editar Grupo (🛠️)</Button>
+              </Row>
+
+
+              <Row className='mt-5 mb-5'>
+                <Col xs={12} lg={4} className='my-3'>
+                  <Card className='p-3'>
+                    <Card.Title>
+                      <img src='./images/whatsapp-icon.png' width='40'></img>&nbsp;&nbsp;
+                      Whatsapp
                     </Card.Title>
-                  <Card.Body>
-                    {!instagram && <Alert variant='danger'>Não cadastrado.</Alert>}
-                    {instagram && <Alert variant='danger'><strong>@</strong><a target="_blank" href={instagram.url} style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <u>{instagram.account}</u>
-                      </a>
-                      </Alert> }
-                  </Card.Body>
+                    <Card.Body>
+                      {!whatsapp && <Alert variant='danger'>Não cadastrado.</Alert>}
+                      {whatsapp && 
+                      
+                      <Alert variant='success'>
+                          <span> 
+                            <strong>Whatsaap:</strong>&nbsp;&nbsp;
+                            {whatsapp.account}
+                          </span>
+                      </Alert>
+                      }
+                    </Card.Body>
 
-                  <Button variant='secondary' className='adopt-btn' onClick={handleShowInstagramModal}> Editar </Button>
+                    <Button variant='secondary' className='adopt-btn' onClick={handleShowWhatsappModal}> Editar </Button>
                   
-                </Card>
-              </Col>
-              <Col className='my-3' >
-                <Card className='p-3'>
-                  <Card.Title>
-                    <img src='./images/pix-icon.png' width='40'></img>&nbsp;&nbsp;             
-                    PIX
-                    </Card.Title>
-                  <Card.Body>
-                    {!pix && <Alert variant='danger'>Não cadastrado.</Alert>}
-                    {pix && <Alert variant='info'><strong>{pix.type}: </strong>{pix.key}</Alert> }
+                  </Card>
+                </Col>
+                <Col xs={12} lg={4} className='my-3'>
+                  <Card className='p-3'>
+                    <Card.Title>
+                      <img src='./images/instagram-icon.png' width='80'></img>&nbsp;
+                      Instagram
+                      </Card.Title>
+                    <Card.Body>
+                      {!instagram && <Alert variant='danger'>Não cadastrado.</Alert>}
+                      {instagram && <Alert variant='danger'><strong>@</strong><a target="_blank" href={instagram.url} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <u>{instagram.account}</u>
+                        </a>
+                        </Alert> }
+                    </Card.Body>
+
+                    <Button variant='secondary' className='adopt-btn' onClick={handleShowInstagramModal}> Editar </Button>
                     
-                  </Card.Body>
+                  </Card>
+                </Col>
+                <Col className='my-3' >
+                  <Card className='p-3'>
+                    <Card.Title>
+                      <img src='./images/pix-icon.png' width='40'></img>&nbsp;&nbsp;             
+                      PIX
+                      </Card.Title>
+                    <Card.Body>
+                      {!pix && <Alert variant='danger'>Não cadastrado.</Alert>}
+                      {pix && <Alert variant='info'><strong>{pix.type}: </strong>{pix.key}</Alert> }
+                      
+                    </Card.Body>
 
-                  <Button variant='secondary' className='adopt-btn' onClick={handleShowPixModal}> Editar</Button>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
+                    <Button variant='secondary' className='adopt-btn' onClick={handleShowPixModal}> Editar</Button>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
 
+        </div>
       </div>
+
+    
       }
 
       { loading && <Load></Load>}
@@ -271,7 +278,7 @@ const Home = () => {
           <h3>Instagram</h3>
           </Modal.Header>
         <Modal.Body>
-          <FormInstagram instagram={instagram} register={instagramFormMethods.register}/>
+          <FormInstagram instagram={instagram} register={instagramFormMethods.register} set={instagramFormMethods.setValue}/>
           </Modal.Body>
         
         <Modal.Footer>
