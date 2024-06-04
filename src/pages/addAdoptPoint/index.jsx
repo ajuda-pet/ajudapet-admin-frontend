@@ -19,21 +19,21 @@ const AddAdoptPoint = () => {
                 <Toast.Header>
                     <strong className="mr-auto">😸 Sucesso </strong>
                 </Toast.Header>
-                <Toast.Body>{ message }</Toast.Body>
+                <Toast.Body>{message}</Toast.Body>
             </Toast>
         )
     })
 
 
     const ToastError = ({ show }) => {
-            return (
-                <Toast bg='danger' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToast} onClose={() => setShowToast(false)}>
-                    <Toast.Header>
-                        <strong className="mr-auto">😿 Atenção</strong>
-                    </Toast.Header>
-                    <Toast.Body>Preencha todos os campos antes de avançar.</Toast.Body>
-                </Toast>
-            )
+        return (
+            <Toast bg='danger' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToast} onClose={() => setShowToast(false)}>
+                <Toast.Header>
+                    <strong className="mr-auto">😿 Atenção</strong>
+                </Toast.Header>
+                <Toast.Body>Preencha todos os campos antes de avançar.</Toast.Body>
+            </Toast>
+        )
     }
 
 
@@ -46,14 +46,14 @@ const AddAdoptPoint = () => {
     const [show, setShow] = useState(false)
 
     const handleShow = () => setShow(true)
-    const handleNextStep = () => { 
-        
+    const handleNextStep = () => {
+
         if (step == 1) {
-            const payload =  methods.getValues()
-            
+            const payload = methods.getValues()
+
             if (!payload.name || !payload.description) {
                 setShowToast(true);
-                return        
+                return
             }
         }
 
@@ -70,15 +70,17 @@ const AddAdoptPoint = () => {
     const handleSubmit = (payload) => {
         payload.addressCountry = 'BR'
 
-        const { 
-            postalCode, 
-            addressState, 
+        const {
+            postalCode,
+            addressState,
             addressCity,
             addressNeighborhood,
-            addressStreet, 
-            addressNumber
-         } = payload
-
+            addressStreet,
+            addressNumber,
+            lat,
+            lon
+        } = payload
+        console.log(payload)
         if (
             !postalCode ||
             !addressState ||
@@ -87,6 +89,7 @@ const AddAdoptPoint = () => {
             !addressStreet ||
             !addressNumber
         ) {
+            console.log(postalCode, addressState, addressCity, addressNeighborhood, addressStreet, addressNumber)
             setShowToast(true)
             return;
         }
@@ -104,9 +107,11 @@ const AddAdoptPoint = () => {
 
                 setShowToastSuccess(false)
                 handleClose()
+
+
             }
-            
-            
+
+
             setLoading(false)
         })
     }
@@ -144,7 +149,7 @@ const AddAdoptPoint = () => {
         })
     }, [])
 
-    
+
     return (
 
         <>
@@ -184,7 +189,7 @@ const AddAdoptPoint = () => {
                 </>
             }
 
-            { loading &&
+            {loading &&
                 <Load condition={loading}></Load>
 
             }
@@ -196,28 +201,37 @@ const AddAdoptPoint = () => {
                 <Modal.Body>
                     {step == 1 &&
                         <Container className='PointForm mb-5'>
-                            <PointForm step={1} register={methods.register} />
+                            <PointForm step={1} register={methods.register} setValue={methods.setValue} />
                         </Container>
                     }
 
                     {
                         step == 2 &&
                         <Container className='PointForm mb-5'>
-                            <PointForm step={2} register={methods.register} />
+
+                            <PointForm step={2} register={methods.register} setValue={methods.setValue} />
+
                         </Container>
                     }
+                    {
+                        step == 3 &&
+                        <Container className='PointForm mb-5'>
 
+                            <PointForm step={3} register={methods.register} setValue={methods.setValue} />
+
+                        </Container>
+                    }
                 </Modal.Body>
                 <Modal.Footer>
 
-                    {step < 2 && <>
+                    {step < 3 && <>
                         <Button variant="secondary" onClick={handleClose}>Fechar</Button>
                         <Button variant="primary" onClick={handleNextStep}>Próximo</Button>
 
                     </>
                     }
 
-                    {step == 2 && <>
+                    {step == 3 && <>
                         <Button variant="secondary" onClick={handleBackStep}>Voltar</Button>
                         <Button onClick={methods.handleSubmit(handleSubmit)}>Cadastrar</Button>
                     </>
@@ -229,7 +243,7 @@ const AddAdoptPoint = () => {
             <ToastSuccess message={'Ponto de adoção cadastrado com sucesso.'}></ToastSuccess>
         </>
 
-        
+
 
     )
 }
