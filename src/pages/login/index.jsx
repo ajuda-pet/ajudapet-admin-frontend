@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+
 // Validadores
 import { validateEmail } from '../../components/validators/email';
 import { loginUser } from '../../controllers/login';
@@ -73,69 +74,69 @@ function Login() {
     <div className="body">
     <Background/>
 
-    <div className="container-lr container-l" >
-      <div className="logo">
-          <a href="/">
-              <img src="./images/logo.png" alt="logo" />
-          </a>
-      </div>
-
-      {!loading &&
+    <div className="container-login" >
       
-        <form onSubmit={handleSubmit} method='post'>
-          
-          <div className="form-inputs form-l">
-            <div className="header-lr" >
-              <h1>Login</h1>
-              
-            {error ? <p className="error">{error}</p> : <></>}
-            {msg? <p className="error">{msg}</p>: <></>}
-            </div>
-            <div className="main-rl">
-              <div className="input-form">
-                <input
-                  required
-                  name='email'
-                  className="input-field"
-                  type="email"
-                  value={email}
-                  placeholder='email'
-                  onChange={(e) => setEmail(e.target.value)}
+      <div className="form-container-login">
 
-                />
-              </div>
+        <div className='imagem-login'></div>
+
+        {!loading &&
+        <div className="login">
+          <form  onSubmit={handleSubmit} method='post'>
+
             
-              <div className="input-form">
-                <input
-                  required
-                  placeholder='Senha'
-                  name='password'
-                  className="input-field"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-
-                />
+              <div className="logo">
+                <a href="/">
+                    <img src="./images/logo.png" alt="logo" />
+                </a>
               </div>
-            </div>
-            
-            <div className='footer-l mt-4'>
-              <button type='submit' className="btn1">Entrar</button>
 
-              <div className='linha-ou mt-4 mb-1'>
-                <div className='linha'></div>
-                <p className='ou'><span>ou</span></p>
+              <div className="header-login" >
+                <h6>Sing in your account</h6>
+              
+                {error ? <p className="error">{error}</p> : <></>}
+                {msg? <p className="error">{msg}</p>: <></>}
+              </div>
+
+              <div className="main-login">
+                <div className="input-form">
+                  <input
+                    required
+                    name='email'
+                    className="input-field"
+                    type="email"
+                    value={email}
+                    placeholder='email'
+                    onChange={(e) => setEmail(e.target.value)}
+
+                  />
+                </div>
+              
+                <div className="input-form">
+                  <input
+                    required
+                    placeholder='Senha'
+                    name='password'
+                    className="input-field"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+
+                  />
+                </div>
               </div>
               
-                <button onClick={() => navigate('/register')} className="btn-clean"> Registrar </button>
-              </div>
+              <div className='footer-login'>
+                <button type='submit' className="btn1">Login</button>
+                
+                  <button onClick={() => navigate('/register')} className="btn-neutro"> Não possui uma conta? Registre-se </button>
+                </div>
+            </form>
           </div>
+        }
 
-        </form>
-      }
-
-      {loading && <Load></Load>}
-      
+        {loading && <Load></Load>}
+      </div>
     </div>
 </div>
   );

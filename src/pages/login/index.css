@@ -1,62 +1,183 @@
-.container-l{
-    margin: 12vh auto 0;
-}
 
-.form-l{
-    height: 370px !important;
-}
-
-.header-l{
-    border: 1px solid black;
-}
-
-.footer-l{
+/* Div principal do login */
+.container-login{
+    height: 100vh;
     display: flex;
-    flex-direction: column;
-}
-
-.linha-ou{
-    margin-bottom: -15px;
-    margin-top: 15px;
-    height: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    
-}
-
-.linha{
-    position: relative;
-    top: 7px;
-    width: 100%;
-    border-bottom: .5px solid gray;
-}
-
-.ou{
-    position: relative;
-    display: flex;
     align-items: center;
-    top: -5px;
-    padding: 0;
-    width: 20px;
 }
 
-.ou span {
+/* Voltado ao tamnho do form */
+
+.form-container-login{
+    background-color: #fbfaec;
+    display: flex;
+    border: 15px solid #fbfaec;
+    height: 550px;
+    width: 800px;
+}
+
+/* Imagem do login */
+.imagem-login {
+    border-radius: 10px 0px 0px 10px;
+    background-image: url('../../../public/images/login2.jpg'); 
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-width: 50%;
+}
+
+/* fomulario-login */
+
+.login {
+    border-radius: 0px 5px 5px 0px;
     background-color: #fff;
-    padding: 0 2px;
-    color: gray;
-    
+    width: 100%;
+    display: flex;
+    justify-content: start;
 }
 
-.btn-clean {
-    border: none;
-    background-color: #0000;
+.logo {
+    text-align: center;
+    margin: 30px 25px;
+}
+
+.header-login {
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.header-login h6{
+    font-size: 17px;
+    font-weight: 500;
     text-align: center;
 }
 
-.btn-clean:hover {
-    color: rgb(0, 0, 153);
+.main-login {
+    width: 385px;
+    border-radius: 0px 5px 5px 0px;
+    text-align: center;
+}
+
+.input-form input{
+    padding: 5px;
+    width: 70%;
+    border: .2px solid rgb(192, 192, 192);
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.footer-login {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn1 {
+    color: white;
+    font-size: 14px;
+    padding: 5px;
+    background-color: rgb(52, 52, 52);
+    border: none;
+    width: 70%;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
     cursor: pointer;
 }
 
+.btn1:hover {
+    background-color: rgb(72, 72, 72);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-neutro {
+    background-color: rgba(240, 248, 255, 0);  
+    font-size: 14px;
+    color: rgb(29, 0, 194);
+    width: 70%;
+    margin: 15px auto;
+    border: none;
+}
+
+.btn-neutro:hover {
+    margin-top: 16px;
+    color: rgb(22, 0, 149);
+    
+}
+
+/* login erro */
+
+.error{
+    color: rgba(255, 0, 0, 0.654);
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+
+}
+
+
+
+/* Respondivo */
+
+@media only screen and (max-width: 600px) {
+    
+    .form-container-login{
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        height: 100vh;
+        width: 100%;
+    }
+
+    .login {
+        border: 1px solid rgb(168, 168, 168);
+        padding: 20px 0px;
+        justify-content: center;
+        max-width: 300px;
+        border-radius: 5px;
+    }
+
+    
+
+    .imagem-login {
+        display: none;
+    }
+  
+}
+
+/* Estilos específicos para telas maiores que 600px e menores que 1024px de largura */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    
+    .form-container-login{
+        height: 450px;
+        width: 600px;
+    }
+
+    .main-login {
+        width: 285px;
+    }
+    
+    .input-form input{
+        padding: 4px;
+        width: 80%;
+        margin-bottom: 9px;
+    }
+
+    .footer-login {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .logo {
+        margin: 25px;
+    }
+    .logo img{
+        width: 130px;
+    }
+}
