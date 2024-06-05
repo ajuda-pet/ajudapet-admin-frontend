@@ -61,7 +61,11 @@ const Home = () => {
   // INSTAGRAM SUBMIT
   const handleInstagramSubmit = (payload) => {
     if (instagram) {
-      groupController.updateSocialMedia(instagram.id, payload, 'instagram').then(response => {
+      groupController.updateSocialMedia(instagram.id, {
+        ...payload, 
+        url: `https://instagram.com/${payload.account}`}, 
+        'instagram'
+      ).then(response => {
 
         if (response && response.success) {
           setInstagram(response.info.socialMedia)
