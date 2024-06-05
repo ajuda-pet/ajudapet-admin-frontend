@@ -4,7 +4,6 @@ import { Card, Row, InputGroup, Form } from "react-bootstrap"
 const FormInstagram = ({ instagram, register, set }) => {
     useEffect(() => {
         instagram ? set('account', instagram.account) : set('account', '')
-        instagram ? set('url', instagram.url) : set('url', '')
     }, [])
 
 
@@ -24,18 +23,6 @@ const FormInstagram = ({ instagram, register, set }) => {
                                 aria-label="Instagram do Grupo"
                                 aria-describedby="basic-addon1"
                                 {...register('account')}
-                                
-                            />
-                        </InputGroup>
-                    </Row>
-                    <Row>
-                        <InputGroup className="mb-3">
-                            <InputGroup.Text id="basic-addon1">URL</InputGroup.Text>
-                            <Form.Control
-                                placeholder='URL do Instagram'
-                                aria-label="Instagram do Grupo"
-                                aria-describedby="basic-addon1"
-                                {...register('url')}
                                 
                             />
                         </InputGroup>
