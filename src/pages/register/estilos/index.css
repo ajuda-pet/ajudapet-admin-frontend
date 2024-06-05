@@ -4,11 +4,14 @@
 }
 
 .main-img {
+    max-width: 300px;
+    margin: 0 auto;
     height: 150px;
 }
 
 
 .p-img{
+    width: 300px;
     font-size: 15px;
     color: rgb(40, 40, 40);
     padding: 0;
@@ -29,4 +32,25 @@
     resize: none;
     width: 70%;
     height: 120px;
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    .p-img{
+        font-size: 15px;
+    }
+    .p-info{
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .main-img textarea {
+        margin-top: 4px;
+        width: 90%;
+    }
+    .main-img input {
+        width: 90%;
+    }
+    
 }

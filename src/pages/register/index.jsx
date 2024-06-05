@@ -176,7 +176,7 @@ function Register() {
 
                                 {step === 1 && (
                                     <>
-                                        <div className='main-rl'>
+                                        <div className='main-img'>
                                             <div className="input-form">
                                                 <input
                                                     required

@@ -32,7 +32,20 @@
 
 
 /* Responsive  */ 
+#green2 {
+    display: none;
+}
+#pink2 {
+    display: none;
+}
 
+#yellow2 {
+    display: none;
+
+}
+#black2 {
+    display: none;
+}
 
 /* Estilos específicos para telas menores que 600px de largura(mobile)*/
 @media only screen and (max-width: 600px) {
@@ -52,7 +65,42 @@
         display: none;
     }
     
+    #green2 {
+        position: absolute;
+        display: block;
+        z-index: -1;
+        width: 300px;
+        bottom: 0; 
+        left: 0;     
+    }
+
+    #pink2 {
+        position: absolute;
+        display: block;
+        z-index: -1;
+        width: 140px;
+        top: 7vh; 
+        left: -20px; 
+    }
     
+    #yellow2 {
+        position: absolute;
+        display: block;
+        z-index: -1;
+        width: 150px;
+        bottom: 3vh; 
+        right: 0;
+    }
+
+    #black2 {
+        position: absolute;
+        display: block;
+        z-index: -1;
+        top: 0; 
+        right: 0;
+        width: 200px;
+    }
+
 }
 
 /* Estilos específicos para telas maiores que 600px e menores que 1024px de largura */
