@@ -125,6 +125,19 @@ function Login() {
                   />
                 </div>
               </div>
+              <div className="main-rl">
+                <div className="input-form">
+                  <input
+                    required
+                    name='email'
+                    className="input-field"
+                    type="email"
+                    value={email}
+                    placeholder='email'
+                    onChange={(e) => setEmail(e.target.value)}
+
+                  />
+                </div>
               
               <div className='footer-login'>
                 <button type='submit' className="btn1">Login</button>

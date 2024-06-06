@@ -55,7 +55,6 @@ function AddPet() {
 
     const handleSubmitTwo = () =>{
         if (!dataPet) return;
-        console.log(dataPet)
         petController.create({ ...dataPet }).then(response => {
             if (response && response.success) {
                 pets.push(response.info.pet)
@@ -85,7 +84,6 @@ function AddPet() {
         }
         ;
         if(payload.picture) {
-            console.log(payload)
             let nomeImg = gerarNomeImagem();
             const sendfirebase = async () =>  {
                 const storageRef = ref(storage, `pets/${nomeImg}`);
@@ -141,6 +139,7 @@ function AddPet() {
 
     return (
         <>
+            {!loading && <> 
             <Header />
             <img src="./images/green.png" id='green' alt='mancha verde' />
             <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
@@ -153,7 +152,6 @@ function AddPet() {
                 <PetForm />
             </div> */}
 
-            {!loading &&
                 <div className='px-3'>
                     <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
                         {/* <ToastComponent variant={'warning'}></ToastComponent> */}
@@ -197,12 +195,12 @@ function AddPet() {
                         </Row>
 
                         <Row className='mx-3 mt-2'>
-                            <Button variant='secondary' className='d-flex align-items-center justify-content-center text-center px-5 w-100'>
+                            <Button variant='secondary' className='d-flex align-items-center justify-content-center text-center px-5 w-100' disabled={true}>
                                 <span class="material-symbols-outlined">
                                     filter_alt
                                 </span>
                                 <span>
-                                    Filtrar (Dev 🛠️)
+                                    Filtrar (🛠️)
                                 </span>
                             </Button>
                         </Row>
@@ -241,6 +239,7 @@ function AddPet() {
                     </Container>
 
                 </div>
+            </>
             }
 
             {

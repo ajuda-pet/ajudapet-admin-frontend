@@ -39,3 +39,33 @@ body {
         opacity: 1;
     }
 }
+
+.NavLink-container {
+    display: flex;
+    align-items: center;
+}
+
+.material-symbols-outlined {
+    /* Estilos para o ícone */
+    margin-right: 5px;
+    /* Ajuste conforme necessário */
+}
+
+.off-canva-item {
+    color: silver;
+}
+
+.off-canva-item:hover {
+    color: white;
+    background-color: #141e2b;
+}
+
+.off-canva-item-target {
+    background-color: #141e2b;
+    color: white;
+}
+
+.anchor {
+    text-decoration: none;
+    color: inherit;
+}
