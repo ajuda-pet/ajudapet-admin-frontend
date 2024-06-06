@@ -52,7 +52,7 @@ const Home = () => {
 
     groupController.createSocialMedia({ ...payload, plataform: 'WHATSAPP', url: '.'}).then(response => {
       if (response && response.success) {
-        setWhatsapp(response.info.socialMedia)
+        setWhatsapp(response.info.newSocialMedia)
       }
       setWhatsappModal(false)
     })
@@ -76,9 +76,9 @@ const Home = () => {
       return
     }
 
-    groupController.createSocialMedia({ ...payload, plataform: 'INSTAGRAM'}).then(response => {
+    groupController.createSocialMedia({ ...payload, plataform: 'INSTAGRAM', url: `https://instagram.com/${payload.account}`}).then(response => {
       if (response && response.success) {
-        setInstagram(response.info.socialMedia)
+        setInstagram(response.info.newSocialMedia)
       }
       setInstagramModal(false)
     })
