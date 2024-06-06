@@ -1,87 +1,125 @@
 /* Destalhes das paginas */
 #green1 {
     position: absolute; 
-    top: 10%; 
-    left: 100%; 
-    transform: translate(-50%, -50%); 
+    width: 250px;
+    top: 0; 
+    right: 0;
     z-index: -1;
 }
 #pink1 {
-    width: 15vw;
+    width: 220px;
     position: absolute; 
-    top: 98%; 
-    left: 96%; 
-    transform: translate(-50%, -50%); 
+    bottom: 0;  
+    right: 0; 
     z-index: -1;
 }
 
 #yellow1 {
     position: absolute; 
-    top: 5%; 
+    width: 15vw;
+    top: 0%; 
     left: 0%; 
-    transform: translate(-50%, -50%); 
     z-index: -1;
 }
 #black1 {
+    max-width: 260px;
+    width: 20vw;
     position: absolute; 
-    top: 105%; 
+    bottom: 0; 
     left: 0%; 
-    transform: translate(-50%, -50%); 
     z-index: -1;
-    width: 50vw;
-    max-width: 600px;
 }
 
 
 /* Responsive  */ 
+#green2 {
+    display: none;
+}
+#pink2 {
+    display: none;
+}
 
+#yellow2 {
+    display: none;
+
+}
+#black2 {
+    display: none;
+}
 
 /* Estilos específicos para telas menores que 600px de largura(mobile)*/
 @media only screen and (max-width: 600px) {
 
     #green1 {
-        width: 75%;
-        top: 100%; 
-        left: 20%;     
+        display: none;
     }
-
     #pink1 {
-        width: 200px;
-        top: 200px; 
-        left: -20px; 
+        display: none;
     }
     
     #yellow1 {
-        width: 50%;
-        top: 80%; 
-        left: 100%; 
+        display: none;
+
     }
     #black1 {
-        top: 0; 
-        left: 80%; 
-        transform: translate(-50%, -50%); 
+        display: none;
+    }
+    
+    #green2 {
+        position: absolute;
+        display: block;
         z-index: -1;
-        width: 50%;
+        width: 300px;
+        bottom: 0; 
+        left: 0;     
     }
 
+    #pink2 {
+        position: absolute;
+        display: block;
+        z-index: -1;
+        width: 140px;
+        top: 7vh; 
+        left: -20px; 
+    }
     
+    #yellow2 {
+        position: absolute;
+        display: block;
+        z-index: -1;
+        width: 150px;
+        bottom: 3vh; 
+        right: 0;
+    }
+
+    #black2 {
+        position: absolute;
+        display: block;
+        z-index: -1;
+        top: 0; 
+        right: 0;
+        width: 200px;
+    }
+
 }
 
 /* Estilos específicos para telas maiores que 600px e menores que 1024px de largura */
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
     
     #green1 {
-        max-width: 50vw;
+        width: 200px;
+    }
+    #pink1 {
+        width: 200px;
     }
     
     #yellow1 {
-        max-width: 70vw;
+        width: 200px;
+
     }
     #black1 {
-        max-width: 50vh;
+        width: 200px;
     }
-
-
 
 }
 
