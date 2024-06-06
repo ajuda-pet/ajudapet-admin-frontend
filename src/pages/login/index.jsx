@@ -106,7 +106,7 @@ function Login() {
                     className="input-field"
                     type="email"
                     value={email}
-                    placeholder='email'
+                    placeholder='Email'
                     onChange={(e) => setEmail(e.target.value)}
 
                   />
@@ -126,26 +126,16 @@ function Login() {
                 </div>
               </div>
               <div className="main-rl">
-                <div className="input-form">
-                  <input
-                    required
-                    name='email'
-                    className="input-field"
-                    type="email"
-                    value={email}
-                    placeholder='email'
-                    onChange={(e) => setEmail(e.target.value)}
 
-                  />
-                </div>
-              
               <div className='footer-login'>
                 <button type='submit' className="btn1">Login</button>
                 
                   <button onClick={() => navigate('/register')} className="btn-neutro"> Não possui uma conta? Registre-se </button>
                 </div>
+              </div>
             </form>
           </div>
+
         }
 
         {loading && <Load></Load>}
