@@ -48,8 +48,6 @@ function Register() {
         handleStep(formData, step, setStep, setError);
     };
 
-
-
     const onDrop = useCallback((acceptedFiles) => {
         const file = acceptedFiles[0];
         
@@ -184,7 +182,7 @@ function Register() {
                                                     type="text"
                                                     value={formData.name}
                                                     onChange={(e) => setFormData(prevState => ({ ...prevState, name: e.target.value }))}
-                                                    placeholder='Nome'
+                                                    placeholder='Nome do Grupo'
                                                 />
                                             </div>
                                             <div className="input-form">
@@ -214,6 +212,7 @@ function Register() {
                                         </div>
                                         <div className="footer-login">
                                             <button type='button' className="btn1" onClick={handleStepWrapper}>Próximo</button>
+                                            <button type='button' className="btn-volta btn-neutro" onClick={() => window.location.href = '/login'}>Voltar</button>
                                         </div>
                                     </>
                                 )}
@@ -223,17 +222,15 @@ function Register() {
                                     <div className="input-form-img" {...getRootProps()}>
                                         <input {...getInputProps()} />
                                         {imageUrl ? <>
-                                        <img className='imagem-register' src={imageUrl} alt='img' />
+                                        <img className='' src={imageUrl} alt='img' width='200' height='200' style={{borderRadius: '100px'}}/>
                                         </> : <>
                                         <p className='p-img'>Imagem que representa o grupo, clique ou arraste uma imagem</p>
                                         <p className='p-info'>OBS:imagem do grupo ajuda a ter mais credibilidade!</p></>}
-                                        
-                                        
                                     </div>
                                     
                                 </div>
-                                <div className="footer-login">
-                                    <button type='button' className="btn1" onClick={handleStepWrapper}>Próximo</button>
+                                <div className="footer-login mt-5" >
+                                    <button type='button' className="btn1 mt-3" onClick={handleStepWrapper}>Próximo</button>
                                     <button className="btn-volta btn-neutro" onClick={() => setStep(step - 1)}>Voltar</button>
                                 </div>
                             </>
