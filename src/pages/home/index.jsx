@@ -12,8 +12,27 @@ import Load from '../../components/molecules/load/Load';
 import FormInstagram from '../../components/molecules/FormInstagram/FormInstagram';
 import FormPix from '../../components/molecules/FormPix/FormPix';
 import pixController from '../../controllers/pixController';
-
+import ToastInputError from '../../components/molecules/ToastInputError/ToastInputError';
+import ToastSuccess from '../../components/molecules/ToastSuccess/ToastSuccess';
 const Home = () => {
+  const [showToastInputError, setShowToastInputError] = useState(false)
+  const [showToastSuccess, setShowToastSuccess] = useState(false)
+
+  const handleToastError = () => {
+    setShowToastInputError(true)
+    setTimeout(() => {
+      setShowToastInputError(false)
+    }, 2000)
+  }
+
+  const handleToastSuccess = () => {
+    setShowToastSuccess(true)
+    setTimeout(() => {
+      setShowToastSuccess(false)
+    }, 2000)
+  }
+
+
   const whatsappFormMethods = useForm()
   const instagramFormMethods = useForm()
   const pixFormMethods = useForm()
@@ -40,11 +59,22 @@ const Home = () => {
 
   // WHATSAPP SUBMIT
   const handleWhatsappSubmit = (payload) => {
+    if (!payload.account) {
+      handleToastError()
+      return
+    }
+
+    if (!/^\(\d{2}\) \d{5}-\d{4}$/.test(payload.account)) {
+      handleToastError()
+      return
+    }
+
     if (whatsapp && Object.keys(whatsapp).length) {
       groupController.updateSocialMedia(whatsapp.id, {account: payload.account}, 'whatsapp').then(response => {
         if (response && response.success) {
           setWhatsapp(response.info.socialMedia)
         }
+        handleToastSuccess()
         setWhatsappModal(false)
       })
       return
@@ -54,12 +84,19 @@ const Home = () => {
       if (response && response.success) {
         setWhatsapp(response.info.newSocialMedia)
       }
+      
+      handleToastSuccess()
       setWhatsappModal(false)
     })
   }
 
   // INSTAGRAM SUBMIT
   const handleInstagramSubmit = (payload) => {
+    if (!payload.account) {
+      handleToastError()
+      return
+    }
+
     if (instagram) {
       groupController.updateSocialMedia(instagram.id, {
         ...payload, 
@@ -72,6 +109,7 @@ const Home = () => {
         }
       })
 
+      handleToastSuccess()
       setInstagramModal(false)
       return
     }
@@ -80,6 +118,8 @@ const Home = () => {
       if (response && response.success) {
         setInstagram(response.info.newSocialMedia)
       }
+
+      handleToastSuccess()
       setInstagramModal(false)
     })
   }
@@ -87,12 +127,16 @@ const Home = () => {
 
   //PIX SUBMIT
   const handlePixSubmit = (payload) => {
-    console.log(pix)
-    debugger
+    if (!payload.key || !payload.type) {
+      handleToastError()
+      return
+    }
+
     if (pix) {
       pixController.update({ ...payload, qrcode: 'off'}).then(response => {
         if (response && response.success) {
           setPix(response.info.pix)
+          handleToastSuccess()
           setPixModal(false)
         }
       })
@@ -105,6 +149,7 @@ const Home = () => {
         setPix(response.info.pix)
       }
 
+      handleToastSuccess()
       setPixModal(false)
       return
     })
@@ -260,6 +305,9 @@ const Home = () => {
 
 
       {/* whatsapp modal */}
+      <ToastInputError show={showToastInputError}/>
+      <ToastSuccess show={showToastSuccess}/>
+
       <Modal show={showWhatsappModal} onHide={handleCloseWhatsappModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>
           <img src='./images/whatsapp-icon.png' width='50'></img>&nbsp;&nbsp;
