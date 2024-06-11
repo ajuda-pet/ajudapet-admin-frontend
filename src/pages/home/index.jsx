@@ -14,6 +14,7 @@ import FormPix from '../../components/molecules/FormPix/FormPix';
 import pixController from '../../controllers/pixController';
 import ToastInputError from '../../components/molecules/ToastInputError/ToastInputError';
 import ToastSuccess from '../../components/molecules/ToastSuccess/ToastSuccess';
+import authenticationController from '../../controllers/authentication.controller';
 const Home = () => {
   const [showToastInputError, setShowToastInputError] = useState(false)
   const [showToastSuccess, setShowToastSuccess] = useState(false)
@@ -174,6 +175,9 @@ const Home = () => {
 
 
   useEffect(() => {
+    authenticationController.isAuthenticate()
+
+
     const groupId = localStorage.getItem('groupId')
     groupController.getById(groupId).then(response => {
 
@@ -203,11 +207,7 @@ const Home = () => {
     <>
 
       {!loading && <div>
-
-
         <Header />
-
-        
 
         <div className='container'>
           <img src="./images/green.png" id='green' alt='mancha verde' />

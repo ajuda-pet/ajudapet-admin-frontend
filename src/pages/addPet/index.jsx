@@ -12,6 +12,7 @@ import Load from '../../components/molecules/load/Load';
 import { gerarNomeImagem } from '../../components/validators/arquivo';
 import { storage } from '../../controllers/resgisterImg';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import authenticationController from '../../controllers/authentication.controller';
 
 
 
@@ -138,6 +139,8 @@ function AddPet() {
 
 
     useEffect(() => {
+        authenticationController.isAuthenticate()
+
         petController.getByGroupId().then((response) => {
             setPets(response);
             setLoading(false)

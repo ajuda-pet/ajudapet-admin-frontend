@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import './index.css';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Button, Container, Modal, Toast } from 'react-bootstrap';
 import Header from '../../components/molecules/header';
 import SideBarHome from '../../components/molecules/sideBarHome';
@@ -10,10 +10,11 @@ import PointTable from '../../components/molecules/pointTable/PointTable';
 import pointsController from '../../controllers/points.controller';
 import groupController from '../../controllers/group.controller';
 import Load from '../../components/molecules/load/Load';
+import authenticationController from '../../controllers/authentication.controller';
 
 
 const AddAdoptPoint = () => {
-    const ToastSuccess = (({ show, message }) => {
+    const ToastSuccess = (({ message }) => {
         return (
             <Toast bg='success' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToastSuccess} onClose={() => setShowToast(false)}>
                 <Toast.Header>
@@ -25,7 +26,7 @@ const AddAdoptPoint = () => {
     })
 
 
-    const ToastError = ({ show }) => {
+    const ToastError = () => {
         return (
             <Toast bg='danger' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToast} onClose={() => setShowToast(false)}>
                 <Toast.Header>
@@ -117,7 +118,7 @@ const AddAdoptPoint = () => {
     }
 
     useEffect(() => {
-        let timer;
+        let timer
         if (showToast) {
             timer = setTimeout(() => {
                 setShowToast(false)
@@ -126,12 +127,15 @@ const AddAdoptPoint = () => {
         }
 
         return () => clearTimeout(timer);
-    }, [showToast]);
+    }, [showToast])
 
 
     const [points, setPoint] = useState([])
 
     useEffect(() => {
+        authenticationController.isAuthenticate()
+
+
         groupController.getAdoptionPoints().then(response => {
             if (response && response.success) {
                 const points = response.info.adoptionPoints
