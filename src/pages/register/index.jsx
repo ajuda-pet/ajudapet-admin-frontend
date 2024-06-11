@@ -173,7 +173,7 @@ function Register() {
 
                                 {step === 1 && (
                                     <>
-                                        <div className='main-img'>
+                                        
                                             <div className="input-form">
                                                 <input
                                                     required
@@ -209,7 +209,7 @@ function Register() {
                                                     placeholder='CPF/CNPJ'
                                                 />
                                             </div>
-                                        </div>
+                                        
                                         <div className="footer-login">
                                             <button type='button' className="btn1" onClick={handleStepWrapper}>Próximo</button>
                                             <button type='button' className="btn-volta btn-neutro" onClick={() => window.location.href = '/login'}>Voltar</button>
@@ -233,20 +233,21 @@ function Register() {
                                     <button type='button' className="btn1 mt-3" onClick={handleStepWrapper}>Próximo</button>
                                     <button className="btn-volta btn-neutro" onClick={() => setStep(step - 1)}>Voltar</button>
                                 </div>
-                            </>
+                                </>
                                 )}
                                 {step === 3 && (
                                     <>
-                                        <div className='main-img'>
-                                            <div className="input-form">
-                                                <textarea
-                                                    name="description"
-                                                    id="text-description"
-                                                    value={formData.description}
-                                                    placeholder='Razão Social'
-                                                    onChange={(e)=>(handleText(e, setFormData))}></textarea>
-                                            </div>
+                                        
+                                        <div className="input-form">
+                                            <textarea
+                                                name="description"
+                                                id="text-description"
+                                                
+                                                value={formData.description}
+                                                placeholder='Razão Social'
+                                                onChange={(e)=>(handleText(e, setFormData))}></textarea>
                                         </div>
+                                    
                                         <div className="footer-login">                        
                                             <button type='button' className="btn1" onClick={handleStepWrapper}>Próximo</button>
                                             <button className="btn-volta  btn-neutro" onClick={() => setStep(step - 1)}>Voltar</button>
@@ -255,7 +256,7 @@ function Register() {
                                 )}
                                 {step === 4 && (
                                     <>
-                                        <div className='main-img'>
+                                        
                                             <div className="input-form">
                                                 <input
                                                     required
@@ -289,7 +290,7 @@ function Register() {
                                                     placeholder='Confirmar Senha'
                                                 />
                                             </div>
-                                        </div>
+                                        
                                         <div className="footer-login">
                                             <button type='submit' className="btn1">Registrar</button>
                                             <button className="btn-volta  btn-neutro" onClick={() => setStep(step - 1)}>Voltar</button>

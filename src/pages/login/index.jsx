@@ -125,14 +125,13 @@ function Login() {
                   />
                 </div>
               </div>
-              <div className="main-rl">
-
-              <div className='footer-login'>
+              
+                <div className='footer-login'>
                 <button type='submit' className="btn1">Login</button>
                 
                   <button onClick={() => navigate('/register')} className="btn-neutro"> Não possui uma conta? Registre-se </button>
                 </div>
-              </div>
+              
             </form>
           </div>
 

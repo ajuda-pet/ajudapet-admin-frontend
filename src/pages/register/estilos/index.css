@@ -9,7 +9,12 @@
     height: 150px;
 }
 
-
+.main-img:hover .p-img{
+    color: gray !important;
+}
+.main-img:hover{
+    cursor: pointer;
+}
 .p-img{
     width: 300px;
     font-size: 15px;
@@ -27,7 +32,7 @@
     max-width: 150px;
 }
 
-.main-img textarea {
+.main-login textarea {
     margin-top: 10px;
     resize: none;
     width: 70%;
@@ -45,11 +50,8 @@
         text-align: center;
     }
 
-    .main-img textarea {
-        margin-top: 4px;
-        width: 90%;
-    }
-    .main-img input {
+    
+    .main-login input {
         width: 90%;
     }
     
