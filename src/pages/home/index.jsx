@@ -12,8 +12,31 @@ import Load from '../../components/molecules/load/Load';
 import FormInstagram from '../../components/molecules/FormInstagram/FormInstagram';
 import FormPix from '../../components/molecules/FormPix/FormPix';
 import pixController from '../../controllers/pixController';
-
+import ToastInputError from '../../components/molecules/ToastInputError/ToastInputError';
+import ToastSuccess from '../../components/molecules/ToastSuccess/ToastSuccess';
 const Home = () => {
+  const [showToastInputError, setShowToastInputError] = useState(false)
+  const [showToastSuccess, setShowToastSuccess] = useState(false)
+
+  const [submitWhatsappDisabled, setSubmitWhatsappDisabled] = useState(false)
+  const [submitInstagramDisabled, setSubmitInstagramDisabled] = useState(false)
+  const [submitPixDisabled, setSubmitPixDisabled] = useState(false)
+
+  const handleToastError = () => {
+    setShowToastInputError(true)
+    setTimeout(() => {
+      setShowToastInputError(false)
+    }, 2000)
+  }
+
+  const handleToastSuccess = () => {
+    setShowToastSuccess(true)
+    setTimeout(() => {
+      setShowToastSuccess(false)
+    }, 2000)
+  }
+
+
   const whatsappFormMethods = useForm()
   const instagramFormMethods = useForm()
   const pixFormMethods = useForm()
@@ -31,21 +54,36 @@ const Home = () => {
   const [showPixModal, setPixModal] = useState(false)
 
   const handleShowWhatsappModal  = () => setWhatsappModal(true)
-  const handleCloseWhatsappModal = () => setWhatsappModal(false) 
+  const handleCloseWhatsappModal = () => {setWhatsappModal(false); setSubmitWhatsappDisabled(false)}
   const handleShowInstagramModal = () => setInstagramModal(true)
-  const handleCloseInstagramModal = () => setInstagramModal(false)
-  const handleClosePixModal = () => setPixModal(false)
+  const handleCloseInstagramModal = () => {setInstagramModal(false); setSubmitInstagramDisabled(false)}
+  const handleClosePixModal = () => {setPixModal(false); setSubmitPixDisabled(false)}
   const handleShowPixModal = () => setPixModal(true)
 
 
   // WHATSAPP SUBMIT
   const handleWhatsappSubmit = (payload) => {
+    setSubmitWhatsappDisabled(true)
+
+    if (!payload.account) {
+      setSubmitWhatsappDisabled(false)
+      handleToastError()
+      return
+    }
+
+    if (!/^\(\d{2}\) \d{5}-\d{4}$/.test(payload.account)) {
+      setSubmitWhatsappDisabled(false)
+      handleToastError()
+      return
+    }
+
     if (whatsapp && Object.keys(whatsapp).length) {
       groupController.updateSocialMedia(whatsapp.id, {account: payload.account}, 'whatsapp').then(response => {
         if (response && response.success) {
           setWhatsapp(response.info.socialMedia)
         }
-        setWhatsappModal(false)
+        handleToastSuccess()
+        handleCloseWhatsappModal()
       })
       return
     }
@@ -54,12 +92,25 @@ const Home = () => {
       if (response && response.success) {
         setWhatsapp(response.info.newSocialMedia)
       }
-      setWhatsappModal(false)
+      
+      handleToastSuccess()
+      handleCloseWhatsappModal()
     })
+
+    setSubmitWhatsappDisabled(false)
+
   }
 
   // INSTAGRAM SUBMIT
   const handleInstagramSubmit = (payload) => {
+    setSubmitInstagramDisabled(true)
+    
+    if (!payload.account) {
+      handleToastError()
+      setSubmitInstagramDisabled(false)
+      return
+    }
+
     if (instagram) {
       groupController.updateSocialMedia(instagram.id, {
         ...payload, 
@@ -72,7 +123,8 @@ const Home = () => {
         }
       })
 
-      setInstagramModal(false)
+      handleToastSuccess()
+      handleCloseInstagramModal()
       return
     }
 
@@ -80,20 +132,29 @@ const Home = () => {
       if (response && response.success) {
         setInstagram(response.info.newSocialMedia)
       }
-      setInstagramModal(false)
+
+      handleToastSuccess()
+      handleCloseInstagramModal()
     })
   }
 
 
   //PIX SUBMIT
   const handlePixSubmit = (payload) => {
-    console.log(pix)
-    debugger
+    setSubmitPixDisabled(true)
+
+    if (!payload.key || !payload.type) {
+      setSubmitPixDisabled(false)
+      handleToastError()
+      return
+    }
+
     if (pix) {
       pixController.update({ ...payload, qrcode: 'off'}).then(response => {
         if (response && response.success) {
           setPix(response.info.pix)
-          setPixModal(false)
+          handleToastSuccess()
+          handleClosePixModal()
         }
       })
 
@@ -105,7 +166,8 @@ const Home = () => {
         setPix(response.info.pix)
       }
 
-      setPixModal(false)
+      handleToastSuccess()
+      handleClosePixModal()
       return
     })
   }
@@ -260,6 +322,9 @@ const Home = () => {
 
 
       {/* whatsapp modal */}
+      <ToastInputError show={showToastInputError}/>
+      <ToastSuccess show={showToastSuccess}/>
+
       <Modal show={showWhatsappModal} onHide={handleCloseWhatsappModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>
           <img src='./images/whatsapp-icon.png' width='50'></img>&nbsp;&nbsp;
@@ -271,7 +336,7 @@ const Home = () => {
         
         <Modal.Footer>
           <Button variant='secondary' onClick={handleCloseWhatsappModal}>Fechar</Button>
-          <Button onClick={whatsappFormMethods.handleSubmit(handleWhatsappSubmit)}>Salvar</Button>
+          <Button onClick={whatsappFormMethods.handleSubmit(handleWhatsappSubmit)} disabled={submitWhatsappDisabled}>Salvar</Button>
         </Modal.Footer>
       </Modal>
 
@@ -287,7 +352,7 @@ const Home = () => {
         
         <Modal.Footer>
           <Button variant='secondary' onClick={handleCloseInstagramModal}>Fechar</Button>
-          <Button onClick={instagramFormMethods.handleSubmit(handleInstagramSubmit)}>Salvar</Button>
+          <Button onClick={instagramFormMethods.handleSubmit(handleInstagramSubmit)} disabled={submitInstagramDisabled}>Salvar</Button>
 
         </Modal.Footer>
       </Modal>
@@ -305,7 +370,7 @@ const Home = () => {
         
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClosePixModal}>Fechar</Button>
-          <Button onClick={pixFormMethods.handleSubmit(handlePixSubmit)}>Salvar</Button>
+          <Button onClick={pixFormMethods.handleSubmit(handlePixSubmit)} disabled={submitPixDisabled}>Salvar</Button>
         </Modal.Footer>
       </Modal>
     </>

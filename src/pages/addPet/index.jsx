@@ -11,11 +11,12 @@ import { useForm } from 'react-hook-form';
 import Load from '../../components/molecules/load/Load';
 import { gerarNomeImagem } from '../../components/validators/arquivo';
 import { storage } from '../../controllers/resgisterImg';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
 
 function AddPet() {
+    
     const ToastSuccess = (({ show, message }) => {
         return (
             <Toast bg='success' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToastSuccess} onClose={() => setShowToast(false)}>
@@ -26,8 +27,8 @@ function AddPet() {
             </Toast>
         )
     })
-
-
+    
+    
     const ToastError = ({ show }) => {
         return (
             <Toast bg='danger' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToast} onClose={() => setShowToast(false)}>
@@ -38,8 +39,9 @@ function AddPet() {
             </Toast>
         )
     }
-
-
+    
+    
+    const [submitPetDisabled, setSubmitPetDisabled] = useState(false)
     const [showToastSuccess, setShowToastSuccess] = useState(false)
     const [showToast, setShowToast] = useState(false);
 
@@ -54,7 +56,10 @@ function AddPet() {
     const [dataPet, setDataPet] = useState()
 
     const handleSubmitTwo = () =>{
+        setSubmitPetDisabled(true)
+
         if (!dataPet) return;
+
         petController.create({ ...dataPet }).then(response => {
             if (response && response.success) {
                 pets.push(response.info.pet)
@@ -70,6 +75,8 @@ function AddPet() {
     }
 
     const handleSubmit = (payload) => {
+        setSubmitPetDisabled(true)
+
         if (
             !payload.gender ||
             !payload.species ||
@@ -80,9 +87,10 @@ function AddPet() {
 
             setShowToast(true)
             setTimeout(() => { setShowToast(false) }, 3000)
+            setSubmitPetDisabled(false)
             return
         }
-        ;
+        
         if(payload.picture) {
             let nomeImg = gerarNomeImagem();
             const sendfirebase = async () =>  {
@@ -95,11 +103,10 @@ function AddPet() {
             }
             sendfirebase()
         }
-                
-
     }
 
     const handleNextStep = () => {
+        setSubmitPetDisabled(false)
         const payload = methods.getValues()
 
         if (step == 1) {
@@ -116,10 +123,14 @@ function AddPet() {
     }
 
 
-    const handleBackStep = () => setStep(step - 1)
+    const handleBackStep = () => {
+        setStep(step - 1)
+        setSubmitPetDisabled(false)
+    }
 
     const handleClose = () => {
         setShow(false)
+        setSubmitPetDisabled(false)
         setStep(1)
     }
 
@@ -277,7 +288,7 @@ function AddPet() {
 
                     {step == 2 && <>
                         <Button variant="secondary" onClick={handleBackStep}>Voltar</Button>
-                        <Button onClick={methods.handleSubmit(handleSubmit)}>Cadastrar</Button>
+                        <Button onClick={methods.handleSubmit(handleSubmit)} disabled={submitPetDisabled}>Cadastrar</Button>
                     </>
                     }
                 </Modal.Footer>
