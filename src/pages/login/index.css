@@ -61,9 +61,9 @@
     text-align: center;
 }
 
-.input-form input{
+.main-login .input-form input{
     padding: 5px;
-    width: 70%;
+    width: 70% !important;
     border: .2px solid rgb(192, 192, 192);
     margin-bottom: 15px;
     border-radius: 5px;
@@ -172,9 +172,16 @@
     }
 
     .footer-login {
-        margin-top: 10px;
+        margin-top: 0px;
         display: flex;
         flex-direction: column;
+    }
+    .btn-neutro {
+        margin: 7px auto;
+    }
+    
+    .btn-neutro:hover {
+        margin-top: 8px;
     }
 
     .logo {
@@ -183,4 +190,9 @@
     .logo img{
         width: 130px;
     }
+
+    .p-img {
+        max-width: 100%;
+    }
+
 }
