@@ -18,6 +18,10 @@ const Home = () => {
   const [showToastInputError, setShowToastInputError] = useState(false)
   const [showToastSuccess, setShowToastSuccess] = useState(false)
 
+  const [submitWhatsappDisabled, setSubmitWhatsappDisabled] = useState(false)
+  const [submitInstagramDisabled, setSubmitInstagramDisabled] = useState(false)
+  const [submitPixDisabled, setSubmitPixDisabled] = useState(false)
+
   const handleToastError = () => {
     setShowToastInputError(true)
     setTimeout(() => {
@@ -50,21 +54,25 @@ const Home = () => {
   const [showPixModal, setPixModal] = useState(false)
 
   const handleShowWhatsappModal  = () => setWhatsappModal(true)
-  const handleCloseWhatsappModal = () => setWhatsappModal(false) 
+  const handleCloseWhatsappModal = () => {setWhatsappModal(false); setSubmitWhatsappDisabled(false)}
   const handleShowInstagramModal = () => setInstagramModal(true)
-  const handleCloseInstagramModal = () => setInstagramModal(false)
-  const handleClosePixModal = () => setPixModal(false)
+  const handleCloseInstagramModal = () => {setInstagramModal(false); setSubmitInstagramDisabled(false)}
+  const handleClosePixModal = () => {setPixModal(false); setSubmitPixDisabled(false)}
   const handleShowPixModal = () => setPixModal(true)
 
 
   // WHATSAPP SUBMIT
   const handleWhatsappSubmit = (payload) => {
+    setSubmitWhatsappDisabled(true)
+
     if (!payload.account) {
+      setSubmitWhatsappDisabled(false)
       handleToastError()
       return
     }
 
     if (!/^\(\d{2}\) \d{5}-\d{4}$/.test(payload.account)) {
+      setSubmitWhatsappDisabled(false)
       handleToastError()
       return
     }
@@ -75,7 +83,7 @@ const Home = () => {
           setWhatsapp(response.info.socialMedia)
         }
         handleToastSuccess()
-        setWhatsappModal(false)
+        handleCloseWhatsappModal()
       })
       return
     }
@@ -86,14 +94,20 @@ const Home = () => {
       }
       
       handleToastSuccess()
-      setWhatsappModal(false)
+      handleCloseWhatsappModal()
     })
+
+    setSubmitWhatsappDisabled(false)
+
   }
 
   // INSTAGRAM SUBMIT
   const handleInstagramSubmit = (payload) => {
+    setSubmitInstagramDisabled(true)
+    
     if (!payload.account) {
       handleToastError()
+      setSubmitInstagramDisabled(false)
       return
     }
 
@@ -110,7 +124,7 @@ const Home = () => {
       })
 
       handleToastSuccess()
-      setInstagramModal(false)
+      handleCloseInstagramModal()
       return
     }
 
@@ -120,14 +134,17 @@ const Home = () => {
       }
 
       handleToastSuccess()
-      setInstagramModal(false)
+      handleCloseInstagramModal()
     })
   }
 
 
   //PIX SUBMIT
   const handlePixSubmit = (payload) => {
+    setSubmitPixDisabled(true)
+
     if (!payload.key || !payload.type) {
+      setSubmitPixDisabled(false)
       handleToastError()
       return
     }
@@ -137,7 +154,7 @@ const Home = () => {
         if (response && response.success) {
           setPix(response.info.pix)
           handleToastSuccess()
-          setPixModal(false)
+          handleClosePixModal()
         }
       })
 
@@ -150,7 +167,7 @@ const Home = () => {
       }
 
       handleToastSuccess()
-      setPixModal(false)
+      handleClosePixModal()
       return
     })
   }
@@ -319,7 +336,7 @@ const Home = () => {
         
         <Modal.Footer>
           <Button variant='secondary' onClick={handleCloseWhatsappModal}>Fechar</Button>
-          <Button onClick={whatsappFormMethods.handleSubmit(handleWhatsappSubmit)}>Salvar</Button>
+          <Button onClick={whatsappFormMethods.handleSubmit(handleWhatsappSubmit)} disabled={submitWhatsappDisabled}>Salvar</Button>
         </Modal.Footer>
       </Modal>
 
@@ -335,7 +352,7 @@ const Home = () => {
         
         <Modal.Footer>
           <Button variant='secondary' onClick={handleCloseInstagramModal}>Fechar</Button>
-          <Button onClick={instagramFormMethods.handleSubmit(handleInstagramSubmit)}>Salvar</Button>
+          <Button onClick={instagramFormMethods.handleSubmit(handleInstagramSubmit)} disabled={submitInstagramDisabled}>Salvar</Button>
 
         </Modal.Footer>
       </Modal>
@@ -353,7 +370,7 @@ const Home = () => {
         
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClosePixModal}>Fechar</Button>
-          <Button onClick={pixFormMethods.handleSubmit(handlePixSubmit)}>Salvar</Button>
+          <Button onClick={pixFormMethods.handleSubmit(handlePixSubmit)} disabled={submitPixDisabled}>Salvar</Button>
         </Modal.Footer>
       </Modal>
     </>
