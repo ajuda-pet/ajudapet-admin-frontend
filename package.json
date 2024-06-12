@@ -26,7 +26,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:staging": "cross-env REACT_APP_ENV=staging react-scripts start",
+    "start:prod": "cross-env REACT_APP_ENV=production react-scripts start",
     "build": "react-scripts build",
+    "build:prod": "cross-env REACT_APP_ENV=production react-scripts build",
+    "build:staging": "cross-env REACT_APP_ENV=staging react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -47,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

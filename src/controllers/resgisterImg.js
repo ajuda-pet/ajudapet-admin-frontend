@@ -1,16 +1,52 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from 'firebase/storage';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyD3-QTkb0l0eKsSr_p4yWRrx3UFBLKyPmA",
-    authDomain: "ajudapet-864d2.firebaseapp.com",
-    projectId: "ajudapet-864d2",
-    storageBucket: "ajudapet-864d2.appspot.com",
-    messagingSenderId: "636723044110",
-    appId: "1:636723044110:web:74e1e311b8055e0480415f",
-    measurementId: "G-9MJHN4T00V"
+const env = process.env;
+let firebaseConfig;
+
+if (env.REACT_APP_ENV === 'production') {
+  firebaseConfig = {
+    apiKey: env.REACT_APP_API_KEY,
+    authDomain: env.REACT_APP_AUTH_DOMAIN,
+    projectId: env.REACT_APP_PROJECT_ID,
+    storageBucket: env.REACT_APP_BUCKET,
+    messagingSenderId: env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: env.REACT_APP_APP_ID,
+    measurementId: env.REACT_APP_MEASUREMENT_ID
   };
 
+  console.log('Estamos em um ambiente de produção');
+} else if (env.REACT_APP_ENV === 'staging') {
+  console.log('Estamos em um ambiente de staging');
+  firebaseConfig = {
+    apiKey: env.REACT_APP_API_KEY_STAGING,
+    authDomain: env.REACT_APP_AUTH_DOMAIN_STAGING,
+    projectId: env.REACT_APP_PROJECT_ID_STAGING,
+    storageBucket: env.REACT_APP_BUCKET_STAGING,
+    messagingSenderId: env.REACT_APP_MESSAGING_SENDER_ID_STAGING,
+    appId: env.REACT_APP_APP_ID_STAGING,
+    measurementId: env.REACT_APP_MEASUREMENT_ID_STAGING
+  };
+} else {
+  console.log('Estamos em um ambiente de desenvolvimento ', env.REACT_APP_ENV);
+  firebaseConfig = {
+    apiKey: env.REACT_APP_API_KEY,
+    authDomain: env.REACT_APP_AUTH_DOMAIN,
+    projectId: env.REACT_APP_PROJECT_ID,
+    storageBucket: env.REACT_APP_BUCKET,
+    messagingSenderId: env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: env.REACT_APP_APP_ID,
+    measurementId: env.REACT_APP_MEASUREMENT_ID
+  };
+}
 
-export const app = initializeApp(firebaseConfig);
-export const storage = getStorage(app)
+console.log(env);
+
+let storage;
+if (firebaseConfig) {
+  console.log(`Using Firebase Storage Bucket: ${firebaseConfig.storageBucket}`);
+  const app = initializeApp(firebaseConfig);
+  storage = getStorage(app);
+}
+
+export { storage };
