@@ -13,8 +13,7 @@ import { gerarNomeImagem } from '../../components/validators/arquivo';
 import { storage } from '../../controllers/resgisterImg';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import authenticationController from '../../controllers/authentication.controller';
-
-
+import Background from '../../components/organism/background/Background';
 
 function AddPet() {
     
@@ -181,10 +180,6 @@ function AddPet() {
         <>
             {!loading && <> 
             <Header />
-            <img src="./images/green.png" id='green' alt='mancha verde' />
-            <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
-            <img src="./images/pink.png" id='pink' alt='mancha rosa' />
-            <img src="./images/black.png" id='black' alt='mancha preta' />
             {/* Sidebar */}
             <SideBarHome page='/addPet' />
 

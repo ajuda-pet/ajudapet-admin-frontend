@@ -143,10 +143,6 @@ function Register() {
 
     return (
         <div className="body">
-
-            <Background />
-
-
             <div className="container-login">
 
                 <div className="form-container-login">

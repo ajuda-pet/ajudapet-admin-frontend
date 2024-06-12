@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, CardGroup, Table, Alert, Image, Card, Modal, ModalBody, ModalTitle, Toast, InputGroup } from 'react-bootstrap'
-import Header from '../../components/molecules/header';
-import SideBarHome from '../../components/molecules/sideBarHome';
-import CardComponent from '../../components/molecules/cards';
-import Form from 'react-bootstrap/Form';
-import './index.css';
-import groupController from '../../controllers/group.controller';
-import FormWhatsapp from '../../components/molecules/FormWhatsapp/FormWhatsapp';
-import { useForm } from 'react-hook-form';
-import Load from '../../components/molecules/load/Load';
-import FormInstagram from '../../components/molecules/FormInstagram/FormInstagram';
-import FormPix from '../../components/molecules/FormPix/FormPix';
-import pixController from '../../controllers/pixController';
-import ToastInputError from '../../components/molecules/ToastInputError/ToastInputError';
-import ToastSuccess from '../../components/molecules/ToastSuccess/ToastSuccess';
-import authenticationController from '../../controllers/authentication.controller';
+import { useForm } from 'react-hook-form'
+import { Container, Row, Col, Button, Alert, Image, Card, Modal } from 'react-bootstrap'
+import Header from '../../components/molecules/header'
+import SideBarHome from '../../components/molecules/sideBarHome'
+import './index.css'
+import groupController from '../../controllers/group.controller'
+import FormWhatsapp from '../../components/molecules/FormWhatsapp/FormWhatsapp'
+import Load from '../../components/molecules/load/Load'
+import FormInstagram from '../../components/molecules/FormInstagram/FormInstagram'
+import FormPix from '../../components/molecules/FormPix/FormPix'
+import pixController from '../../controllers/pixController'
+import ToastInputError from '../../components/molecules/ToastInputError/ToastInputError'
+import ToastSuccess from '../../components/molecules/ToastSuccess/ToastSuccess'
+import authenticationController from '../../controllers/authentication.controller'
+
 const Home = () => {
   const [showToastInputError, setShowToastInputError] = useState(false)
   const [showToastSuccess, setShowToastSuccess] = useState(false)
@@ -210,10 +209,6 @@ const Home = () => {
         <Header />
 
         <div className='container'>
-          <img src="./images/green.png" id='green' alt='mancha verde' />
-          <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
-          <img src="./images/pink.png" id='pink' alt='mancha rosa' />
-          <img src="./images/black.png" id='black' alt='mancha preta' />
           {/* Header */}
 
           {/* Sidebar */}
