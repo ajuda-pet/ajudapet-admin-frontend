@@ -158,6 +158,8 @@ const AddAdoptPoint = () => {
 
         <>
             { !loading && <> 
+                <Header />
+
               
             {/*  |<div className='pointForm'>
                     <PointForm />
