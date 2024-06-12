@@ -4,9 +4,6 @@ import Navbar from 'react-bootstrap/Navbar'
 import { Button, Col, Offcanvas, Row } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 import './index.css'
-import { Link } from 'react-router-dom'
-
-
 
 const logout = () => {
     window.localStorage.removeItem('token')
