@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-
 // Validadores
 import { validateEmail } from '../../components/validators/email';
 import { loginUser } from '../../controllers/login';
-
-// componentes
-import Background from '../../components/organism/background/Background';
 
 // Estilos
 import './index.css';
@@ -72,8 +68,6 @@ function Login() {
   return (
 
     <div className="body">
-    <Background/>
-
     <div className="container-login" >
       
       <div className="form-container-login">
