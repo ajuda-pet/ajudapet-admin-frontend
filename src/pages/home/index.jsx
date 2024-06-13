@@ -222,7 +222,7 @@ const Home = () => {
               <h2> Dados Gerais do Grupo </h2>
               <hr className='my-4 bg-primary' /> 
 
-              <Alert variant='primary'> É importante deixar as informações de contato e sua chave pix atualizadas para receber doações ou adoção de pets.</Alert>
+            <Alert variant='warning'> É importante <strong>deixar as informações de contato e pix atualizadas</strong> para receber doações ou adoção de pets.</Alert>
 
               {/* Foto do Grupo */}
               <Row lg={12} className='mt-5 justify-content-center'>
