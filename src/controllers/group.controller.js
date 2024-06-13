@@ -17,7 +17,7 @@ const groupController = {
                 window.location.href = '/login'
             }
         }
-    },
+    }, 
 
     getAdoptionPoints: async () => {
         try {
@@ -67,7 +67,22 @@ const groupController = {
         catch (error) {
             console.error(error)
         }
-    }
+    },
+
+    update: async (groupId, groupData) => {
+        try {
+          console.log(groupData)
+          const response = await axios.put(`${authGroupsEndpoint}`, groupData, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': window.localStorage.getItem('token')
+            }
+          });
+          return response.data;
+        } catch (error) {
+          console.error(error);
+        }
+      }
 }
 
 export default groupController

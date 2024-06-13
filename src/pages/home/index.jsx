@@ -1,27 +1,47 @@
-import React, { useEffect, useState } from 'react';
+// bibliotecas
+import React, { useEffect, useState, useCallback } from 'react';
 import { Container, Row, Col, Button, CardGroup, Table, Alert, Image, Card, Modal, ModalBody, ModalTitle, Toast, InputGroup } from 'react-bootstrap'
+import Form from 'react-bootstrap/Form';
+import { useForm } from 'react-hook-form';
+
+// firebase
+import { gerarNomeImagem } from '../../components/validators/arquivo';
+import { useDropzone } from 'react-dropzone';
+import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
+import { storage } from '../../controllers/resgisterImg';
+
+// Components
 import Header from '../../components/molecules/header';
 import SideBarHome from '../../components/molecules/sideBarHome';
 import CardComponent from '../../components/molecules/cards';
-import Form from 'react-bootstrap/Form';
-import './index.css';
-import groupController from '../../controllers/group.controller';
-import FormWhatsapp from '../../components/molecules/FormWhatsapp/FormWhatsapp';
-import { useForm } from 'react-hook-form';
+import Background from '../../components/organism/background/Background'
 import Load from '../../components/molecules/load/Load';
 import FormInstagram from '../../components/molecules/FormInstagram/FormInstagram';
 import FormPix from '../../components/molecules/FormPix/FormPix';
-import pixController from '../../controllers/pixController';
+import FormWhatsapp from '../../components/molecules/FormWhatsapp/FormWhatsapp';
 import ToastInputError from '../../components/molecules/ToastInputError/ToastInputError';
 import ToastSuccess from '../../components/molecules/ToastSuccess/ToastSuccess';
+
+// controler
+import groupController from '../../controllers/group.controller';
+import pixController from '../../controllers/pixController';
 import authenticationController from '../../controllers/authentication.controller';
+
+// estilo
+import './index.css';
+
+
 const Home = () => {
   const [showToastInputError, setShowToastInputError] = useState(false)
   const [showToastSuccess, setShowToastSuccess] = useState(false)
+  const [file, setFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
 
   const [submitWhatsappDisabled, setSubmitWhatsappDisabled] = useState(false)
   const [submitInstagramDisabled, setSubmitInstagramDisabled] = useState(false)
   const [submitPixDisabled, setSubmitPixDisabled] = useState(false)
+  const [submitDisabled, setSubmitDisabled] = useState(false);
+
 
   const handleToastError = () => {
     setShowToastInputError(true)
@@ -36,14 +56,15 @@ const Home = () => {
       setShowToastSuccess(false)
     }, 2000)
   }
+  
 
-
+  // Forms
   const whatsappFormMethods = useForm()
   const instagramFormMethods = useForm()
   const pixFormMethods = useForm()
+  const groupFormMethods = useForm();
 
   const [loading, setLoading] = useState(true)
-
   const [group, setGroup] = useState({})
 
   const [whatsapp, setWhatsapp] = useState()
@@ -53,13 +74,17 @@ const Home = () => {
   const [showWhatsappModal, setWhatsappModal] = useState(false)
   const [showInstagramModal, setInstagramModal] = useState(false)
   const [showPixModal, setPixModal] = useState(false)
+  const [showGroupModal, setGroupModal] = useState(false);
 
+  // Controle de modais
   const handleShowWhatsappModal  = () => setWhatsappModal(true)
   const handleCloseWhatsappModal = () => {setWhatsappModal(false); setSubmitWhatsappDisabled(false)}
   const handleShowInstagramModal = () => setInstagramModal(true)
   const handleCloseInstagramModal = () => {setInstagramModal(false); setSubmitInstagramDisabled(false)}
   const handleClosePixModal = () => {setPixModal(false); setSubmitPixDisabled(false)}
   const handleShowPixModal = () => setPixModal(true)
+  const handleShowGroupModal = () => {setGroupModal(true); console.log(group)}
+  const handleCloseGroupModal = () => {setGroupModal(false); setSubmitDisabled(false);};
 
 
   // WHATSAPP SUBMIT
@@ -173,6 +198,36 @@ const Home = () => {
     })
   }
 
+  // Group submit
+
+  const handleGroupSubmit = (payload) => {
+    setSubmitDisabled(true);
+
+    Object.keys(payload).forEach(key => {
+      if (payload[key] === '' || payload[key] === group[key]) {
+        delete payload[key];
+      }
+    });
+      
+    if(payload.length) {
+      handleCloseGroupModal()
+    }
+    groupController.update(group.id, payload).then(response => {
+      if (response && response.success) {
+        // Apagar imagem antiga em caso de sucesso
+        if(file) deleteImg(group.picture);
+        setGroup(response.info.group);
+        handleToastSuccess();
+        handleCloseGroupModal();
+      } else {
+        // Apagar imagem nova em caso de erro no banco
+        deleteImg(payload.url)
+        handleToastError();
+      }
+      setSubmitDisabled(false);
+    });
+  };
+  
 
   useEffect(() => {
     authenticationController.isAuthenticate()
@@ -190,7 +245,7 @@ const Home = () => {
             setWhatsapp(socialMedia)
           }
 
-          if (socialMedia.plataform == 'INSTAGRAM') {
+          if (socialMedia.plataform === 'INSTAGRAM') {
             setInstagram(socialMedia)
           }
         })
@@ -201,19 +256,73 @@ const Home = () => {
       }
     })
   }, [])
+  // Img
+  
+  // Salvar imagem local
+  const onDrop = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (!validImageTypes.includes(file.type)) {
+        return;
+      }
+      setFile(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImageUrl(imageUrl);
+    }
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/jpeg, image/png, image/gif' });
+
+  const fistSubmitprofile = (e) => {
+    const payload = groupFormMethods.getValues();
+
+    // Se nao houver alteração de imagem
+    if (!file) {
+      handleGroupSubmit(payload);
+      return;
+    }
+
+    let nomeImg = gerarNomeImagem();
+    const storageRef = ref(storage, `images/${nomeImg}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {},
+      error => console.error(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(url => {
+          payload.picture = url;
+          handleGroupSubmit(payload);
+          // deleteImg(group.picture)
+        });
+      }
+    );
+  };
+
+  const deleteImg = useCallback(() => {
+    const { picture } = group;
+    if (!picture) return;
+    try {
+      const imageRef = ref(storage, picture);
+      deleteObject(imageRef);
+    } catch (error) {
+      console.error('Erro ao deletar a imagem:', error);
+    }
+  }, [group]);
+
+
+// const handleSubmit = useCallback(async () => { !! TROCAR PELA FUNÇÃO DO MODAL
 
 
   return (
     <>
-
+      <div className="body">
       {!loading && <div>
         <Header />
 
         <div className='container'>
-          <img src="./images/green.png" id='green' alt='mancha verde' />
-          <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
-          <img src="./images/pink.png" id='pink' alt='mancha rosa' />
-          <img src="./images/black.png" id='black' alt='mancha preta' />
+          <Background></Background>
           {/* Header */}
 
           {/* Sidebar */}
@@ -247,8 +356,9 @@ const Home = () => {
                 </center>
               </Row>
 
+              {/* Editar Grupo */}
               <Row className='mx-5 my-3'>
-                <Button variant='secondary' className='adopt-btn' disabled={true}>Editar Grupo (🛠️)</Button>
+                <Button variant='secondary' className='adopt-btn'  onClick={handleShowGroupModal}>Editar Grupo (🛠️)</Button>
               </Row>
 
 
@@ -319,7 +429,7 @@ const Home = () => {
       }
 
       { loading && <Load></Load>}
-
+    </div>
 
       {/* whatsapp modal */}
       <ToastInputError show={showToastInputError}/>
@@ -373,6 +483,54 @@ const Home = () => {
           <Button onClick={pixFormMethods.handleSubmit(handlePixSubmit)} disabled={submitPixDisabled}>Salvar</Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Group Edit Modal */}
+      <Modal show={showGroupModal} onHide={handleCloseGroupModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+        <Modal.Header closeButton>
+          <h3>Editar Grupo</h3>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="groupName">
+              <Form.Label>Nome do Grupo:</Form.Label>
+
+                <Form.Control
+                  type="text"
+                  placeholder={group.name}
+                  {...groupFormMethods.register('name')}
+                />
+
+            </Form.Group>
+            <Form.Group controlId="groupDescription" className="mt-3">
+              <Form.Label>Descrição:</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={4}
+                style={{ resize: 'none', height: '130px'}}
+                defaultValue={group.description}
+                {...groupFormMethods.register('description')}
+              />
+            </Form.Group>
+            <Form.Group controlId="groupImage" className="mt-3">
+              <Form.Label>Imagem do Grupo:</Form.Label>
+              <div {...getRootProps()} className="dropzone">
+                <input {...getInputProps()} />
+                
+                {file ? (
+                  <Image src={imageUrl} roundedCircle width="200" height="200" alt="Imagem do grupo" />
+                ) : (
+                    <Image src={group.picture} roundedCircle width="200" height="200" alt="Imagem do grupo"  />
+                )}
+              </div>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleCloseGroupModal}>Fechar</Button>
+          <Button onClick={groupFormMethods.handleSubmit(fistSubmitprofile)} disabled={submitDisabled}>Salvar</Button>
+        </Modal.Footer>
+      </Modal>
+
     </>
   );
 }
