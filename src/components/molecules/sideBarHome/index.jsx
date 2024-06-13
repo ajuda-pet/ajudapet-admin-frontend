@@ -16,8 +16,8 @@ const SideBarHome = ({ page }) => {
             <Row className='align-items-center d-none d-sm-flex'>
                 <Col className='sidebar px-4'>
                     <a className={`circle ${page === '/' ? 'home' : ''}`} href='/'><img src='./images/home.png' width='30' alt='Ícone de home' title='Home' /></a>
-                    <a className={`circle ${page === '/addPet' ? 'home' : ''}`} href='/addPet'><img src='./images/pet-icon-sidebar.png' width='30' alt='Ícone de animal de estimação' title='Adicionar Pet' /></a>
-                    <a className={`circle ${page === '/addAdoptPoint' ? 'home' : ''}`} href='/addAdoptPoint'><img src='./images/location-icon-sidebar.png' width='30' alt='Ícone de ponto de adoção' title='Adicionar Ponto de Adoção' /></a>
+                    <a className={`circle ${page === '/pets' ? 'home' : ''}`} href='/pets'><img src='./images/pet-icon-sidebar.png' width='30' alt='Ícone de animal de estimação' title='Adicionar Pet' /></a>
+                    <a className={`circle ${page === '/pontos' ? 'home' : ''}`} href='/pontos'><img src='./images/location-icon-sidebar.png' width='30' alt='Ícone de ponto de adoção' title='Adicionar Ponto de Adoção' /></a>
                 </Col>
             </Row>
             
