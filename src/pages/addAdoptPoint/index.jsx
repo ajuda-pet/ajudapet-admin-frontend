@@ -159,10 +159,8 @@ const AddAdoptPoint = () => {
         <>
             { !loading && <> 
                 <Header />
-                <img src="./images/green.png" id='green' alt='mancha verde' />
-                <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
-                <img src="./images/pink.png" id='pink' alt='mancha rosa' />
-                <img src="./images/black.png" id='black' alt='mancha preta' />
+
+              
             {/*  |<div className='pointForm'>
                     <PointForm />
                 </div> */}
@@ -170,10 +168,6 @@ const AddAdoptPoint = () => {
                 <SideBarHome page={'/addAdoptPoint'}/>
 
                 {/* Container dos pets */}
-
-                
-                
-                
                     <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
                         <h2> Pontos de Adoção </h2>
                         <hr class='my-4 bg-primary' />

@@ -322,7 +322,6 @@ const Home = () => {
         <Header />
 
         <div className='container'>
-          <Background></Background>
           {/* Header */}
 
           {/* Sidebar */}
@@ -341,7 +340,7 @@ const Home = () => {
               {/* Foto do Grupo */}
               <Row lg={12} className='mt-5 justify-content-center'>
                   <Col className='text-center'>
-                    <Image src="./images/ong-profile.jpg" width='250' roundedCircle />
+                <Image src={group.picture || "./images/ong-profile.jpg"} width='250' roundedCircle />
                   </Col>
               </Row>
 

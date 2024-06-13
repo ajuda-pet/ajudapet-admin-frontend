@@ -13,8 +13,7 @@ import { gerarNomeImagem } from '../../components/validators/arquivo';
 import { storage } from '../../controllers/resgisterImg';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import authenticationController from '../../controllers/authentication.controller';
-
-
+import Background from '../../components/organism/background/Background';
 
 function AddPet() {
     
@@ -48,7 +47,10 @@ function AddPet() {
 
     const [loading, setLoading] = useState(true)
     const methods = useForm()
+    const filterMethods = useForm()
 
+
+    const [addressCities, setAddressCities] = useState([])
 
 
     const [show, setShow] = useState(false)
@@ -142,7 +144,11 @@ function AddPet() {
         authenticationController.isAuthenticate()
 
         petController.getByGroupId().then((response) => {
-            setPets(response);
+            const pets = response
+
+            const cities = [...new Set(pets.map(pet => pet.adoptionPoint.addressCity))]
+            setPets(pets);
+            setAddressCities(cities)
             setLoading(false)
         });
     }, []);
@@ -151,14 +157,29 @@ function AddPet() {
         handleSubmitTwo()
     }, [dataPet])
 
+    const handleSubmitFilter = (params) => {
+        setLoading(true)
+
+        if (!params) {
+            filterMethods.reset()
+        }
+
+        petController.get(params).then(response => {
+            setPets(response)
+            setLoading(false)
+        })
+
+            .catch(error => {
+                console.error(error)
+                setLoading(false)
+            })
+
+    }
+
     return (
         <>
             {!loading && <> 
             <Header />
-            <img src="./images/green.png" id='green' alt='mancha verde' />
-            <img src="./images/yellow.png" id='yellow' alt='mancha amarela' />
-            <img src="./images/pink.png" id='pink' alt='mancha rosa' />
-            <img src="./images/black.png" id='black' alt='mancha preta' />
             {/* Sidebar */}
             <SideBarHome page='/addPet' />
 
@@ -172,49 +193,59 @@ function AddPet() {
 
                         {/*⚠️ Popular o endereço dos PETs */}
                         <Col xs={12} className='mt-2'>
-                            <Form.Select aria-label="Default select example" className='p-2'>
-                                <option>📍 Cidade</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <Form.Select aria-label="Default select example" className='p-2' {...filterMethods.register('addressCity')}>
+                                <option value=''>📍 Cidade</option>
+
+                                {addressCities.map(city => (
+                                    <option key={city} value={city}>📍 {city}</option>
+                                ))}
+
                             </Form.Select>
                         </Col>
                         <Row>
                             <Col xs={4} className='mt-2'>
-                                <Form.Select aria-label="Default select example" className='select p-2'>
-                                    <option>🎂 Idade</option>
-                                    <option value="1">Bebê</option>
-                                    <option value="2">Adulto</option>
-                                    <option value="3">Idoso</option>
+                                <Form.Select aria-label="Default select example" className='select p-2' {...filterMethods.register('age')}>
+                                    <option value=''>🎂 Idade</option>
+                                    <option value="BABY">🎂 Bebê</option>
+                                    <option value="ADULT">🎂 Adulto</option>
+                                    <option value="OLD">🎂 Idoso</option>
                                 </Form.Select>
                             </Col>
 
                             <Col xs={4} className='mt-2'>
-                                <Form.Select aria-label="Default select example" className='p-2'>
-                                    <option>📏 Tamanho</option>
-                                    <option value="1">Pequeno</option>
-                                    <option value="2">Médio</option>
-                                    <option value="3">Idoso</option>
+                                <Form.Select aria-label="Default select example" className='p-2' {...filterMethods.register('size')}>
+                                    <option value=''>📏 Tamanho</option>
+                                    <option value="SMALL">📏 Pequeno</option>
+                                    <option value="MEDIUM">📏 Médio</option>
+                                    <option value="LARGE">📏 Grande</option>
                                 </Form.Select>
                             </Col>
 
 
                             <Col xs={4} className='mt-2'>
-                                <Form.Select aria-label="Default select example" className='select p-2'>
-                                    <option>🐾 Espécie</option>
-                                    <option value="1">Cachorro</option>
-                                    <option value="2">Gato</option>
+                                <Form.Select aria-label="Default select example" className='select p-2' {...filterMethods.register('species')}>
+                                    <option value=''>🐾 Espécie</option>
+                                    <option value="DOG">🐾 Cachorro</option>
+                                    <option value="CAT">🐾  Gato</option>
                                 </Form.Select>
                             </Col>
                         </Row>
 
                         <Row className='mx-3 mt-2'>
-                            <Button variant='secondary' className='d-flex align-items-center justify-content-center text-center px-5 w-100' disabled={true}>
+                            <Button className='d-flex align-items-center justify-content-center text-center px-5 w-100 adopt-btn' onClick={filterMethods.handleSubmit(handleSubmitFilter)}>
                                 <span class="material-symbols-outlined">
                                     filter_alt
                                 </span>
                                 <span>
-                                    Filtrar (🛠️)
+                                    Filtrar
+                                </span>
+                            </Button>
+                            <Button variant='secondary' className='d-flex align-items-center justify-content-center text-center px-5 w-100 mt-2' onClick={() => filterMethods.handleSubmit(handleSubmitFilter(''))}>
+                                <span class="material-symbols-outlined">
+                                    ink_eraser
+                                </span>
+                                <span>
+                                    Limpar
                                 </span>
                             </Button>
                         </Row>
