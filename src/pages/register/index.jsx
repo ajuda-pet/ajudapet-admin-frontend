@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 // Validadores
@@ -16,7 +16,7 @@ import { gerarNomeImagem } from '../../components/validators/arquivo/index.js';
 import { handleStep, handleText, handleEmailChange, handleCPFChange, handlePhoneChange } from './funcoesRegister/index.js';
 
 // components
-import Background from '../../components/organism/background/Background.jsx';
+
 
 // Estilo
 
@@ -38,6 +38,14 @@ function Register() {
         picture: '',
     });
 
+    // Refs para os campos de input
+    const nameRef = useRef(null);
+    const phoneRef = useRef(null);
+    const cpfRef = useRef(null);
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const confirmPasswordRef = useRef(null);
+
     const [confirmPassword, setConfirmPassword] = useState('');
     const [file, setFile] = useState('');
     const [imageUrl, setImageUrl] = useState('');
@@ -45,7 +53,7 @@ function Register() {
     const [step, setStep] = useState(1);
 
     const handleStepWrapper = () => {
-        handleStep(formData, step, setStep, setError);
+        handleStep(formData, step, setStep, setError, imageUrl);
     };
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -67,10 +75,13 @@ function Register() {
 
     const fistSubmit = (e) => {
         e.preventDefault();
+
         const { cpf, email, phone, password } = formData;
         let cpfValidated = validateCPF(cpf);
         let emailValidated = validateEmail(email);
         let phoneValidated = validatePhoneNumber(phone);
+
+        // Validate passawordValidated = validatePassword(password)
 
         if (password === confirmPassword && cpfValidated && emailValidated && phoneValidated) {
             setError('');
@@ -89,10 +100,10 @@ function Register() {
                 }
             );
         } else {
-            if (!cpfValidated) setError('CPF inválido!');
-            if (!emailValidated) setError('Email inválido!');
-            if (password !== confirmPassword) setError('As senhas não são iguais!');
-            if (!phoneValidated) setError('Telefone inválido!');
+            if (!cpfValidated) { setError('CPF inválido!'); setStep(1); }
+            if (!emailValidated) {setError('Email inválido!');}
+            if (password !== confirmPassword) {setError('As senhas não são iguais!' ); }
+            if (!phoneValidated) {setError('Telefone inválido!'); setStep(1); }
         }
     };
 
@@ -141,6 +152,14 @@ function Register() {
         }, 5000);
     }, [location.state?.msg]);
 
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError('');
+            }, 6000);
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
     return (
         <div className="body">
             <div className="container-login">
@@ -179,6 +198,7 @@ function Register() {
                                                     value={formData.name}
                                                     onChange={(e) => setFormData(prevState => ({ ...prevState, name: e.target.value }))}
                                                     placeholder='Nome do Grupo'
+                                                    ref={nameRef}
                                                 />
                                             </div>
                                             <div className="input-form">
@@ -191,6 +211,7 @@ function Register() {
                                                     onChange={(e) =>{handlePhoneChange(e, setFormData)}}
                                                     placeholder='Telefone'
                                                     maxLength={15}
+                                                    ref={phoneRef}
                                                 />
                                             </div>
                                             <div className="input-form">
@@ -203,6 +224,7 @@ function Register() {
                                                     maxLength={14}
                                                     onChange={(e) =>{handleCPFChange(e, setFormData)}}
                                                     placeholder='CPF/CNPJ'
+                                                    ref={cpfRef}
                                                 />
                                             </div>
                                         
@@ -218,7 +240,7 @@ function Register() {
                                     <div className="input-form-img" {...getRootProps()}>
                                         <input {...getInputProps()} />
                                         {imageUrl ? <>
-                                        <img className='' src={imageUrl} alt='img' width='200' height='200' style={{borderRadius: '100px'}}/>
+                                        <img className='' src={imageUrl} alt='img' width='170' height='170' style={{borderRadius: '50%'}}/>
                                         </> : <>
                                         <p className='p-img'>Imagem que representa o grupo, clique ou arraste uma imagem</p>
                                         <p className='p-info'>OBS:imagem do grupo ajuda a ter mais credibilidade!</p></>}
@@ -262,6 +284,7 @@ function Register() {
                                                     value={formData.email}
                                                     onChange={(e)=>{handleEmailChange(e, setFormData)}}
                                                     placeholder='Email'
+                                                    ref={emailRef}
                                                 />
                                             </div>
                                             <div className="input-form">
@@ -273,6 +296,7 @@ function Register() {
                                                     value={formData.password}
                                                     onChange={(e) => setFormData(prevState => ({ ...prevState, password: e.target.value }))}
                                                     placeholder='Senha'
+                                                    ref={passwordRef}
                                                 />
                                             </div>
                                             <div className="input-form">
@@ -284,6 +308,7 @@ function Register() {
                                                     value={confirmPassword}
                                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                                     placeholder='Confirmar Senha'
+                                                    ref={confirmPasswordRef}
                                                 />
                                             </div>
                                         
