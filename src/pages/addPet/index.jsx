@@ -176,6 +176,31 @@ function AddPet() {
 
     }
 
+    const [pet, setPet] = useState({
+        name: '',
+        age: '',
+        size: '',
+        gender: '',
+        species: '',
+        description: '',
+        picture: '',
+        adoptionPoint: '',
+      });
+
+    const handlePetUpdate = (updatedPet, petIndex) => {
+        const newPets = [...pets];
+        const index = petIndex; // Define the 'index' variable
+        newPets[index] = updatedPet;
+        setPets(newPets);
+    };
+
+    const handlePetRemove = (removedPetId) => {
+        setPets(pets.filter(pet => pet.id !== removedPetId));
+    };
+
+    useEffect(() => {}, [pets]);
+
+
     return (
         <>
             {!loading && <> 
@@ -274,9 +299,9 @@ function AddPet() {
 
                         <CardGroup className='mt-5' >
                             <Row style={{minWidth: '100%'}}>
-                                {pets && pets.map((pet) => (
+                                {pets && pets.map((pet, index) => (
                                     <Col md={4} sm={6}>
-                                        <CardComponent key={pet.id} pet={pet} />
+                                        <CardComponent pet={pet} onPetUpdate={(updatedPet) => handlePetUpdate(updatedPet, index)} onPetRemove={handlePetRemove} />
                                     </Col>
                                 ))}
                             </Row>
