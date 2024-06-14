@@ -79,7 +79,7 @@ const petController = {
         }
     },
 
-    updated: async(petId, payload) => {
+    update: async(petId, payload) => {
         try {
             const response = await axios.put(`${authEndpoint}/${petId}`, payload, {
                 headers: {
@@ -96,7 +96,23 @@ const petController = {
         catch (error) {
             console.error(error)
         }
-    }
+    },
+
+    remove: async (petId) => {
+        try {
+            const response = await axios.delete(`${authEndpoint}/${petId}`, {
+                headers: {
+                    'Authorization': window.localStorage.getItem('token'),
+                },
+            });
+
+            if (!response.data.success) {
+                return response.data.message;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    },
 }
 
 export default petController
