@@ -5,10 +5,12 @@ import { formatPhoneNumber } from "../../../components/validators/telefone";
 import { formatCPF } from "../../../components/validators/cpf";
 
 // Alterar pagina
-export const handleStep = (formData, step, setStep, setError) => {
+export const handleStep = (formData, step, setStep, setError, imageUrl) => {
     const { name, description, phone, cpf } = formData;
-    if ((name === '' || cpf === '' || phone === '') && step === 1) {
+    if ((name === '' || cpf === '' || phone === '' ) && step === 1) {
         setError('Complete todos os campos!');
+    } else if (!imageUrl && step === 2) {
+        setError('Escolha uma imagem que represente o grupo!');
     } else if (description === '' && step === 3) {
         setError('Complete todos os campos!');
     } else {

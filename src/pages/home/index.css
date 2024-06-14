@@ -71,3 +71,17 @@ select {
     border-radius: 50px !important;
     background-color: #fff !important;
 }
+
+.dropzone{
+    border-radius: 50%;
+    max-width: 210px;
+    text-align: center;
+    margin: 0 auto;
+}
+.dropzone img{
+    transition: 0.5s;
+}
+.dropzone:hover img {
+    cursor: pointer;
+    filter: grayscale(30%);
+}

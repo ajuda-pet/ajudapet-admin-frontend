@@ -206,7 +206,7 @@ function AddPet() {
             {!loading && <> 
             <Header />
             {/* Sidebar */}
-            <SideBarHome page='/addPet' />
+            <SideBarHome page='/pets' />
 
             {/* <div className='petForm'>
                 <PetForm />

@@ -4,9 +4,6 @@ import Navbar from 'react-bootstrap/Navbar'
 import { Button, Col, Offcanvas, Row } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 import './index.css'
-import { Link } from 'react-router-dom'
-
-
 
 const logout = () => {
     window.localStorage.removeItem('token')
@@ -61,8 +58,8 @@ function Header() {
                             </Row>
                         </a>
 
-                        <a href='/addPet' className='anchor'>
-                        <Row className={`p-2 ${window.location.pathname == '/addPet' ? 'off-canva-item-target' : 'off-canva-item'}`}>
+                        <a href='/pets' className='anchor'>
+                        <Row className={`p-2 ${window.location.pathname == '/pets' ? 'off-canva-item-target' : 'off-canva-item'}`}>
                                 <Col xs={12}> 
                                     <img src='./images/pets.png' width='30'></img> &nbsp;
                                     <span>Pets</span>
@@ -70,8 +67,8 @@ function Header() {
                             </Row>
                         </a>
 
-                        <a href='/addAdoptPoint' className='anchor'>
-                        <Row className={`p-2 ${window.location.pathname == '/addAdoptPoint' ? 'off-canva-item-target' : 'off-canva-item'}`}>
+                        <a href='/pontos' className='anchor'>
+                        <Row className={`p-2 ${window.location.pathname == '/pontos' ? 'off-canva-item-target' : 'off-canva-item'}`}>
                                 <Col xs={12}> 
                                     <img src='./images/location.png' width='30'></img> &nbsp;
                                     <span>Pontos</span>
