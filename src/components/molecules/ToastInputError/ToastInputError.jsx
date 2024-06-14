@@ -1,0 +1,16 @@
+import { Toast } from "react-bootstrap"
+
+const ToastInputError = ({ show }) => {
+    return (
+        <>
+            <Toast bg='danger' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={show}>
+                <Toast.Header>
+                    <strong className="mr-auto">Atenção</strong>
+                </Toast.Header>
+                <Toast.Body>Preencha todos os campos corretamente!</Toast.Body>
+            </Toast>
+        </>
+    )
+}
+
+export default ToastInputError

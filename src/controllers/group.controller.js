@@ -8,19 +8,16 @@ const groupController = {
     getById: async (groupId) => {
         try { 
             const response = await axios.get(`${noAuthEndpoint}/${groupId}`)
-
-            /* if (!response.data.success) {
-                return response.data.message
-            } */
-
-            return response.data.info.pets
+            return response.data
         }
 
         catch (error) {
             console.error(error)
+            if (error.response.status == 404) {
+                window.location.href = '/login'
+            }
         }
-    },
-
+    }, 
 
     getAdoptionPoints: async () => {
         try {
@@ -36,7 +33,56 @@ const groupController = {
         catch (error) {
             console.error(error)
         }
-    }
+    },
+
+    createSocialMedia: async (socialMedia) => {
+        try {
+            const response = await axios.post(`${authGroupsEndpoint}/social-media`, socialMedia, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': window.localStorage.getItem('token')
+                }
+            })
+
+            return response.data
+        }
+
+        catch (error) {
+            console.error(error)
+        }
+    },
+
+    updateSocialMedia: async (socialMediaId, account, plataform) => {
+        try {
+            const response = await axios.put(`${authGroupsEndpoint}/social-media/${plataform}`, account, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': window.localStorage.getItem('token')
+                }
+            })
+
+            return response.data
+        }
+
+        catch (error) {
+            console.error(error)
+        }
+    },
+
+    update: async (groupId, groupData) => {
+        try {
+          console.log(groupData)
+          const response = await axios.put(`${authGroupsEndpoint}`, groupData, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': window.localStorage.getItem('token')
+            }
+          });
+          return response.data;
+        } catch (error) {
+          console.error(error);
+        }
+      }
 }
 
 export default groupController
