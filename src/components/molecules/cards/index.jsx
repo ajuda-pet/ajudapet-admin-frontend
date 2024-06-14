@@ -61,7 +61,6 @@ const CardComponent = ({ pet, onPetUpdate, onPetRemove }) => {
     };
 
     const handleFormSubmit = (event) => {
-        console.log(event, "AQUI")
         if (event) {
             onPetUpdate(event);
         } else {
