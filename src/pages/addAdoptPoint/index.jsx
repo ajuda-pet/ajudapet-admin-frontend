@@ -169,7 +169,10 @@ const AddAdoptPoint = () => {
 
                 {/* Container dos pets */}
                     <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
-                        <h2> Pontos de Adoção </h2>
+                        <h3> 
+                            <img src='./images/point-icon.png' width='60'></img> &nbsp;
+                            Pontos de Adoção 
+                        </h3>
                         <hr class='my-4 bg-primary' />
 
                         <Button className='d-flex align-items-center justify-content-center text-center px-5 w-100 my-4 adopt-btn' onClick={handleShow}>
@@ -194,7 +197,10 @@ const AddAdoptPoint = () => {
 
             <Modal show={show} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>🐾 Cadastro de Ponto de Adoção</Modal.Title>
+                    <Modal.Title>
+                        <img src='./images/point-icon.png' width='60'></img> &nbsp;
+                        Cadastro de Ponto de Adoção
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {step == 1 &&

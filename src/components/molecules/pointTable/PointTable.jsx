@@ -7,7 +7,7 @@ const PointTable = ({ points }) => {
         <>
             {!points.length && <Alert>Cadastre seu ponto de adoção!</Alert>}
 
-            {points.length && <Table striped bordered hover size="sm">
+            {points.length > 0 && <Table striped bordered hover size="sm">
                 <thead className='p-5'>
                     <tr>
                         <th>🏡 Ponto de Adoção</th>

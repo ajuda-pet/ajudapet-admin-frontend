@@ -198,7 +198,7 @@ const Step3 = ({ register, setValue }) => {
                 </Row>
                 <Row>
                     <Col>
-                        <MapContainer center={[-32.044254048708105, -52.122076770802614]} zoom={10} style={{ height: '500px', width: '500px' }}>
+                        <MapContainer center={[-32.044254048708105, -52.122076770802614]} zoom={3} style={{ height: '50vh', width: '95%' }}>
                             <TileLayer
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
