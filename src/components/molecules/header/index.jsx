@@ -30,10 +30,9 @@ function Header() {
                     <Navbar.Brand href="/"> <img src='./images/header-logo.png' width='210' /></Navbar.Brand>
 
                     <Navbar.Toggle aria-controls="" onClick={handleOpenOffCanva} />
-
                         <Nav.Link onClick={logout} className='d-none d-lg-block'>
-                            <Button variant='danger' className="d-flex align-items-center btn-danger">
-                                <span>🐾 Logout &nbsp;&nbsp;</span>
+                            <Button className="d-flex align-items-center btn-danger logout-btn">
+                                <span>Logout &nbsp;&nbsp;</span>
                                 <span className="material-symbols-outlined">logout</span>
                             </Button>
                         </Nav.Link>
