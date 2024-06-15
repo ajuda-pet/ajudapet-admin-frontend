@@ -230,7 +230,7 @@ function Register() {
                                         
                                         <div className="footer-login">
                                             <button type='button' className="btn1" onClick={handleStepWrapper}>Próximo</button>
-                                            <button type='button' className="btn-volta btn-neutro" onClick={() => window.location.href = '/login'}>Voltar</button>
+                                            <button type='button' className="btn-volta btn-neutro" onClick={() => navigate('/login')}>Voltar</button>
                                         </div>
                                     </>
                                 )}
