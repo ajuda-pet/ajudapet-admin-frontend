@@ -1,6 +1,6 @@
 // bibliotecas
 import React, { useEffect, useState, useCallback } from 'react';
-import { Container, Row, Col, Button, CardGroup, Table, Alert, Image, Card, Modal, ModalBody, ModalTitle, Toast, InputGroup } from 'react-bootstrap'
+import { Container, Row, Col, Button, Alert, Image, Card, Modal, InputGroup } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 
@@ -13,8 +13,6 @@ import { storage } from '../../controllers/resgisterImg';
 // Components
 import Header from '../../components/molecules/header';
 import SideBarHome from '../../components/molecules/sideBarHome';
-import CardComponent from '../../components/molecules/cards';
-import Background from '../../components/organism/background/Background'
 import Load from '../../components/molecules/load/Load';
 import FormInstagram from '../../components/molecules/FormInstagram/FormInstagram';
 import FormPix from '../../components/molecules/FormPix/FormPix';
@@ -83,8 +81,8 @@ const Home = () => {
   const handleCloseInstagramModal = () => {setInstagramModal(false); setSubmitInstagramDisabled(false)}
   const handleClosePixModal = () => {setPixModal(false); setSubmitPixDisabled(false)}
   const handleShowPixModal = () => setPixModal(true)
-  const handleShowGroupModal = () => {setGroupModal(true); console.log(group)}
-  const handleCloseGroupModal = () => {setGroupModal(false); setSubmitDisabled(false);};
+  const handleShowGroupModal = () => setGroupModal(true)
+  const handleCloseGroupModal = () => {setGroupModal(false); setSubmitDisabled(false); groupFormMethods.reset() };
 
 
   // WHATSAPP SUBMIT
@@ -331,16 +329,20 @@ const Home = () => {
 
 
         <div className='px-3'>
-            <Container className='mt-5 ml-5 container-pets p-3 mb-5'>
+            <Container className='mt-4 ml-5 container-pets p-3 mb-5'>
               <h2> Dados Gerais do Grupo </h2>
               <hr className='my-4 bg-primary' /> 
 
-            <Alert variant='warning'> É importante <strong>deixar as informações de contato e pix atualizadas</strong> para receber doações ou adoção de pets.</Alert>
+            <Alert variant='secondary'> 
+              <center>
+                  🐾 Para receber ser divulgado em nossa plataforma <strong>preencha todos dados do grupo!</strong>
+              </center>
+            </Alert>
 
               {/* Foto do Grupo */}
               <Row lg={12} className='mt-5 justify-content-center'>
                   <Col className='text-center'>
-                <Image src={group.picture || "./images/ong-profile.jpg"} width='250' roundedCircle />
+                <Image src={group.picture || "./images/ong-profile.jpg"} width='250' roundedCircle className='group-image'/>
                   </Col>
               </Row>
 
@@ -357,7 +359,7 @@ const Home = () => {
 
               {/* Editar Grupo */}
               <Row className='mx-5 my-3'>
-                <Button variant='secondary' className='adopt-btn'  onClick={handleShowGroupModal}>Editar Grupo (🛠️)</Button>
+                <Button variant='secondary' className='adopt-btn'  onClick={handleShowGroupModal}>Editar</Button>
               </Row>
 
 
@@ -486,44 +488,53 @@ const Home = () => {
       {/* Group Edit Modal */}
       <Modal show={showGroupModal} onHide={handleCloseGroupModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>
+          <img src='./images/group-icon.png' width='50'></img> &nbsp;
           <h3>Editar Grupo</h3>
         </Modal.Header>
+
         <Modal.Body>
+          <Form.Group controlId="groupImage" className="mb-3">
+            <div {...getRootProps()} className="dropzone">
+              <input {...getInputProps()} />
+
+              {file ?
+                <Image src={imageUrl} roundedCircle width="200" height="200" alt="Imagem do grupo" className='group-image'/> :
+                <Image src={group.picture} roundedCircle width="200" height="200" alt="Imagem do grupo" className='group-image' />
+              }
+
+            </div>
+          </Form.Group>
+
           <Form>
             <Form.Group controlId="groupName">
-              <Form.Label>Nome do Grupo:</Form.Label>
-
-                <Form.Control
-                  type="text"
-                  placeholder={group.name}
-                  {...groupFormMethods.register('name')}
-                />
-
+                <InputGroup>
+                  <InputGroup.Text>Grupo</InputGroup.Text>
+                  <Form.Control
+                    type="text"
+                    placeholder={group.name}
+                    {...groupFormMethods.register('name')}
+                  />
+                </InputGroup>
             </Form.Group>
+
             <Form.Group controlId="groupDescription" className="mt-3">
-              <Form.Label>Descrição:</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={4}
-                style={{ resize: 'none', height: '130px'}}
-                defaultValue={group.description}
-                {...groupFormMethods.register('description')}
-              />
+              <InputGroup>
+                <InputGroup.Text>Descrição</InputGroup.Text>
+                <Form.Control
+                  as="textarea"
+                  rows={4}
+                  style={{ resize: 'none', height: '130px'}}
+                  defaultValue={group.description}
+                  {...groupFormMethods.register('description')}
+                />
+              </InputGroup>
             </Form.Group>
-            <Form.Group controlId="groupImage" className="mt-3">
-              <Form.Label>Imagem do Grupo:</Form.Label>
-              <div {...getRootProps()} className="dropzone">
-                <input {...getInputProps()} />
-                
-                {file ? (
-                  <Image src={imageUrl} roundedCircle width="200" height="200" alt="Imagem do grupo" />
-                ) : (
-                    <Image src={group.picture} roundedCircle width="200" height="200" alt="Imagem do grupo"  />
-                )}
-              </div>
-            </Form.Group>
+
+              
+           
           </Form>
         </Modal.Body>
+
         <Modal.Footer>
           <Button variant='secondary' onClick={handleCloseGroupModal}>Fechar</Button>
           <Button onClick={groupFormMethods.handleSubmit(fistSubmitprofile)} disabled={submitDisabled}>Salvar</Button>

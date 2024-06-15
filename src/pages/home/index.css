@@ -85,3 +85,9 @@ select {
     cursor: pointer;
     filter: grayscale(30%);
 }
+
+.group-image {
+    background-color: #f4f4f4;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6) !important;
+}
