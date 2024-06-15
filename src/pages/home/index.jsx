@@ -336,7 +336,7 @@ const Home = () => {
               </h3>
               <hr className='my-4 bg-primary' /> 
 
-            <Alert variant='secondary'> 
+            <Alert> 
               <center>
                   Para receber ser divulgado em nossa plataforma <strong>preencha todos dados do grupo!</strong>
               </center>
