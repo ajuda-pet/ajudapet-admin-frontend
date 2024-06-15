@@ -97,7 +97,7 @@ function AddPet() {
         if(payload.picture) {
             let nomeImg = gerarNomeImagem();
             const sendfirebase = async () =>  {
-                const storageRef = ref(storage, `pets/${nomeImg}`);
+                const storageRef = ref(storage, `images/pets/${nomeImg}`);
                 await uploadBytes(storageRef, payload.picture);
                 const url = await getDownloadURL(storageRef);
 

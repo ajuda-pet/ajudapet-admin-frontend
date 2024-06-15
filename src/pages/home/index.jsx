@@ -282,7 +282,7 @@ const Home = () => {
     }
 
     let nomeImg = gerarNomeImagem();
-    const storageRef = ref(storage, `images/${nomeImg}`);
+    const storageRef = ref(storage, `images/groups/${nomeImg}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
       "state_changed",
