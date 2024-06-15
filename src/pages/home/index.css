@@ -91,3 +91,14 @@ select {
     border: 0.5px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6) !important;
 }
+
+.logout-btn {
+    background-color: #2f3e50 !important;
+    border-color: #101924 !important;
+}
+
+.logout-btn:hover {
+    background-color: #253344 !important;
+    border-color: #101924 !important;
+    scale: 1.01;
+}

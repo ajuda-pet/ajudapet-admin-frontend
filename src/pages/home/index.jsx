@@ -329,13 +329,16 @@ const Home = () => {
 
 
         <div className='px-3'>
-            <Container className='mt-4 ml-5 container-pets p-3 mb-5'>
-              <h2> Dados Gerais do Grupo </h2>
+            <Container className='mt-4 ml-5 container-pets p-3 mb-2'>
+              <h3> 
+               <img src='./images/group-icon.png' width='50'></img> &nbsp;
+                Dados do Grupo 
+              </h3>
               <hr className='my-4 bg-primary' /> 
 
             <Alert variant='secondary'> 
               <center>
-                  🐾 Para receber ser divulgado em nossa plataforma <strong>preencha todos dados do grupo!</strong>
+                  Para receber ser divulgado em nossa plataforma <strong>preencha todos dados do grupo!</strong>
               </center>
             </Alert>
 
@@ -361,7 +364,6 @@ const Home = () => {
               <Row className='mx-5 my-3'>
                 <Button variant='secondary' className='adopt-btn'  onClick={handleShowGroupModal}>Editar</Button>
               </Row>
-
 
               <Row className='mt-5 mb-5'>
                 <Col xs={12} lg={4} className='my-3'>
