@@ -5,6 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../components/validators/email';
 import { loginUser } from '../../controllers/login';
 
+// Controller
+import authenticationController from '../../controllers/authentication.controller';
+
 // Estilos
 import './index.css';
 import Load from '../../components/molecules/load/Load';
@@ -63,6 +66,17 @@ function Login() {
 
   }, [location.state?.msg]);
 
+  useEffect(()=> {
+    authenticationController.isAuthenticate().then(isAuthenticated => {
+      if (isAuthenticated) {
+          //console.log("Usuário está autenticado");
+          navigate('/')
+      } else {
+          //console.log("Usuário não está autenticado");
+      }
+  });
+  
+  }, [])
 
 
   return (
