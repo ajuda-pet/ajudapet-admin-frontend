@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Troque 'Switch' por 'Routes'
-import Login from './pages/login/index.jsx';
+import Login from './pages/Login/Login.jsx';
 import Register from './pages/register/index.jsx';
 import Home from './pages/home/index.jsx';
 import NotFoundPage from './pages/notFoundPage/index.jsx';
