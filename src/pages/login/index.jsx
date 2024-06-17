@@ -15,6 +15,17 @@ import Load from '../../components/molecules/load/Load';
 function Login() {
   localStorage.removeItem("authenticated");
   const navigate = useNavigate();
+  useEffect(()=> {
+    authenticationController.isAuthenticate().then(isAuthenticated => {
+      if (isAuthenticated) {
+          //console.log("Usuário está autenticado");
+          navigate('/')
+      } else {
+          //console.log("Usuário não está autenticado");
+      }
+  });
+  
+  }, [navigate])
   const [loading, setLoading] = useState(false)
   const location = useLocation();
 
@@ -66,17 +77,7 @@ function Login() {
 
   }, [location.state?.msg]);
 
-  useEffect(()=> {
-    authenticationController.isAuthenticate().then(isAuthenticated => {
-      if (isAuthenticated) {
-          //console.log("Usuário está autenticado");
-          navigate('/')
-      } else {
-          //console.log("Usuário não está autenticado");
-      }
-  });
   
-  }, [])
 
 
   return (

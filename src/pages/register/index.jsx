@@ -171,7 +171,7 @@ function Register() {
           }
       });
       
-      }, [])
+      }, [navigate])
     return (
         <div className="body">
             <div className="container-login">
