@@ -1,19 +1,18 @@
-import { useState } from "react"
-import { Button, Col, Form, InputGroup, Row } from "react-bootstrap"
+import { useEffect, useState } from "react"
+import { Button, Form, InputGroup, Row } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import signinController from "../../controllers/signin.controller"
 import { useNavigate } from "react-router-dom"
+import { ToastError, setToastError } from "../Toast/ToastError"
 
 import styles from './FormSinup.module.css'
 
 const FormSignup = () => {
-
     const navigate = useNavigate()
     const [validated, setValidated] = useState(false)
     const signinForm = useForm()
-
+    
     const handleGoogleLogin = () => alert('Em desenvolvimento')
-
     const handleRegister = () => navigate('/register')
 
     const handleSignin = (event) => {
@@ -29,7 +28,8 @@ const FormSignup = () => {
         
         signinController.signin(payload).then(response => {
             if (!response.success) {
-                alert(response.message)
+                setToastError(response.message)
+                return
             }
 
             const { group, token } = response.info
@@ -42,6 +42,7 @@ const FormSignup = () => {
 
     return (
         <>
+            <ToastError message='Ops, ocorreu um erro'></ToastError>
             <Form noValidate className='px-4 my-5' validated={validated} onSubmit={handleSignin}>
 
                 <center> <h5 className='mt-5 mb-4'>Tecnologia a favor dos pets!</h5> </center>
