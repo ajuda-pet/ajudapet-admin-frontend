@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button, Form, InputGroup, Row } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import signinController from "../../controllers/signin.controller"
 import { useNavigate } from "react-router-dom"
 import { ToastError, setToastError } from "../Toast/ToastError"
 
-import styles from './FormSinup.module.css'
+import styles from './FormSignin.module.css'
 
-const FormSignup = () => {
+const FormSignin = () => {
     const navigate = useNavigate()
     const [validated, setValidated] = useState(false)
     const signinForm = useForm()
     
     const handleGoogleLogin = () => alert('Em desenvolvimento')
-    const handleRegister = () => navigate('/register')
+    const handleRegister = () => navigate('/cadastro')
 
     const handleSignin = (event) => {
         event.preventDefault()
@@ -41,8 +41,9 @@ const FormSignup = () => {
     }
 
     return (
-        <>
-            <ToastError message='Ops, ocorreu um erro'></ToastError>
+        <>            
+            <ToastError></ToastError>
+
             <Form noValidate className='px-4 my-5' validated={validated} onSubmit={handleSignin}>
 
                 <center> <h5 className='mt-5 mb-4'>Tecnologia a favor dos pets!</h5> </center>
@@ -84,4 +85,4 @@ const FormSignup = () => {
     )
 }
 
-export default FormSignup
+export default FormSignin
