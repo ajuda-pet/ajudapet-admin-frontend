@@ -112,7 +112,7 @@ const Home = () => {
       return
     }
 
-    groupController.createSocialMedia({ ...payload, plataform: 'WHATSAPP', url: '.'}).then(response => {
+    groupController.createSocialMedia({ ...payload, plataform: 'WHATSAPP'}).then(response => {
       if (response && response.success) {
         setWhatsapp(response.info.newSocialMedia)
       }
@@ -136,11 +136,7 @@ const Home = () => {
     }
 
     if (instagram) {
-      groupController.updateSocialMedia(instagram.id, {
-        ...payload, 
-        url: `https://instagram.com/${payload.account}`}, 
-        'instagram'
-      ).then(response => {
+      groupController.updateSocialMedia(instagram.id, {...payload, }, 'instagram').then(response => {
 
         if (response && response.success) {
           setInstagram(response.info.socialMedia)

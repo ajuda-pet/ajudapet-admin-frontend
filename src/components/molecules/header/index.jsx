@@ -2,26 +2,23 @@ import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import { Button, Col, Offcanvas, Row } from 'react-bootstrap'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './index.css'
+import { useNavigate } from 'react-router-dom'
 
-const logout = () => {
-    window.localStorage.removeItem('token')
-    window.location.reload()
-}
 
 function Header() {
+    const navigate = useNavigate()
     const [showOffCanva, setOffCanva] = useState(false)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-
+    
     const handleOpenOffCanva = () => setOffCanva(true)
     const handleCloseOffCanva = () => setOffCanva(false)
-
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setIsLoggedIn(!!token)
-    }, []);
+    
+    const logout = () => {
+        window.localStorage.removeItem('token')
+        window.localStorage.removeItem('groupId')
+        navigate('/login')
+    }
 
     return (
         <>

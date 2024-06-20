@@ -5,6 +5,48 @@ const noAuthEndpoint = `${baseApi}/noauth/groups`
 const authGroupsEndpoint = `${baseApi}/auth/groups`
 
 const groupController = {
+    getGroupByEmail: async (email) => {
+        try {
+            const response = await axios.get(`${noAuthEndpoint}?email=${email}`)
+            return response.data
+        }
+
+        catch (error) {
+            console.error(error)
+            if (error.response && error.response.data) {
+                return error.response.data
+            }
+        }
+    },
+
+    getGroupByName: async (name) => {
+        try {
+            const response = await axios.get(`${noAuthEndpoint}?name=${name}`)
+            return response.data
+        }
+
+        catch (error) {
+            console.error(error)
+            if (error.response && error.response.data) {
+                return error.response.data
+            }
+        }
+    },
+
+    getGroupByCpfCnpj: async (cpfCnpj) => {
+        try {
+            const response = await axios.get(`${noAuthEndpoint}?cpfCnpj=${cpfCnpj}`)
+            return response.data
+        }
+
+        catch (error) {
+            console.error(error)
+            if (error.response && error.response.data) {
+                return error.response.data
+            }
+        }
+    },
+
     getById: async (groupId) => {
         try { 
             const response = await axios.get(`${noAuthEndpoint}/${groupId}`)
