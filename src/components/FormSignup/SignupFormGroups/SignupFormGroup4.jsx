@@ -45,11 +45,6 @@ const SignupFormGroup4 = ({ next, previus, signupForm}) => {
     
     const handlePreviusStep = previus
     const handleNextStep = (event) => {
-
-        setTimeout(() => {
-            setToastWarning('Aguarde um momento, o servidor está acordando')
-        }, 2000)
-        
         event.preventDefault()
         const payload = signupForm.getValues()
 
@@ -97,7 +92,6 @@ const SignupFormGroup4 = ({ next, previus, signupForm}) => {
     return (
         <>
             <ToastError></ToastError>
-            <ToastWarning></ToastWarning>
 
             <Form noValidate validated={validated} onSubmit={handleNextStep}>
                 <FormGroup className='mt-2'>
