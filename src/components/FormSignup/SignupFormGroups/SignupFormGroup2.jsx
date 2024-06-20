@@ -13,11 +13,8 @@ const SignupFormGroup2 = ({ next, previus, signupForm }) => {
         if (!file) return
 
         const url = URL.createObjectURL(file)
-
         setPictureUrl(url)
-        signupForm.setValue('picture', url)
-
-        console.log(signupForm)
+        signupForm.setValue('picture', file)
     }
 
     const handleNextStep = (event) => {
@@ -28,13 +25,17 @@ const SignupFormGroup2 = ({ next, previus, signupForm }) => {
             setValidated(true)
             return
         }
+
         next()
     }
 
     useEffect(() => {
+        const file = signupForm.getValues('picture')
 
-        console.log(signupForm.getValues('picture'))
-        setPictureUrl(signupForm.getValues('picture') || '')
+        if (file) {
+            const url = URL.createObjectURL(file)
+            setPictureUrl(url)
+        }
     }, [])
 
 
@@ -76,7 +77,7 @@ const SignupFormGroup2 = ({ next, previus, signupForm }) => {
                 
 
                 <footer className='mt-5 d-flex justify-content-end'>
-                    <Button className='mx-1' style={{ minWidth: '20%' }} variant='danger' onClick={handlePreviusStep}> Voltar </Button>
+                    <Button className='mx-1' style={{ minWidth: '20%' }} variant='secondary' onClick={handlePreviusStep}> Voltar </Button>
                     <Button className='mx-1' style={{ minWidth: '20%' }} variant='dark' type='submit'> Próximo </Button>
                 </footer>
             </Form>

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { baseApi } from '../resources/api'
 
 const signinController = {
-    signin: async (payload, callback) => {
+    signin: async (payload) => {
         try {
             const response = await axios.post(`${baseApi}/noauth/signin`, payload, {
                 headers: { 

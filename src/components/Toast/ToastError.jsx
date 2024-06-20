@@ -25,8 +25,8 @@ const ToastError = ({ show }) => {
         <>
         <ToastContainer position='top-end' className='m-1'>
                 <Toast show={showToastError} bg='danger' onClose={toggleShow}>
-                <ToastHeader>Mensagem de erro!</ToastHeader>
-                <ToastBody>{messageToastError}</ToastBody>
+                <ToastHeader><h5>Mensagem de erro! 😿</h5></ToastHeader>
+                <ToastBody><span>{messageToastError || 'Ocorreu um erro no servidor.'}</span></ToastBody>
             </Toast>
         </ToastContainer>
         </>
