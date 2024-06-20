@@ -1,10 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, setValue } from 'react-hook-form';
+import axios from 'axios';
 import './form.css'
-import { Card, InputGroup, Row, Col, Form, Alert } from 'react-bootstrap';
+import { Card, InputGroup, Row, Col, Form, Alert, Toast } from 'react-bootstrap';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { formatCEP, extractNumbers } from '../../validators/cep';
 
 import L from 'leaflet';
+
+
+// busca por cep
+
+const fetchAddress = async (cep, setValue, setShowToast, setCep) => {
+    try {
+        const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = response.data;
+        //console.log(data)
+        if (data.erro) {
+            
+            setValue("addressState", "");
+            setValue("addressCity", "");
+            setValue("addressNeighborhood", "");
+            setValue("addressStreet", "");
+            setValue('postalCode', "")
+            setShowToast(true)
+            setCep('')
+        } else {
+            setValue("addressState", data.uf);
+            setValue("addressCity", data.localidade);
+            setValue("addressNeighborhood", data.bairro);
+            setValue("addressStreet", data.logradouro);
+            
+        }
+    } catch (error) {
+        console.error("Erro ao buscar o CEP", error);
+    }
+};
+
 
 const Step1 = ({ register }) => {
     return (
@@ -34,7 +66,35 @@ const Step1 = ({ register }) => {
     )
 }
 
-const Step2 = ({ register }) => {
+const Step2 = ({ register, setValue }) => {
+    const [showToast, setShowToast] = useState(false);
+    const ToastError = () => {
+        return (
+            <Toast bg='danger' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToast} onClose={() => setShowToast(false)}>
+                <Toast.Header>
+                    <strong className="mr-auto">😿 Atenção</strong>
+                </Toast.Header>
+                <Toast.Body>Erro ao encontrar CEP. Tente novamente!</Toast.Body>
+            </Toast>
+        )
+    }
+    const [cep2, setCep] = useState()
+
+    const handleCepChange = (e) => {
+        let value = extractNumbers(e.target.value)
+        //console.log('foi', register('postalCode').value)
+        if (value.length > 8) {
+            setCep(cep2);
+            value = cep2
+        }
+        
+        
+        if (value.length === 8) {
+            fetchAddress(value, setValue, setShowToast, setCep);
+        }
+        setCep(formatCEP(value))//no form
+    };
+
     const [groupId, setGroupId] = useState(null);
 
     useEffect(() => {
@@ -43,8 +103,20 @@ const Step2 = ({ register }) => {
         }
     }, []);
 
+    useEffect(() => {
+        let timer
+        if (showToast) {
+            timer = setTimeout(() => {
+                setShowToast(false)
+            }, 2000)
+        }
+
+        return () => clearTimeout(timer);
+    }, [showToast])
+
     return (
         <Card className='form-container'>
+            <ToastError></ToastError>
             <Card.Title>📍 Endereço</Card.Title>
             <Card.Body>
                 <Row>
@@ -54,7 +126,11 @@ const Step2 = ({ register }) => {
                             placeholder="Ex: 06194-070"
                             aria-label="Código Postal"
                             aria-describedby="basic-addon1"
+                            
+                            
                             {...register('postalCode')}
+                            onChange={(e)=>handleCepChange(e)}
+                            value={cep2}
                         />
                     </InputGroup>
                 </Row>
@@ -241,19 +317,19 @@ const Step3 = ({ register, setValue }) => {
 const PointForm = ({ step, register, setValue }) => {
     return (
         <>
-            {step == 1 &&
+            {step === 1 &&
                 <>
                     <Alert className='my-4'>Lembre-se de cadastrar um nome legal para o ponto de adoção.</Alert>
                     <Step1 register={register}></Step1>
                 </>
             }
 
-            {step == 2 &&
+            {step === 2 &&
                 <>
-                    <Step2 register={register}></Step2>
+                    <Step2 register={register} setValue={setValue}></Step2>
                 </>
             }
-            {step == 3 && (
+            {step === 3 && (
                 <Step3 register={register} setValue={setValue} />
             )
 

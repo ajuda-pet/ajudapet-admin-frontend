@@ -15,8 +15,8 @@ import { gerarNomeImagem } from '../../components/validators/arquivo/index.js';
 
 import { handleStep, handleText, handleEmailChange, handleCPFChange, handlePhoneChange } from './funcoesRegister/index.js';
 
-// components
-
+// Controllers
+import authenticationController from '../../controllers/authentication.controller';
 
 // Estilo
 
@@ -160,6 +160,18 @@ function Register() {
             return () => clearTimeout(timer);
         }
     }, [error]);
+
+    useEffect(()=> {
+        authenticationController.isAuthenticate().then(isAuthenticated => {
+          if (isAuthenticated) {
+              //console.log("Usuário está autenticado");
+              navigate('/')
+          } else {
+              //console.log("Usuário não está autenticado");
+          }
+      });
+      
+      }, [navigate])
     return (
         <div className="body">
             <div className="container-login">

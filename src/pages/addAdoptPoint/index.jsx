@@ -47,17 +47,32 @@ const AddAdoptPoint = () => {
     const [show, setShow] = useState(false)
 
     const handleShow = () => setShow(true)
-    const handleNextStep = () => {
 
+    const handleNextStep = () => {
+        const payload = methods.getValues()
         if (step == 1) {
-            const payload = methods.getValues()
+            
 
             if (!payload.name || !payload.description) {
                 setShowToast(true);
                 return
             }
         }
-
+        
+        // fazer o 2
+        else if (step == 2) {
+            if (
+                !payload.addressCity ||
+                !payload.addressNeighborhood ||
+                !payload.addressState ||
+                !payload.addressStreet ||
+                !payload.postalCode ||
+                !payload.addressNumber
+            ) {
+                setShowToast(true);
+                return;
+            }
+        }
         setStep(step + 1)
     }
 
@@ -95,7 +110,7 @@ const AddAdoptPoint = () => {
             return;
         }
 
-
+       
         pointsController.create(payload).then(response => {
             setLoading(true)
 
@@ -115,6 +130,7 @@ const AddAdoptPoint = () => {
 
             setLoading(false)
         })
+            
     }
 
     useEffect(() => {
