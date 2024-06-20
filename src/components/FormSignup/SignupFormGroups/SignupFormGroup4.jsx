@@ -3,6 +3,7 @@ import { Button, Form, FormGroup, InputGroup } from "react-bootstrap"
 import InputGroupText from "react-bootstrap/esm/InputGroupText"
 import lib from "../../../lib/lib"
 import { ToastError, setToastError } from './../../Toast/ToastError'
+import { ToastWarning, setToastWarning } from "../../Toast/ToastWarning"
 import groupController from "../../../controllers/group.controller"
 
 const SignupFormGroup4 = ({ next, previus, signupForm}) => {
@@ -44,6 +45,11 @@ const SignupFormGroup4 = ({ next, previus, signupForm}) => {
     
     const handlePreviusStep = previus
     const handleNextStep = (event) => {
+
+        setTimeout(() => {
+            setToastWarning('Aguarde um momento, o servidor está acordando')
+        }, 2000)
+        
         event.preventDefault()
         const payload = signupForm.getValues()
 
@@ -91,6 +97,8 @@ const SignupFormGroup4 = ({ next, previus, signupForm}) => {
     return (
         <>
             <ToastError></ToastError>
+            <ToastWarning></ToastWarning>
+
             <Form noValidate validated={validated} onSubmit={handleNextStep}>
                 <FormGroup className='mt-2'>
                     <Form.Select aria-label="Default select example" className='mb-3' {...signupForm.register('category')} onChange={handleGroupCategory}>
@@ -102,7 +110,7 @@ const SignupFormGroup4 = ({ next, previus, signupForm}) => {
                     {groupCategory == 'GROUP'  && <InputGroup {...signupForm.register('cpf')}>
                         <InputGroupText>CPF</InputGroupText>
                         <Form.Control type='tel' placeholder='CPF do responsável' onKeyUp={handleCpf} maxLength={14} {...signupForm.register('cpf')} pattern='\d{3}\.\d{3}\.\d{3}-\d{2}' required></Form.Control>
-                        <Form.Control.Feedback type='invalid'>CPF não está no formato errado.</Form.Control.Feedback>
+                        <Form.Control.Feedback type='invalid'>CPF está no formato errado.</Form.Control.Feedback>
                     </InputGroup>}
 
                     {groupCategory == 'ONG' && <InputGroup {...signupForm.register('cpnj')}>
