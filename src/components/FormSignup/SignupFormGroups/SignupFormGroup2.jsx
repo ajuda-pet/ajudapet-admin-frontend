@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { Alert, Badge, Button, Form, FormGroup, FormText, Image, InputGroup } from "react-bootstrap"
+import groupController from "../../../controllers/group.controller"
+import { ToastError, setToastError } from "../../Toast/ToastError"
 
 const SignupFormGroup2 = ({ next, previus, signupForm }) => {
     const handlePreviusStep = previus
@@ -26,7 +28,21 @@ const SignupFormGroup2 = ({ next, previus, signupForm }) => {
             return
         }
 
-        next()
+        const groupName = signupForm.getValues('name')
+
+        groupController.getGroupByName(groupName).then(response => {
+            if (!response.success) {
+                setToastError(response.message)
+                return
+            }
+
+            if (response.info.group) {
+                setToastError('Esse Grupo/ONG já existe.')
+                return
+            }
+            next()
+        })
+
     }
 
     useEffect(() => {
@@ -41,6 +57,7 @@ const SignupFormGroup2 = ({ next, previus, signupForm }) => {
 
     return (
         <>
+            <ToastError></ToastError>
             <Form onSubmit={handleNextStep} noValidate validated={validated}>
                 <FormGroup className='mt-2'>
 
@@ -71,7 +88,8 @@ const SignupFormGroup2 = ({ next, previus, signupForm }) => {
                 <FormGroup className='mt-2'>
                     <InputGroup>
                         <InputGroup.Text>Descrição</InputGroup.Text>
-                        <Form.Control as='textarea' placeholder='Descreve o propósito do seu Grupo' {...signupForm.register('description')}></Form.Control>
+                        <Form.Control as='textarea' placeholder='Descreve o propósito do seu Grupo' {...signupForm.register('description')} required></Form.Control>
+                        <Form.Control.Feedback type='invalid'> Parece que você esqueceu da descrição.</Form.Control.Feedback>
                     </InputGroup>
                 </FormGroup>
                 

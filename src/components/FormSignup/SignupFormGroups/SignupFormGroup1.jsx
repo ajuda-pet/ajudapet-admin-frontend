@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { Button, Form, InputGroup } from "react-bootstrap"
+import groupController from "../../../controllers/group.controller"
+import { ToastError, setToastError } from "../../Toast/ToastError"
 const SignupFormGroup1 = ({ next, previus, signupForm }) => {
     const [validated, setValidated] = useState(false)
     const [spanErrorEmailMessage, setSpanErrorEmailMessage] = useState('Email incorreto') 
@@ -35,7 +37,19 @@ const SignupFormGroup1 = ({ next, previus, signupForm }) => {
         }
 
         setValidated(true)
-        next()
+
+        groupController.getGroupByEmail(email).then(response => {
+            if (!response.success) {
+                setToastError(response.message)
+                return
+            }
+
+            if (response.info.group) {
+                setToastError('Esse email já tem Grupo cadastrado.')
+                return
+            }
+            next()
+        })
     }
 
     const confirmationEmailValidation = (email, emailConfirmation) => {
@@ -48,6 +62,7 @@ const SignupFormGroup1 = ({ next, previus, signupForm }) => {
 
     return (
         <>
+            <ToastError></ToastError>
             <Form noValidate validated={validated} onSubmit={handleNextStep}>
                 <Form.Group className='mb-2'>
                     <Form.Text>

@@ -1,6 +1,7 @@
 import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage'
 import { storage } from '../controllers/resgisterImg.js'
 import { gerarNomeImagem } from '../components/validators/arquivo/index.js'
+import { cnpj, cpf } from 'cpf-cnpj-validator'
 const lib = {
     firebaseUploadImage: async (file) => {
         const imgName = gerarNomeImagem()
@@ -34,6 +35,19 @@ const lib = {
             console.error('Error deleting image:', error)
             throw error
         }
+    },
+
+    cnpjIsValid: (param) => {
+        param.replace(/\D/g, '')
+        return cnpj.isValid(param)
+    },
+
+    cpfIsValid: (param) => {
+        param.replace(/\D/g, '')
+
+        console.log(param)
+        return cpf.isValid(param)
+
     }
 }
 

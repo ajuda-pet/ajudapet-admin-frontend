@@ -3,7 +3,6 @@ import signupController from "../../controllers/signup.controller"
 import { ToastError, setToastError } from '../../components/Toast/ToastError' 
 import { useNavigate } from "react-router-dom"
 import lib from "../../lib/lib"
-//import lib from "../../lib/lib"
 
 const SignupFormGroup5 = ({ next, previus, signupForm }) => {
     const navigate = useNavigate()
@@ -11,13 +10,11 @@ const SignupFormGroup5 = ({ next, previus, signupForm }) => {
     useEffect(() => {
         const payload = signupForm.getValues()
 
-
         lib.firebaseUploadImage(payload.picture).then(url => {
             signupController.signup(payload).then((response) => {
                 if (!response.success) {
                     setToastError()
 
-                    // Removendo a imagem
                     lib.firebaseDeleteImage(url)
                     setTimeout(() => {
                         navigate('/login')
@@ -33,11 +30,6 @@ const SignupFormGroup5 = ({ next, previus, signupForm }) => {
                 navigate('/')
             })
         })
-
-        .catch(error => {
-
-        })
-
     }, [])
 
     return (

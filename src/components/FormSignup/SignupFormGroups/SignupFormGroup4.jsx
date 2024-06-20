@@ -1,6 +1,9 @@
 import { useState } from "react"
 import { Button, Form, FormGroup, InputGroup } from "react-bootstrap"
 import InputGroupText from "react-bootstrap/esm/InputGroupText"
+import lib from "../../../lib/lib"
+import { ToastError, setToastError } from './../../Toast/ToastError'
+import groupController from "../../../controllers/group.controller"
 
 const SignupFormGroup4 = ({ next, previus, signupForm}) => {
     const [validated, setValidated] = useState(false)
@@ -39,10 +42,10 @@ const SignupFormGroup4 = ({ next, previus, signupForm}) => {
         return value
     }
     
-    
     const handlePreviusStep = previus
     const handleNextStep = (event) => {
         event.preventDefault()
+        const payload = signupForm.getValues()
 
         if (!event.currentTarget.checkValidity()) {
             event.stopPropagation()
@@ -50,13 +53,44 @@ const SignupFormGroup4 = ({ next, previus, signupForm}) => {
             return
         }
 
+        if (payload.category == 'GROUP' && !lib.cpfIsValid(payload.cpf)) {
+            event.stopPropagation()
+            setValidated(true)
+            setToastError('CNPJ informado é inválido')
+            return
+        }
+
+        if (payload.category == 'ONG' && !lib.cnpjIsValid(payload.cnpj)) {
+            event.stopPropagation()
+            setValidated(true)
+            setToastError('CPF informado é inválido')
+            return
+        }
+
         setValidated(false)
 
-        next()
+        if (payload.category == 'GROUP') signupForm.setValue('cpfCnpj', signupForm.getValues('cpf'))
+        else signupForm.setValue('cpfCnpj', signupForm.getValues('cnpj'))
+
+        const cpfCnpj = signupForm.getValues('cpfCnpj')
+
+        groupController.getGroupByCpfCnpj(cpfCnpj).then(response => {
+            if (!response.success) {
+                setToastError(response.message)
+                return
+            }
+
+            if (response.info.group) {
+                setToastError('Esse CPF/CNPJ já tem Grupo cadastrado.')
+                return
+            }
+            next()
+        })
     }
 
     return (
         <>
+            <ToastError></ToastError>
             <Form noValidate validated={validated} onSubmit={handleNextStep}>
                 <FormGroup className='mt-2'>
                     <Form.Select aria-label="Default select example" className='mb-3' {...signupForm.register('category')} onChange={handleGroupCategory}>
@@ -78,7 +112,6 @@ const SignupFormGroup4 = ({ next, previus, signupForm}) => {
                     </InputGroup>}
                     
                 </FormGroup>
-
 
                 <footer className='mt-5 d-flex justify-content-end'>
                     <Button className='mx-1' style={{ minWidth: '20%' }} variant='secondary' onClick={handlePreviusStep}> Voltar </Button>
