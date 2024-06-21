@@ -84,7 +84,7 @@ const FormSignin = () => {
 
 
                 <Button className={`mt-2`} style={{ minWidth: '100%' }} variant='dark' type='submit'> Login </Button>
-                <Button className='mt-1 mb-2' style={{ minWidth: '100%' }} variant='danger' type='' onClick={handleGoogleLogin} >
+                <Button className='mt-1 mb-2' style={{ minWidth: '100%' }} variant='danger' type='' onClick={handleGoogleLogin} disabled={true}>
                     <img src='./images/google-icon.png' width='20'></img> &nbsp;
                     <label>Google</label>
                 </Button>
