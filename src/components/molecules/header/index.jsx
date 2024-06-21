@@ -24,7 +24,7 @@ function Header() {
         <>
             <Navbar className='p-2' style={{ borderRadius: '2px', backgroundColor: ' #212f3f'}} expand="lg" data-bs-theme='dark'>
                 <Container fluid>
-                    <Navbar.Brand href="/"> <img src='./images/header-logo.png' width='210' /></Navbar.Brand>
+                    <Navbar.Brand onClick={() => navigate('/')}> <img src='./images/header-logo.png' width='210' /></Navbar.Brand>
 
                     <Navbar.Toggle aria-controls="" onClick={handleOpenOffCanva} />
                         <Nav.Link onClick={logout} className='d-none d-lg-block'>
@@ -45,7 +45,7 @@ function Header() {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                         
-                        <a href='/' className='anchor'>
+                        <a onClick={() => navigate('/')} className='anchor'>
                             <Row className={`p-2 ${window.location.pathname == '/' ? 'off-canva-item-target' : 'off-canva-item'}`}>
                                 <Col xs={12}> 
                                     <img src='./images/home.png' width='30'></img> &nbsp;
@@ -54,7 +54,7 @@ function Header() {
                             </Row>
                         </a>
 
-                        <a href='/pets' className='anchor'>
+                        <a onClick={() => navigate('/pets')} className='anchor'>
                         <Row className={`p-2 ${window.location.pathname == '/pets' ? 'off-canva-item-target' : 'off-canva-item'}`}>
                                 <Col xs={12}> 
                                     <img src='./images/pets.png' width='30'></img> &nbsp;
@@ -63,7 +63,7 @@ function Header() {
                             </Row>
                         </a>
 
-                        <a href='/pontos' className='anchor'>
+                        <a onClick={() => navigate('/pontos')} className='anchor'>
                         <Row className={`p-2 ${window.location.pathname == '/pontos' ? 'off-canva-item-target' : 'off-canva-item'}`}>
                                 <Col xs={12}> 
                                     <img src='./images/location.png' width='30'></img> &nbsp;
