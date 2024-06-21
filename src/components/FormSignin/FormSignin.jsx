@@ -40,13 +40,29 @@ const FormSignin = () => {
         })
     }
 
+    const handleVitrini = () => {
+        let url = 'https://ajudapet-frontend.onrender.com/'
+
+        if (window.location.href.includes('staging') || window.location.href.includes('localhost')) {
+            url = 'https://staging-ajudapet-frontend.onrender.com/'
+        }
+
+        window.open(url, '_blank')
+    }
+
     return (
         <>            
             <ToastError></ToastError>
 
             <Form noValidate className='px-4 my-5' validated={validated} onSubmit={handleSignin}>
 
-                <center> <h5 className='mt-5 mb-4'>Tecnologia a favor dos pets!</h5> </center>
+                <center className='mt-5 mb-5'> 
+                    <h5>Tecnologia a favor dos pets!</h5> 
+                    <h6 className='text-muted'>
+                        Você cadastra e a gente divulga o seu Grupo
+                        <a style={{cursor: 'pointer', color: 'green'}}onClick={handleVitrini}><i> <u> aqui.</u></i></a>
+                    </h6>
+                </center>
 
                 <Form.Group className='mb-2'>
                     <InputGroup hasValidation id='input-email'>
@@ -78,8 +94,6 @@ const FormSignin = () => {
                         <u><i>Não tem cadastro? Registre-se.</i></u>
                     </a>
                 </Row>
-
-
             </Form>
         </>
     )
