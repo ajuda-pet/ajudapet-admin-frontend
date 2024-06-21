@@ -5,9 +5,34 @@ const noAuthEndpoint = `${baseApi}/noauth/pets`
 const authEndpoint = `${baseApi}/auth/pets`
 
 const petController = {
-    get: async () => {
+    getByGroupId: async() => {
         try {
-            const response = await axios.get(noAuthEndpoint)
+            const groupId = localStorage.getItem('groupId')
+            const response = await axios.get(`${noAuthEndpoint}/groups/${groupId}`)
+
+            if (!response.data.success) {
+                return response.data.message
+            }
+
+            return response.data.info.pets
+        }
+
+        catch (error) {
+            console.error(error)
+        }
+    },
+
+
+    get: async (params) => {
+        try {
+            let queryParams = `&groupId=${window.localStorage.getItem('groupId')}`
+
+            if (params && params.addressCity) queryParams += `&addressCity=${params.addressCity}`
+            if (params && params.age) queryParams += `&age=${params.age}`
+            if (params && params.size) queryParams += `&size=${params.size}`
+            if (params && params.species) queryParams += `&species=${params.species}`
+
+            const response = await axios.get(`${noAuthEndpoint}?${queryParams}`)
 
             if (!response.data.success) {
                 return response.data.message

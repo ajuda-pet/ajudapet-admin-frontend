@@ -1,3 +1,0 @@
-Pasta responsável pela organização dos atomos. Chama-se atomo por ser a menor unidade "de um componente".
-exemplo: um input, um botão
-

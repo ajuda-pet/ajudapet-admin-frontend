@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -10,6 +11,13 @@
     />
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <style>
+      body {
+        background-image: url('./images/bkg.png');
+        background-position: center;
+      }
+    </style>
     
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -20,7 +28,9 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+
+    <link rel='icon' href='./images/pets.png' type='image/x-icon'>
+    <title>Admin | Ajudapet</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

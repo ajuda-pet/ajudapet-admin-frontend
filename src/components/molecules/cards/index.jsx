@@ -28,17 +28,12 @@ const CardComponent = (content) => {
                 <Card.Img variant="top" src={pet.picture} width='260' height='260/'/>
                 <Card.Body>
                     <Card.Title>{petIcon} {pet.name}</Card.Title>
-                    
-                    <ListGroup className='mt-4'>
-                        <ListGroup.Item> <Badge bg="secondary">🎂 Idade&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Badge>&nbsp;&nbsp;{ageHash[pet.age]} </ListGroup.Item>
-                        <ListGroup.Item> <Badge bg="secondary">📏 Tamanho</Badge>&nbsp;&nbsp;{sizeHash[pet.size]} </ListGroup.Item>
-                        <ListGroup.Item> <Badge bg="secondary">{genderIcon} Gênero&nbsp;&nbsp;&nbsp;</Badge>&nbsp;&nbsp;{genderHash[pet.gender]} </ListGroup.Item>
-                        <ListGroup.Item> <Badge bg="secondary">🧬 Espécie &nbsp;&nbsp;</Badge>&nbsp;&nbsp;{pet.species == 'DOG' ? 'Cachorro' : 'Gato'} </ListGroup.Item>
-                    </ListGroup>
-
+                   
                     <Button className='adopt-btn mt-3' style={{width: '100%'}} onClick={handleShow}>
-                        Quero adotar    
+                        Editar (🛠️)
                     </Button>
+
+                    <Button variant='danger' style={{ width: '100%' }} className='mt-2' disabled={true}>Remover (🛠️)</Button>
                 </Card.Body>
                 <Card.Footer>
                     <small className="text-muted"><strong>Publicado em: </strong>{formatDate}</small>
@@ -81,10 +76,10 @@ const CardComponent = (content) => {
                     <Button variant="danger" className='px-3 py-2' onClick={handleClose}>
                         Fechar
                     </Button>
-                    <Button className='whatsapp-button adoption-btn' onClick={handleClose}>
+                   {/*  <Button className='whatsapp-button adoption-btn' onClick={handleClose}>
                         <img src='./images/whatsapp-icon.png' width='25'></img>
                         <span> Adotar </span>
-                    </Button>
+                    </Button> */}
                 </Modal.Footer>
             </Modal>
         
