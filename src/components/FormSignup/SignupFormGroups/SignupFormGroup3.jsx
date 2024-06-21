@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Form, FormGroup, InputGroup } from "react-bootstrap"
+import { Button, Form, FormGroup, FormText, InputGroup } from "react-bootstrap"
 import InputGroupText from "react-bootstrap/esm/InputGroupText"
 
 const SignupFormGroup3 = ({ next, previus, signupForm}) => {
@@ -44,10 +44,11 @@ const SignupFormGroup3 = ({ next, previus, signupForm}) => {
                         </InputGroup>
                     </FormGroup>
 
-                    <FormGroup className='mt-2'>
+                    <FormGroup className='mt-4'>
+                        <FormText><h6>Informe o seu Instagram para divulgarmos:</h6></FormText>
                         <InputGroup>
-                            <InputGroupText>Instagram</InputGroupText>
-                            <Form.Control type='text' placeholder='Informe o instagram do seu Grupo/ONG' {...signupForm.register('instagram')} required></Form.Control>
+                            <InputGroupText>@</InputGroupText>
+                            <Form.Control type='text' placeholder='Exemplo: ajudapet.rg' {...signupForm.register('instagram')} required></Form.Control>
                             <Form.Control.Feedback type='invalid'>Instagram não informado.</Form.Control.Feedback>
                         </InputGroup>
                     </FormGroup>

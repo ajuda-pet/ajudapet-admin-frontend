@@ -244,7 +244,9 @@ const Home = () => {
           }
         })
 
-        setLoading(false)
+        setTimeout(() => {
+          setLoading(false)
+        }, 1000)
         setGroup(group)
         setPix(group.pix)
       }
@@ -341,7 +343,7 @@ const Home = () => {
               {/* Foto do Grupo */}
               <Row lg={12} className='mt-5 justify-content-center'>
                   <Col className='text-center'>
-                <Image src={group.picture || "./images/ong-profile.jpg"} width='250' roundedCircle className='group-image'/>
+                <Image src={group.picture || "./images/ong-profile.jpg"} width='300' className='group-image'/>
                   </Col>
               </Row>
 

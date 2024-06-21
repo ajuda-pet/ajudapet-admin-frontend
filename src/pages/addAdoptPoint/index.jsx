@@ -121,14 +121,18 @@ const AddAdoptPoint = () => {
                 point.createdAt = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
                 points.push(point)
 
-                setShowToastSuccess(false)
+
+                setTimeout(() => {
+                    setShowToastSuccess(false)
+                }, 1000)
                 handleClose()
 
 
             }
 
-
-            setLoading(false)
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000)
         })
             
     }
@@ -159,13 +163,16 @@ const AddAdoptPoint = () => {
                 points.forEach(point => {
                     const date = new Date(point.createdAt)
                     point.createdAt = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
-                    setLoading(false)
-
+                    setTimeout(() => {
+                        setLoading(false)
+                    }, 1000)
                 })
 
                 setPoint(response.info.adoptionPoints)
-                setLoading(false)
-            }
+                setTimeout(() => {
+                    setLoading(false)
+                }, 1000)            
+                }
         })
     }, [])
 

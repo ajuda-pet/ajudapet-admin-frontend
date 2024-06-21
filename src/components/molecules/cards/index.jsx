@@ -28,14 +28,7 @@ const CardComponent = (content) => {
                 <Card.Img variant="top" src={pet.picture} width='260' height='260/'/>
                 <Card.Body>
                     <Card.Title>{petIcon} {pet.name}</Card.Title>
-                    
-                    <ListGroup className='mt-4'>
-                        <ListGroup.Item> <Badge bg="secondary">🎂 Idade&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Badge>&nbsp;&nbsp;{ageHash[pet.age]} </ListGroup.Item>
-                        <ListGroup.Item> <Badge bg="secondary">📏 Tamanho</Badge>&nbsp;&nbsp;{sizeHash[pet.size]} </ListGroup.Item>
-                        <ListGroup.Item> <Badge bg="secondary">{genderIcon} Gênero&nbsp;&nbsp;&nbsp;</Badge>&nbsp;&nbsp;{genderHash[pet.gender]} </ListGroup.Item>
-                        <ListGroup.Item> <Badge bg="secondary">🧬 Espécie &nbsp;&nbsp;</Badge>&nbsp;&nbsp;{pet.species == 'DOG' ? 'Cachorro' : 'Gato'} </ListGroup.Item>
-                    </ListGroup>
-
+                   
                     <Button className='adopt-btn mt-3' style={{width: '100%'}} onClick={handleShow}>
                         Editar (🛠️)
                     </Button>

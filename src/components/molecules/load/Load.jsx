@@ -6,7 +6,9 @@ const Load = () => {
         <>
             <Modal className='load' centered show={true}>
                 <Modal.Body>
-                    <img src='./images/loading-cat.gif' width='400'></img>
+                    <center>
+                        <img src='./images/loading.gif' width='400'></img>
+                    </center>
                 </Modal.Body>
                 <Modal.Title className='text-center mb-4'>Carregando...</Modal.Title>
 

@@ -15,7 +15,6 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import authenticationController from '../../controllers/authentication.controller';
 
 function AddPet() {
-    
     const ToastSuccess = (({ show, message }) => {
         return (
             <Toast bg='success' className='position-fixed top-0 end-0 m-4 text-white' style={{ zIndex: 9999 }} show={showToastSuccess} onClose={() => setShowToast(false)}>
@@ -26,7 +25,6 @@ function AddPet() {
             </Toast>
         )
     })
-    
     
     const ToastError = ({ show }) => {
         return (
@@ -148,7 +146,10 @@ function AddPet() {
             const cities = [...new Set(pets.map(pet => pet.adoptionPoint.addressCity))]
             setPets(pets);
             setAddressCities(cities)
-            setLoading(false)
+
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000)
         });
     }, []);
 
@@ -165,7 +166,10 @@ function AddPet() {
 
         petController.get(params).then(response => {
             setPets(response)
-            setLoading(false)
+
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000)
         })
 
             .catch(error => {
