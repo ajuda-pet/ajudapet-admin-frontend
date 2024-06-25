@@ -13,6 +13,7 @@ import { gerarNomeImagem } from '../../components/validators/arquivo';
 import { storage } from '../../controllers/resgisterImg';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import authenticationController from '../../controllers/authentication.controller';
+import NoContent from '../../components/NoContent/NoContent';
 
 function AddPet() {
     const ToastSuccess = (({ show, message }) => {
@@ -275,6 +276,7 @@ function AddPet() {
                             </Col>
                         </Row>
 
+                        { pets && pets.length == 0 && <NoContent message='Você ainda não tem pets cadastrados.'></NoContent>}
                         <CardGroup className='mt-5' >
                             <Row style={{minWidth: '100%'}}>
                                 {pets && pets.map((pet) => (
