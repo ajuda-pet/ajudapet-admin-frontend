@@ -11,6 +11,7 @@ import pointsController from '../../controllers/points.controller';
 import groupController from '../../controllers/group.controller';
 import Load from '../../components/molecules/load/Load';
 import authenticationController from '../../controllers/authentication.controller';
+import NoContent from '../../components/NoContent/NoContent';
 
 
 const AddAdoptPoint = () => {
@@ -204,6 +205,7 @@ const AddAdoptPoint = () => {
 
 
                         {/* Tabela de pontos de adoção */}
+                        { points && points.length == 0  && <NoContent message='Você ainda não tem Pontos de Adoção Cadastrado.'></NoContent>}
                         <PointTable points={points}/>
 
                     </Container>

@@ -5,9 +5,7 @@ import pointsController from '../../../controllers/points.controller'
 const PointTable = ({ points }) => {
     return (
         <>
-            {!points.length && <Alert>Cadastre seu ponto de adoção!</Alert>}
-
-            {points.length && <Table striped bordered hover size="sm">
+            {points.length > 0 && <Table striped bordered hover size="sm">
                 <thead className='p-5'>
                     <tr>
                         <th>🏡 Ponto de Adoção</th>
@@ -17,7 +15,7 @@ const PointTable = ({ points }) => {
                     </tr>
                 </thead>
                 <tbody>
-                   {points && points.length && points.map(point => (
+                   {points && points.length > 0 && points.map(point => (
                         <tr key={point.id}>
                             <th>{point.name}</th>
                            <th>{point.addressStreet}, {point.addressNumber}. {point.addressNeighborhood}. {point.addressCity}, {point.addressState}.</th>
